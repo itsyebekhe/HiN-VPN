@@ -34,19 +34,22 @@ function getTelegramChannelConfigs($username)
             "hysteria" => '',
             "hysteria2" => ''
         ];
-        foreach ($configs as $type => $configsArray) {
+        foreach ($configs as $theType => $configsArray) {
             foreach ($configsArray as $config) {
                 if (is_valid($config)) {
                     $fixedConfig = str_replace("amp;", "", removeAngleBrackets($config));
-                    $correctedConfig = correctConfig("{$fixedConfig}", $type, $source);
+                    $correctedConfig = correctConfig("{$fixedConfig}", $theType, $source);
+                    echo $theType . " => " . $correctedConfig . "\n";
+                    $mix .= $correctedConfig . "\n";
                     $bySource[$source] .= "{$correctedConfig}\n";
-                    $byType[$type] .= "{$correctedConfig}\n";
+                    $byType[$theType] .= "{$correctedConfig}\n";
                     $byType["mix"] .= "{$correctedConfig}\n";
                 }
             }
         }
         echo "@{$source} => 100%\n";
     }
+    file_put_contents("testMiX", $mix);
     return [
         "updateTime" => time(),
         "byType" => $byType,
