@@ -644,4 +644,4 @@ $message = "🔺 لینک های اشتراک HiN بروزرسانی شدن! �
 
 🌐 <a href='https://t.me/Here_is_Nowhere'>𝗛.𝗜.𝗡 🫧</a>";
 
-sendMessage($botToken, -1002043507701, $message, "html", $keyboard);
+//sendMessage($botToken, -1002043507701, $message, "html", $keyboard);
