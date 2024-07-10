@@ -23,16 +23,7 @@ function getTelegramChannelConfigs($username)
         }
         echo "@{$source} => 50%\n";
         $bySource = [];
-        $byType = [
-            "mix" => '',
-            "vmess" => '',
-            "vless" => '',
-            "trojan" => '',
-            "ss" => '',
-            "tuic" => '',
-            "hysteria" => '',
-            "hysteria2" => ''
-        ];
+        $byType = [];
         foreach ($configs as $theType => $configsArray) {
             foreach ($configsArray as $config) {
                 if (is_valid($config)) {
