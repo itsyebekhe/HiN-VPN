@@ -9,6 +9,7 @@ function getTelegramChannelConfigs($username)
 {
     $sourceArray = explode(",", $username);
     foreach ($sourceArray as $source) {
+        echo "@{$source} => 0%\n";
         $html = file_get_contents("https://t.me/s/" . $source);
         
         $types = ["vmess", "vless", "trojan", "ss", "tuic", "hysteria", "hysteria2", "hy2"];
@@ -20,6 +21,7 @@ function getTelegramChannelConfigs($username)
                 $configs[$type] = getConfigItems($type, $html);
             }
         }
+        echo "@{$source} => 50%\n";
         file_put_contents("collect", json_encode($configs, JSON_PRETTY_PRINT));
         $output = [];
         foreach ($configs as $type => $configsArray) {
@@ -33,6 +35,7 @@ function getTelegramChannelConfigs($username)
                 }
             }
         }
+        echo "@{$source} => 100%\n";
     }
     return $output;
 }
@@ -482,6 +485,34 @@ function ping($host, $port, $timeout) {
     return round((($tA - $tB) * 1000), 0) . "ms";
 }
 
+
+function sendMessage($botToken, $chatId, $message, $parse_mode, $keyboard)
+{
+    $url = "https://api.telegram.org/bot{$botToken}/sendMessage";
+
+    $data = [
+        "chat_id" => $chatId,
+        "text" => $message,
+        "parse_mode" => $parse_mode,
+        "disable_web_page_preview" => true,
+        "reply_markup" => json_encode([
+            "inline_keyboard" => $keyboard,
+        ]),
+    ];
+
+    $curl = curl_init($url);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, ["Content-Type: application/json"]);
+    curl_setopt($curl, CURLOPT_POST, true);
+    curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+
+    $response = curl_exec($curl);
+
+    curl_close($curl);
+
+    echo $response;
+}
+
 function generateHiddifyTags() {
     $profileTitle = base64_encode("HiN Miner 🫧");
     return "#profile-title: base64:{$profileTitle}\n#profile-update-interval: 1\n#subscription-userinfo: upload=0; download=0; total=10737418240000000; expire=2546249531\n#support-url: https://hingroup.t.me\n#profile-web-page-url: https://Here_is_Nowhere.t.me
@@ -586,3 +617,27 @@ foreach ($configs as $type => $configsOfType) {
         }
     }
 }
+
+$botToken = getenv('TELEGRAM_BOT_TOKEN');
+$keyboard = [
+    [
+        [
+            "text" => "🚹 گیتهاب HiN VPN 🚹", 
+            "url" => "https://github.com/itsyebekhe/HiN-VPN/tree/main/subscription"
+        ]
+    ]
+];
+$tehranTime = getTehranTime();
+$message = "🔺 لینک های اشتراک HiN بروزرسانی شدن! 🔻
+
+⏱ آخرین آپدیت: 
+{$tehranTime}
+
+🔎 MiX: <code>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/base64/mix</code>
+🔎 SHADOWSOCKS: <code>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/base64/ss</code>
+
+💥 برای لینک های بیشتر وارد گیتهاب پروژه بشید
+
+🌐 <a href='https://t.me/Here_is_Nowhere'>𝗛.𝗜.𝗡 🫧</a>";
+
+sendMessage($botToken, -1002043507701, $message, "html", $keyboard);
