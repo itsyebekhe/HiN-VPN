@@ -229,6 +229,10 @@ function is_ip($string)
     }
 }
 
+function maskUrl($url) {
+    return "https://itsyebekhe.github.io/urlmskr/" . base64_encode($url);
+}
+
 function convertToJson($input) {
     // Split the input string by newline
     $lines = explode("\n", $input);
@@ -609,9 +613,20 @@ function generateEndofConfiguration() {
 $source = file_get_contents("source.conf");
 getTelegramChannelConfigs($source);
 
+$types = ["mix", "vmess", "vless", "trojan", "ss", "tuic", "hysteria", "hysteria2"];
+$randKey = rand(0,7);
+$randType = $types[$randKey];
+$upperType = strtoupper($randType);
+
 $tehranTime = getTehranTime();
 $botToken = getenv('TELEGRAM_BOT_TOKEN');
 $keyboard = [
+    [
+        [
+            "text" => "📲 STREISAND",
+            "url" => maskUrl("streisand://import/https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/hiddify/" . $randType)
+        ]
+    ],
     [
         [
             "text" => "🚹 گیتهاب HiN VPN 🚹", 
@@ -620,10 +635,6 @@ $keyboard = [
     ]
 ];
 
-$types = ["mix", "vmess", "vless", "trojan", "ss", "tuic", "hysteria", "hysteria2"];
-$randKey = rand(0,7);
-$randType = $types[$randKey];
-$upperType = strtoupper($randType);
 
 $message = "🔺 لینک های اشتراک HiN بروزرسانی شدن! 🔻
 
