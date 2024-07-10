@@ -38,9 +38,9 @@ function getTelegramChannelConfigs($username)
                 if (is_valid($config)) {
                     $fixedConfig = str_replace("amp;", "", removeAngleBrackets($config));
                     $correctedConfig = correctConfig("{$fixedConfig}", $theType, $source);
-                    $bySource[$source] .= "{$correctedConfig}\n";
-                    $byType[$theType] .= "{$correctedConfig}\n";
-                    $byType["mix"] .= "{$correctedConfig}\n";
+                    $bySource[$source][] = $correctedConfig;
+                    $byType[$theType][] = $correctedConfig;
+                    $byType["mix"][] = $correctedConfig;
                 }
             }
         }
@@ -48,14 +48,14 @@ function getTelegramChannelConfigs($username)
     }
     
     foreach ($byType as $configsType => $configsList) {
-        $$configsType = generateUpdateTime() . $configsList . generateEndofConfiguration();
+        $$configsType = generateUpdateTime() . implode("\n" . $configsList) . generateEndofConfiguration();
         file_put_contents("subscription/normal/" . $configsType, $$configsType);
         file_put_contents("subscription/base64/" . $configsType, base64_encode($$configsType));
         file_put_contents("subscription/hiddify/" . $configsType, base64_encode(generateHiddifyTags() . "\n" . $$configsType));
     }
     
     foreach ($bySource as $configsSource => $configsList) {
-        $$configsSource = generateUpdateTime() . $configsList . generateEndofConfiguration();
+        $$configsSource = generateUpdateTime() . implode("\n" . $configsList) . generateEndofConfiguration();
         file_put_contents("subscription/source/normal/" . $configsSource, $$configsSource);
         file_put_contents("subscription/source/base64/" . $configsSource, base64_encode($$configsSource));
         file_put_contents("subscription/source/hiddify/" . $configsSource, base64_encode(generateHiddifyTags() . "\n" . $$configsSource));
