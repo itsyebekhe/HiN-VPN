@@ -29,9 +29,9 @@ function getTelegramChannelConfigs($username)
                 if (is_valid($config)) {
                     $fixedConfig = str_replace("amp;", "", removeAngleBrackets($config));
                     $correctedConfig = correctConfig("{$fixedConfig}", $theType, $source);
-                    $mix = $correctedConfig . "\n";
-                    $$theType = $correctedConfig . "\n";
-                    $$source = $correctedConfig . "\n";
+                    $mix .= $correctedConfig . "\n";
+                    $$theType .= $correctedConfig . "\n";
+                    $$source .= $correctedConfig . "\n";
                 }
             }
         }
@@ -41,7 +41,7 @@ function getTelegramChannelConfigs($username)
         file_put_contents("subscription/source/hiddify/" . $source, base64_encode(generateHiddifyTags() . "\n" . $configsSource));
         echo "@{$source} => 100%\n";
     }
-    $types = ["vmess", "vless", "trojan", "ss", "tuic", "hysteria", "hysteria2"];
+    $types = ["mix", "vmess", "vless", "trojan", "ss", "tuic", "hysteria", "hysteria2"];
     foreach ($types as $dir) {
         $configsType = generateUpdateTime() . $$dir . generateEndofConfiguration();
         file_put_contents("subscription/normal/" . $dir, $configsType);
@@ -632,4 +632,4 @@ $message = "🔺 لینک های اشتراک HiN بروزرسانی شدن! �
 
 🌐 <a href='https://t.me/Here_is_Nowhere'>𝗛.𝗜.𝗡 🫧</a>";
 
-//sendMessage($botToken, -1002043507701, $message, "html", $keyboard);
+sendMessage($botToken, -1002043507701, $message, "html", $keyboard);
