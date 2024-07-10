@@ -1,3 +1,14 @@
 {
-    "updated": 1720616767
+    "updateTime": 1720619568,
+    "byType": {
+        "mix": "",
+        "vmess": "",
+        "vless": "",
+        "trojan": "",
+        "ss": "",
+        "tuic": "",
+        "hysteria": "",
+        "hysteria2": ""
+    },
+    "bySource": []
 }
