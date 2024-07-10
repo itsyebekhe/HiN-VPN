@@ -27,6 +27,7 @@ function getTelegramChannelConfigs($username)
                 if (is_valid($config)) {
                     $fixedConfig = str_replace("amp;", "", removeAngleBrackets($config));
                     $correctedConfig = correctConfig("{$fixedConfig}", $type, $source);
+                    $output["bySource"][$source] .= "{$correctedConfig}\n";
                     $output[$type] .= "{$correctedConfig}\n";
                     $output["mix"] .= "{$correctedConfig}\n";
                 }
@@ -569,9 +570,19 @@ function generateEndofConfiguration() {
 $source = file_get_contents("sources.conf");
 $configs = getTelegramChannelConfigs($source);
 foreach ($configs as $type => $configsOfType) {
-    $configsList = generateUpdateTime() . $configsOfType . generateEndofConfiguration();
-    $configsListHiddify = generateHiddifyTags() . "\n" . $configsList;
-    file_put_contents("subscription/normal", $configsList);
-    file_put_contents("subscription/base64", base64_encode($configsList));
-    file_put_contents("subscription/hiddify", base64_encode($configsListHiddify));
+    if ($type !== "bySource") {
+        $configsList = generateUpdateTime() . $configsOfType . generateEndofConfiguration();
+        $configsListHiddify = generateHiddifyTags() . "\n" . $configsList;
+        file_put_contents("subscription/normal/{$type}", $configsList);
+        file_put_contents("subscription/base64/{$type}", base64_encode($configsList));
+        file_put_contents("subscription/hiddify/{$type}", base64_encode($configsListHiddify));
+    } else {
+        foreach ($configsOfType as $source => $configsOfSource) {
+            $configsList = generateUpdateTime() . $configsOfSource . generateEndofConfiguration();
+            $configsListHiddify = generateHiddifyTags() . "\n" . $configsList;
+            file_put_contents("subscription/source/normal/{$source}", $configsList);
+            file_put_contents("subscription/source/base64/{$source}", base64_encode($configsList));
+            file_put_contents("subscription/source/hiddify/{$source}", base64_encode($configsListHiddify));
+        }
+    }
 }
