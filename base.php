@@ -38,7 +38,7 @@ function getTelegramChannelConfigs($username)
         $configsSource = generateUpdateTime() . $$source . generateEndofConfiguration();
         file_put_contents("subscription/source/normal/" . $source, $configsSource);
         file_put_contents("subscription/source/base64/" . $source, base64_encode($configsSource));
-        file_put_contents("subscription/source/hiddify/" . $source, base64_encode(generateHiddifyTags() . "\n" . $configsSource));
+        file_put_contents("subscription/source/hiddify/" . $source, base64_encode(generateHiddifyTags("@" . $source) . "\n" . $configsSource));
         echo "@{$source} => 100%\n";
     }
     $types = ["mix", "vmess", "vless", "trojan", "ss", "tuic", "hysteria", "hysteria2"];
@@ -46,7 +46,7 @@ function getTelegramChannelConfigs($username)
         $configsType = generateUpdateTime() . $$dir . generateEndofConfiguration();
         file_put_contents("subscription/normal/" . $dir, $configsType);
         file_put_contents("subscription/base64/" . $dir, base64_encode($configsType));
-        file_put_contents("subscription/hiddify/" . $dir, base64_encode(generateHiddifyTags() . "\n" . $configsType));
+        file_put_contents("subscription/hiddify/" . $dir, base64_encode(generateHiddifyTags(strtoupper($dir)) . "\n" . $configsType));
     }
 }
 
@@ -521,8 +521,8 @@ function sendMessage($botToken, $chatId, $message, $parse_mode, $keyboard)
     echo $response;
 }
 
-function generateHiddifyTags() {
-    $profileTitle = base64_encode("HiN Miner 🫧");
+function generateHiddifyTags($type) {
+    $profileTitle = base64_encode("{$type} | HiN 🫧");
     return "#profile-title: base64:{$profileTitle}\n#profile-update-interval: 1\n#subscription-userinfo: upload=0; download=0; total=10737418240000000; expire=2546249531\n#support-url: https://hingroup.t.me\n#profile-web-page-url: https://Here_is_Nowhere.t.me
 ";
 }
@@ -620,13 +620,17 @@ $keyboard = [
     ]
 ];
 
+$types = ["mix", "vmess", "vless", "trojan", "ss", "tuic", "hysteria", "hysteria2"];
+$randKey = rand(0,7);
+$randType = $types[$randKey];
+$upperType = strtoupper($randType);
+
 $message = "🔺 لینک های اشتراک HiN بروزرسانی شدن! 🔻
 
 ⏱ آخرین آپدیت: 
 {$tehranTime}
 
-🔎 MiX: <code>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/base64/mix</code>
-🔎 SHADOWSOCKS: <code>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/base64/ss</code>
+🔎 {$upperType}: <code>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/hiddify/{$randType}</code>
 
 💥 برای لینک های بیشتر وارد گیتهاب پروژه بشید
 
