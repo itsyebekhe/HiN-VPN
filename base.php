@@ -29,27 +29,24 @@ function getTelegramChannelConfigs($username)
                 if (is_valid($config)) {
                     $fixedConfig = str_replace("amp;", "", removeAngleBrackets($config));
                     $correctedConfig = correctConfig("{$fixedConfig}", $theType, $source);
-                    $bySource[$source][] = $correctedConfig;
-                    $byType[$theType][] = $correctedConfig;
-                    $byType["mix"][] = $correctedConfig;
+                    $mix = $correctedConfig . "\n";
+                    $$theType = $correctedConfig . "\n";
+                    $$source = $correctedConfig . "\n";
                 }
             }
         }
+        $configsSource = generateUpdateTime() . $$source . generateEndofConfiguration();
+        file_put_contents("subscription/source/normal/" . $source, $configsSource);
+        file_put_contents("subscription/source/base64/" . $source, base64_encode($configsSource));
+        file_put_contents("subscription/source/hiddify/" . $source, base64_encode(generateHiddifyTags() . "\n" . $configsSource));
         echo "@{$source} => 100%\n";
     }
-    
-    foreach ($byType as $configsType => $configsList) {
-        $$configsType = generateUpdateTime() . implode("\n" . $configsList) . generateEndofConfiguration();
-        file_put_contents("subscription/normal/" . $configsType, $$configsType);
-        file_put_contents("subscription/base64/" . $configsType, base64_encode($$configsType));
-        file_put_contents("subscription/hiddify/" . $configsType, base64_encode(generateHiddifyTags() . "\n" . $$configsType));
-    }
-    
-    foreach ($bySource as $configsSource => $configsList) {
-        $$configsSource = generateUpdateTime() . implode("\n" . $configsList) . generateEndofConfiguration();
-        file_put_contents("subscription/source/normal/" . $configsSource, $$configsSource);
-        file_put_contents("subscription/source/base64/" . $configsSource, base64_encode($$configsSource));
-        file_put_contents("subscription/source/hiddify/" . $configsSource, base64_encode(generateHiddifyTags() . "\n" . $$configsSource));
+    $types = ["vmess", "vless", "trojan", "ss", "tuic", "hysteria", "hysteria2"];
+    foreach ($types as $dir) {
+        $configsType = generateUpdateTime() . $$dir . generateEndofConfiguration();
+        file_put_contents("subscription/normal/" . $dir, $configsType);
+        file_put_contents("subscription/base64/" . $dir, base64_encode($configsType));
+        file_put_contents("subscription/hiddify/" . $dir, base64_encode(generateHiddifyTags() . "\n" . $configsType));
     }
 }
 
