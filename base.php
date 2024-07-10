@@ -16,27 +16,42 @@ function getTelegramChannelConfigs($username)
         $configs = [];
         foreach ($types as $type) {
             if ($type === "hy2") {
-                $configs["hysteria2"] = getConfigItems($type, $html);
+                $configs["hysteria2"] = array_merge(getConfigItems($type, $html), $configs["hysteria2"]);
             } else {
                 $configs[$type] = getConfigItems($type, $html);
             }
         }
         echo "@{$source} => 50%\n";
         $output = [];
+        $bySource = [];
+        $byType = [
+            "mix" => '',
+            "vmess" => '',
+            "vless" => '',
+            "trojan" => '',
+            "ss" => '',
+            "tuic" => '',
+            "hysteria" => '',
+            "hysteria2" => ''
+        ];
         foreach ($configs as $type => $configsArray) {
             foreach ($configsArray as $config) {
                 if (is_valid($config)) {
                     $fixedConfig = str_replace("amp;", "", removeAngleBrackets($config));
                     $correctedConfig = correctConfig("{$fixedConfig}", $type, $source);
-                    $output["bySource"][$source] .= "{$correctedConfig}\n";
-                    $output[$type] .= "{$correctedConfig}\n";
-                    $output["mix"] .= "{$correctedConfig}\n";
+                    $bySource[$source] .= "{$correctedConfig}\n";
+                    $byType[$type] .= "{$correctedConfig}\n";
+                    $byType["mix"] .= "{$correctedConfig}\n";
                 }
             }
         }
         echo "@{$source} => 100%\n";
     }
-    return $output;
+    return [
+        "updateTime" => time(),
+        "byType" => $byType,
+        "bySource" => $bySource
+    ];
 }
 
 function configParse($input, $configType)
@@ -201,8 +216,6 @@ function correctConfig ($config, $type, $source) {
     $configHashName = $configsHashName[$type];
 
     $parsedConfig = configParse($config, $type);
-    print_r($parsedConfig);
-    echo "\n";
     $configHashTag = generateName($parsedConfig, $type, $source);
     $parsedConfig[$configHashName] = $configHashTag;
 
@@ -600,16 +613,18 @@ function generateEndofConfiguration() {
 $source = file_get_contents("source.conf");
 $configs = getTelegramChannelConfigs($source);
 
-foreach ($configs as $type => $configsOfType) {
-    if ($type !== "bySource") {
-        $configsList = generateUpdateTime() . $configsOfType . generateEndofConfiguration();
-        $configsListHiddify = generateHiddifyTags() . "\n" . $configsList;
-        file_put_contents('subscription/normal/' . $type, $configsList);
-        file_put_contents('subscription/base64/' . $type, base64_encode($configsList));
-        file_put_contents('subscription/hiddify/' . $type, base64_encode($configsListHiddify));
-    } else {
-        foreach ($configsOfType as $source => $configsOfSource) {
-            $configsList = generateUpdateTime() . $configsOfSource . generateEndofConfiguration();
+foreach ($configs as $sort => $sortedConfigs) {
+    if ($sort === "byType") {
+        foreach ($sortedConfigs as $type => $sortedConfigsList){
+           $configsList = generateUpdateTime() . $sortedConfigsList . generateEndofConfiguration();
+           $configsListHiddify = generateHiddifyTags() . "\n" . $configsList;
+           file_put_contents('subscription/normal/' . $type, $configsList);
+           file_put_contents('subscription/base64/' . $type, base64_encode($configsList));
+           file_put_contents('subscription/hiddify/' . $type, base64_encode($configsListHiddify));
+        }
+    } elseif ($sort === "bySource") {
+        foreach ($sortedConfigs as $source => $sortedConfigsList) {
+            $configsList = generateUpdateTime() . $sortedConfigsList . generateEndofConfiguration();
             $configsListHiddify = generateHiddifyTags() . "\n" . $configsList;
             file_put_contents('subscription/source/normal/' . $source, $configsList);
             file_put_contents('subscription/source/base64/' . $source, base64_encode($configsList));
@@ -618,7 +633,6 @@ foreach ($configs as $type => $configsOfType) {
     }
 }
 
-$configs["updated"] = time();
 file_put_contents("result.json", json_encode($configs, JSON_PRETTY_PRINT));
 
 $tehranTime = getTehranTime();
