@@ -618,8 +618,10 @@ foreach ($configs as $type => $configsOfType) {
     }
 }
 
-$tehranTime = getTehranTime();
 $configs["updated"] = time()
+file_put_contents("result.json", json_encode($configs, JSON_PRETTY_PRINT));
+
+$tehranTime = getTehranTime();
 $botToken = getenv('TELEGRAM_BOT_TOKEN');
 $keyboard = [
     [
