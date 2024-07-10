@@ -22,7 +22,6 @@ function getTelegramChannelConfigs($username)
             }
         }
         echo "@{$source} => 50%\n";
-        file_put_contents("collect", json_encode($configs, JSON_PRETTY_PRINT));
         $output = [];
         foreach ($configs as $type => $configsArray) {
             foreach ($configsArray as $config) {
@@ -598,7 +597,7 @@ function generateEndofConfiguration() {
     return "vless://acbabca-acab-bcaa-abdc-bbccaabaccab@127.0.0.1:8080?security=tls&type=tcp#👨🏻‍💻%20DEVELOPED-BY%20@YEBEKHE\nvless://acbabca-acab-bcaa-abdc-bbccaabaccab@127.0.0.1:8080?security=tls&type=tcp#📌%20SUPPORT-CONTACT @HiNGROUP.T.ME";
 }
 
-$source = file_get_contents("sources.conf");
+$source = file_get_contents("source.conf");
 $configs = getTelegramChannelConfigs($source);
 foreach ($configs as $type => $configsOfType) {
     if ($type !== "bySource") {
