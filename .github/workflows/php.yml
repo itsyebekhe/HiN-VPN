@@ -1,4 +1,4 @@
-name: "HiN Miner"
+name: "HiN VPN"
 
 on:
   workflow_dispatch:
@@ -6,7 +6,7 @@ on:
     - cron: '0 */3 * * *'
 
 jobs:
-  hin-full:
+  HiN-VPN:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
