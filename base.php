@@ -618,7 +618,7 @@ foreach ($configs as $type => $configsOfType) {
     }
 }
 
-$configs["updated"] = time()
+$configs["updated"] = time();
 file_put_contents("result.json", json_encode($configs, JSON_PRETTY_PRINT));
 
 $tehranTime = getTehranTime();
