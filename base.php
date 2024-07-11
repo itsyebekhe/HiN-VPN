@@ -694,8 +694,6 @@ function getNetwork($config, $type)
     return null;
 }
 
-<?php
-
 function getTLS($config, $type)
 {
     if (($type === "vmess" && $config["tls"] === "tls") || $type === "ss") {
