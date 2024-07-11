@@ -800,7 +800,7 @@ function sendMessage($botToken, $chatId, $message, $parse_mode, $keyboard)
 
     curl_close($curl);
 
-    echo $response;
+    echo /** @scrutinizer ignore-type */ $response;
 }
 
 function generateHiddifyTags($type)
