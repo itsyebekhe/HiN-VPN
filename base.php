@@ -8,7 +8,7 @@ error_reporting(E_ERROR | E_PARSE);
 function getTelegramChannelConfigs($username)
 {
     $sourceArray = explode(",", $username);
-    $emptySource = "";
+    $emptySource = file_get_contents("empty.conf");
     $mix = "";
     foreach ($sourceArray as $source) {
         echo "@{$source} => PROGRESS: 0%\n";
@@ -77,7 +77,10 @@ function getTelegramChannelConfigs($username)
             echo "@{$source} => PROGRESS: 100%\n";
         } else {
             $username = str_replace($source . ",", "", $username);
-            $emptySource .= $source . ",";
+            $emptyArray = explode(",", $emptySource);
+            if (!in_array($source, $emptyArray)) {
+                $emptySource .= $source . ",";
+            }
             removeFileInDirectory("subscription/source/normal/", $source);
             removeFileInDirectory("subscription/source/base64/", $source);
             removeFileInDirectory("subscription/source/hiddify/", $source);
