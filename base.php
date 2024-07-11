@@ -81,7 +81,7 @@ function getTelegramChannelConfigs($username)
             if (!in_array($source, $emptyArray)) {
                 $emptySource .= $source . ",";
             }
-            removeFileInDirectory("subscription/source/normal/", $source);
+            if (file_exists()) removeFileInDirectory("subscription/source/normal/", $source);
             removeFileInDirectory("subscription/source/base64/", $source);
             removeFileInDirectory("subscription/source/hiddify/", $source);
             file_put_contents("source.conf", $username);
@@ -276,7 +276,7 @@ function removeFileInDirectory($directory, $fileName)
 {
     // Check if the directory exists
     if (!is_dir($directory)) {
-        throw new InvalidArgumentException("Directory does not exist.");
+        return false;
     }
 
     // Construct the full path to the file
@@ -284,14 +284,12 @@ function removeFileInDirectory($directory, $fileName)
 
     // Check if the file exists
     if (!file_exists($filePath)) {
-        throw new InvalidArgumentException(
-            "File does not exist in the directory."
-        );
+        return false;
     }
 
     // Attempt to delete the file
     if (!unlink($filePath)) {
-        throw new RuntimeException("Failed to delete the file.");
+        return false;
     }
 
     return true;
