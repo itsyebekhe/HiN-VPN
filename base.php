@@ -8,45 +8,119 @@ error_reporting(E_ERROR | E_PARSE);
 function getTelegramChannelConfigs($username)
 {
     $sourceArray = explode(",", $username);
+    $emptySource = "";
     foreach ($sourceArray as $source) {
-        echo "@{$source} => 0%\n";
+        echo "@{$source} => PROGRESS: 0%\n";
         $html = file_get_contents("https://t.me/s/" . $source);
-        
-        $types = ["vmess", "vless", "trojan", "ss", "tuic", "hysteria", "hysteria2", "hy2"];
+
+        $types = [
+            "vmess",
+            "vless",
+            "trojan",
+            "ss",
+            "tuic",
+            "hysteria",
+            "hysteria2",
+            "hy2",
+        ];
         $configs = [];
         foreach ($types as $type) {
             if ($type === "hy2") {
-                $configs["hysteria2"] = array_merge(getConfigItems($type, $html), $configs["hysteria2"]);
+                $configs["hysteria2"] = array_merge(
+                    getConfigItems($type, $html),
+                    $configs["hysteria2"]
+                );
             } else {
                 $configs[$type] = getConfigItems($type, $html);
             }
         }
-        echo "@{$source} => 50%\n";
+        echo "@{$source} => PROGRESS: 50%\n";
         $bySource = [];
         $byType = [];
         foreach ($configs as $theType => $configsArray) {
             foreach ($configsArray as $config) {
                 if (is_valid($config)) {
-                    $fixedConfig = str_replace("amp;", "", removeAngleBrackets($config));
-                    $correctedConfig = correctConfig("{$fixedConfig}", $theType, $source);
+                    $fixedConfig = str_replace(
+                        "amp;",
+                        "",
+                        removeAngleBrackets($config)
+                    );
+                    $correctedConfig = correctConfig(
+                        "{$fixedConfig}",
+                        $theType,
+                        $source
+                    );
                     $mix .= $correctedConfig . "\n";
                     $$theType .= $correctedConfig . "\n";
                     $$source .= $correctedConfig . "\n";
                 }
             }
         }
-        $configsSource = generateUpdateTime() . $$source . generateEndofConfiguration();
-        file_put_contents("subscription/source/normal/" . $source, $configsSource);
-        file_put_contents("subscription/source/base64/" . $source, base64_encode($configsSource));
-        file_put_contents("subscription/source/hiddify/" . $source, base64_encode(generateHiddifyTags("@" . $source) . "\n" . $configsSource));
-        echo "@{$source} => 100%\n";
+        if (!empty($$source)) {
+            $configsSource =
+                generateUpdateTime() . $$source . generateEndofConfiguration();
+            file_put_contents(
+                "subscription/source/normal/" . $source,
+                $configsSource
+            );
+            file_put_contents(
+                "subscription/source/base64/" . $source,
+                base64_encode($configsSource)
+            );
+            file_put_contents(
+                "subscription/source/hiddify/" . $source,
+                base64_encode(
+                    generateHiddifyTags("@" . $source) . "\n" . $configsSource
+                )
+            );
+            echo "@{$source} => PROGRESS: 100%\n";
+        } else {
+            $username = str_replace($source . ",", "", $username);
+            $emptySource .= $source . ",";
+            removeFileInDirectory("subscription/source/normal/", $source);
+            removeFileInDirectory("subscription/source/base64/", $source);
+            removeFileInDirectory("subscription/source/hiddify/", $source);
+            file_put_contents("source.conf", $username);
+            file_put_contents("empty.conf", $emptySource);
+            echo "@{$source} => NO CONFIG FOUND, I REMOVED CHANNEL!\n";
+        }
     }
-    $types = ["mix", "vmess", "vless", "trojan", "ss", "tuic", "hysteria", "hysteria2"];
-    foreach ($types as $dir) {
-        $configsType = generateUpdateTime() . $$dir . generateEndofConfiguration();
-        file_put_contents("subscription/normal/" . $dir, $configsType);
-        file_put_contents("subscription/base64/" . $dir, base64_encode($configsType));
-        file_put_contents("subscription/hiddify/" . $dir, base64_encode(generateHiddifyTags(strtoupper($dir)) . "\n" . $configsType));
+    $types = [
+        "mix",
+        "vmess",
+        "vless",
+        "trojan",
+        "ss",
+        "tuic",
+        "hysteria",
+        "hysteria2",
+    ];
+    foreach ($types as $filename) {
+        if (!empty($$filename)) {
+            $configsType =
+                generateUpdateTime() .
+                $$filename .
+                generateEndofConfiguration();
+            file_put_contents("subscription/normal/" . $filename, $configsType);
+            file_put_contents(
+                "subscription/base64/" . $filename,
+                base64_encode($configsType)
+            );
+            file_put_contents(
+                "subscription/hiddify/" . $filename,
+                base64_encode(
+                    generateHiddifyTags(strtoupper($filename)) .
+                        "\n" .
+                        $configsType
+                )
+            );
+            echo "#{$filename} => CREATED SUCCESSFULLY!!\n";
+        } else {
+            removeFileInDirectory("subscription/normal/", $filename);
+            removeFileInDirectory("subscription/base64/", $filename);
+            removeFileInDirectory("subscription/hiddify/", $filename);
+            echo "#{$filename} => WAS EMPTY, I REMOVED IT!\n";
+        }
     }
 }
 
@@ -56,7 +130,16 @@ function configParse($input, $configType)
         $vmess_data = substr($input, 8);
         $decoded_data = json_decode(base64_decode($vmess_data), true);
         return $decoded_data;
-    } elseif (in_array($configType, ["vless", "trojan", "tuic", "hysteria", "hysteria2", "hy2"])) {
+    } elseif (
+        in_array($configType, [
+            "vless",
+            "trojan",
+            "tuic",
+            "hysteria",
+            "hysteria2",
+            "hy2",
+        ])
+    ) {
         $parsedUrl = parse_url($input);
         $params = [];
         if (isset($parsedUrl["query"])) {
@@ -84,13 +167,12 @@ function configParse($input, $configType)
         if (isBase64($url["user"])) {
             $url["user"] = base64_decode($url["user"]);
         }
-        list($encryption_method, $password) = explode(
-            ":",
-            $url["user"]
-        );
+        list($encryption_method, $password) = explode(":", $url["user"]);
         $server_address = $url["host"];
         $server_port = $url["port"];
-        $name = isset($url["fragment"]) ? urldecode($url["fragment"]) : "TVC" . getRandomName();
+        $name = isset($url["fragment"])
+            ? urldecode($url["fragment"])
+            : "TVC" . getRandomName();
         $server = [
             "encryption_method" => $encryption_method,
             "password" => $password,
@@ -108,7 +190,16 @@ function reparseConfig($configArray, $configType)
         $encoded_data = base64_encode(json_encode($configArray));
         $vmess_config = "vmess://" . $encoded_data;
         return $vmess_config;
-    } elseif (in_array($configType, ["vless", "trojan", "tuic", "hysteria", "hysteria2", "hy2"])) {
+    } elseif (
+        in_array($configType, [
+            "vless",
+            "trojan",
+            "tuic",
+            "hysteria",
+            "hysteria2",
+            "hy2",
+        ])
+    ) {
         $url = $configType . "://";
         $url .= addUsernameAndPassword($configArray);
         $url .= $configArray["hostname"];
@@ -177,6 +268,145 @@ function addHash($obj)
     return false;
 }*/
 
+function removeFileInDirectory($directory, $fileName)
+{
+    // Check if the directory exists
+    if (!is_dir($directory)) {
+        throw new InvalidArgumentException("Directory does not exist.");
+    }
+
+    // Construct the full path to the file
+    $filePath = $directory . "/" . $fileName;
+
+    // Check if the file exists
+    if (!file_exists($filePath)) {
+        throw new InvalidArgumentException(
+            "File does not exist in the directory."
+        );
+    }
+
+    // Attempt to delete the file
+    if (!unlink($filePath)) {
+        throw new RuntimeException("Failed to delete the file.");
+    }
+
+    return true;
+}
+
+function generateReadmeTable($titles, $data)
+{
+    // Initialize the table with the header row
+    $table = "| " . implode(" | ", $titles) . " |" . PHP_EOL;
+
+    // Create the separator row
+    $separator =
+        "| " .
+        implode(
+            " | ",
+            array_map(function ($title) {
+                return str_repeat("-", strlen($title));
+            }, $titles)
+        ) .
+        " |" .
+        PHP_EOL;
+
+    // Add the separator row to the table
+    $table .= $separator;
+
+    // Add the data rows to the table
+    foreach ($data as $row) {
+        $table .= "| " . implode(" | ", $row) . " |" . PHP_EOL;
+    }
+
+    return $table;
+}
+
+function listFilesInDirectory($directory)
+{
+    // Check if the directory exists
+    if (!is_dir($directory)) {
+        throw new InvalidArgumentException("Directory does not exist.");
+    }
+
+    // Initialize an array to hold the file paths
+    $filePaths = [];
+
+    // Open the directory
+    if ($handle = opendir($directory)) {
+        // Loop through each entry in the directory
+        while (false !== ($entry = readdir($handle))) {
+            // Skip '.' and '..' entries
+            if ($entry != "." && $entry != "..") {
+                // Construct the full path to the entry
+                $fullPath = $directory . "/" . $entry;
+                // If the entry is a directory, recursively list its files
+                if (is_dir($fullPath)) {
+                    $filePaths = array_merge(
+                        $filePaths,
+                        listFilesInDirectory($fullPath)
+                    );
+                } else {
+                    // If the entry is a file, add it to the filePaths array
+                    $filePaths[] = $fullPath;
+                }
+            }
+        }
+        // Close the directory handle
+        closedir($handle);
+    } else {
+        throw new RuntimeException("Failed to open directory.");
+    }
+
+    return $filePaths;
+}
+
+function getFileNamesInDirectory($filePaths)
+{
+    $fileNames = [];
+
+    foreach ($filePaths as $filePath) {
+        $filePathArray = explode("/", $filePath);
+        $partNumber = count($filePathArray) - 1;
+        $fileNames[] = $filePathArray[$partNumber];
+    }
+
+    return $fileNames;
+}
+
+function convertArrays()
+{
+    // Get all arguments passed to the function
+    $arrays = func_get_args();
+
+    // Initialize the result array
+    $result = [];
+
+    // Check if at least one array is provided
+    if (empty($arrays)) {
+        return $result;
+    }
+
+    // Get the number of elements in the first array
+    $count = count($arrays[0]);
+
+    // Loop through each element index
+    for ($i = 0; $i < $count; $i++) {
+        // Initialize a sub-array for the current index
+        $subArray = [];
+
+        // Loop through each array
+        foreach ($arrays as $array) {
+            // Add the element at the current index to the sub-array
+            $subArray[] = $array[$i];
+        }
+
+        // Add the sub-array to the result array
+        $result[] = $subArray;
+    }
+
+    return $result;
+}
+
 function isBase64($input)
 {
     if (base64_encode(base64_decode($input)) === $input) {
@@ -186,19 +416,21 @@ function isBase64($input)
     return false;
 }
 
-function getRandomName() {
-    $alphabet = 'abcdefghijklmnopqrstuvwxyz';
-    $name = '';
+function getRandomName()
+{
+    $alphabet = "abcdefghijklmnopqrstuvwxyz";
+    $name = "";
     for ($i = 0; $i < 10; $i++) {
-      // Get a random letter from the alphabet
-      $randomLetter = $alphabet[rand(0, strlen($alphabet) - 1)];
-      // Add the letter to the name string
-      $name .= $randomLetter;
+        // Get a random letter from the alphabet
+        $randomLetter = $alphabet[rand(0, strlen($alphabet) - 1)];
+        // Add the letter to the name string
+        $name .= $randomLetter;
     }
     return $name;
-  }
+}
 
-function correctConfig ($config, $type, $source) {
+function correctConfig($config, $type, $source)
+{
     $configsHashName = [
         "vmess" => "ps",
         "vless" => "hash",
@@ -229,11 +461,13 @@ function is_ip($string)
     }
 }
 
-function maskUrl($url) {
+function maskUrl($url)
+{
     return "https://itsyebekhe.github.io/urlmskr/" . base64_encode($url);
 }
 
-function convertToJson($input) {
+function convertToJson($input)
+{
     // Split the input string by newline
     $lines = explode("\n", $input);
 
@@ -339,7 +573,9 @@ function ip_info($ip)
 function is_cloudflare_ip($ip)
 {
     // Get the Cloudflare IP ranges
-    $cloudflare_ranges = file_get_contents('https://raw.githubusercontent.com/ircfspace/cf-ip-ranges/main/export.ipv4');
+    $cloudflare_ranges = file_get_contents(
+        "https://raw.githubusercontent.com/ircfspace/cf-ip-ranges/main/export.ipv4"
+    );
     $cloudflare_ranges = explode("\n", $cloudflare_ranges);
 
     foreach ($cloudflare_ranges as $range) {
@@ -351,14 +587,15 @@ function is_cloudflare_ip($ip)
     return false;
 }
 
-function cidr_match($ip, $range) {
-    list($subnet, $bits) = explode('/', $range);
+function cidr_match($ip, $range)
+{
+    list($subnet, $bits) = explode("/", $range);
     if ($bits === null) {
         $bits = 32;
     }
     $ip = ip2long($ip);
     $subnet = ip2long($subnet);
-    $mask = -1 << (32 - $bits);
+    $mask = -1 << 32 - $bits;
     $subnet &= $mask;
     return ($ip & $mask) == $subnet;
 }
@@ -378,7 +615,8 @@ function getFlags($country_code)
     return $flag;
 }
 
-function generateName($config, $type, $source) {
+function generateName($config, $type, $source)
+{
     $configsTypeName = [
         "vmess" => "VM",
         "vless" => "VL",
@@ -412,11 +650,16 @@ function generateName($config, $type, $source) {
 
     $configIpName = $configsIpName[$type];
     $configPortName = $configsPortName[$type];
-    
+
     $configIp = $config[$configIpName];
     $configPort = $config[$configPortName];
     $configLocation = ip_info($configIp)->country ?? "XX";
-    $configFlag = $configLocation === "XX" ? "❔" : ($configLocation === "CF" ? "🚩" : getFlags($configLocation));
+    $configFlag =
+        $configLocation === "XX"
+            ? "❔"
+            : ($configLocation === "CF"
+                ? "🚩"
+                : getFlags($configLocation));
     $isEncrypted = isEncrypted($config, $type) ? "🔒" : "🔓";
     $configType = $configsTypeName[$type];
     $configNetwork = getNetwork($config, $type);
@@ -427,53 +670,94 @@ function generateName($config, $type, $source) {
     return "🆔{$source} {$isEncrypted} {$configType}-{$configNetwork}-{$configTLS} {$configFlag} {$configLocation} {$lantency}";
 }
 
-function getNetwork($config, $type) {
-    if ($type === "vmess") return strtoupper($config['net']);
-    if (in_array($type, ["vless", "trojan"])) return strtoupper($config['params']['type']);
-    if (in_array($type, ["tuic", "hysteria", "hysteria2", "hy2"])) return "UDP";
-    if ($type === "ss") return "TCP";
+function getNetwork($config, $type)
+{
+    if ($type === "vmess") {
+        return strtoupper($config["net"]);
+    }
+    if (in_array($type, ["vless", "trojan"])) {
+        return strtoupper($config["params"]["type"]);
+    }
+    if (in_array($type, ["tuic", "hysteria", "hysteria2", "hy2"])) {
+        return "UDP";
+    }
+    if ($type === "ss") {
+        return "TCP";
+    }
     return null;
 }
 
-function getTLS($config, $type) {
-    if ($type === "vmess" && $config['tls'] === "tls") return "TLS";
-    if ($type === "vmess" && $config['tls'] === "") return "N/A";
-    if (in_array($type, ["vless", "trojan"]) && $config['params']['security'] === "tls") return "TLS";
-    if (in_array($type, ["vless", "trojan"]) && $config['params']['security'] === "none") return "N/A";
-    if (in_array($type, ["vless", "trojan"]) && empty($config['params']['security'])) return "N/A";
-    if (in_array($type, ["tuic", "hysteria", "hysteria2", "hy2"])) return "N/A";
-    if ($type === "ss") return "TCP";
+function getTLS($config, $type)
+{
+    if ($type === "vmess" && $config["tls"] === "tls") {
+        return "TLS";
+    }
+    if ($type === "vmess" && $config["tls"] === "") {
+        return "N/A";
+    }
+    if (
+        in_array($type, ["vless", "trojan"]) &&
+        $config["params"]["security"] === "tls"
+    ) {
+        return "TLS";
+    }
+    if (
+        in_array($type, ["vless", "trojan"]) &&
+        $config["params"]["security"] === "none"
+    ) {
+        return "N/A";
+    }
+    if (
+        in_array($type, ["vless", "trojan"]) &&
+        empty($config["params"]["security"])
+    ) {
+        return "N/A";
+    }
+    if (in_array($type, ["tuic", "hysteria", "hysteria2", "hy2"])) {
+        return "N/A";
+    }
+    if ($type === "ss") {
+        return "TCP";
+    }
     return null;
 }
 
-function isEncrypted($config, $type) {
-
-    if ($type === "vmess" && $config['tls'] !== "" && $config['scy'] !== "none") {
+function isEncrypted($config, $type)
+{
+    if (
+        $type === "vmess" &&
+        $config["tls"] !== "" &&
+        $config["scy"] !== "none"
+    ) {
         return true;
-    } elseif (in_array($type, ["vless", "trojan"]) && !empty($config['params']['security']) && $config['params']['security'] !== "none") {
+    } elseif (
+        in_array($type, ["vless", "trojan"]) &&
+        !empty($config["params"]["security"]) &&
+        $config["params"]["security"] !== "none"
+    ) {
         return true;
     } elseif (in_array($type, ["ss", "tuic", "hysteria", "hysteria2", "hy2"])) {
         return true;
-    } 
+    }
     return false;
 }
 
-function getConfigItems($prefix, $string) {
-    $regex = '~[a-z]+://\\S+~i';;
+function getConfigItems($prefix, $string)
+{
+    $regex = "~[a-z]+://\\S+~i";
     preg_match_all($regex, $string, $matches);
     $count = strlen($prefix) + 3;
     $output = [];
-    foreach($matches[0] as $match) {
+    foreach ($matches[0] as $match) {
         $newMatches = explode("<br/>", $match);
         foreach ($newMatches as $newMatch) {
-            if (substr($newMatch, 0, $count) === "{$prefix}://"){
+            if (substr($newMatch, 0, $count) === "{$prefix}://") {
                 $output[] = $newMatch;
             }
         }
     }
     return $output;
 }
-
 
 function is_valid($input)
 {
@@ -483,20 +767,21 @@ function is_valid($input)
     return true;
 }
 
-function removeAngleBrackets($link) {
-    return preg_replace('/<.*?>/', '', $link);
+function removeAngleBrackets($link)
+{
+    return preg_replace("/<.*?>/", "", $link);
 }
 
-function ping($host, $port, $timeout) {
+function ping($host, $port, $timeout)
+{
     $tB = microtime(true);
     $fP = fSockOpen($host, $port, $errno, $errstr, $timeout);
     if (!$fP) {
         return "down";
     }
     $tA = microtime(true);
-    return round((($tA - $tB) * 1000), 0) . "ms";
+    return round(($tA - $tB) * 1000, 0) . "ms";
 }
-
 
 function sendMessage($botToken, $chatId, $message, $parse_mode, $keyboard)
 {
@@ -525,14 +810,16 @@ function sendMessage($botToken, $chatId, $message, $parse_mode, $keyboard)
     echo $response;
 }
 
-function generateHiddifyTags($type) {
+function generateHiddifyTags($type)
+{
     $profileTitle = base64_encode("{$type} | HiN 🫧");
     return "#profile-title: base64:{$profileTitle}\n#profile-update-interval: 1\n#subscription-userinfo: upload=0; download=0; total=10737418240000000; expire=2546249531\n#support-url: https://hingroup.t.me\n#profile-web-page-url: https://Here_is_Nowhere.t.me
 ";
 }
 
-function gregorianToJalali($gy, $gm, $gd) {
-    $g_d_m = array(0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334);
+function gregorianToJalali($gy, $gm, $gd)
+{
+    $g_d_m = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
     if ($gy > 1600) {
         $jy = 979;
         $gy -= 1600;
@@ -540,101 +827,231 @@ function gregorianToJalali($gy, $gm, $gd) {
         $jy = 0;
         $gy -= 621;
     }
-    $gy2 = ($gm > 2) ? ($gy + 1) : $gy;
-    $days = (365 * $gy) + ((int)(($gy2 + 3) / 4)) - ((int)(($gy2 + 99) / 100)) + ((int)(($gy2 + 399) / 400)) - 80 + $gd + $g_d_m[$gm - 1];
-    $jy += 33 * ((int)($days / 12053));
+    $gy2 = $gm > 2 ? $gy + 1 : $gy;
+    $days =
+        365 * $gy +
+        ((int) (($gy2 + 3) / 4)) -
+        ((int) (($gy2 + 99) / 100)) +
+        ((int) (($gy2 + 399) / 400)) -
+        80 +
+        $gd +
+        $g_d_m[$gm - 1];
+    $jy += 33 * ((int) ($days / 12053));
     $days %= 12053;
-    $jy += 4 * ((int)($days / 1461));
+    $jy += 4 * ((int) ($days / 1461));
     $days %= 1461;
     if ($days > 365) {
-        $jy += (int)(($days - 1) / 365);
+        $jy += (int) (($days - 1) / 365);
         $days = ($days - 1) % 365;
     }
-    $jm = ($days < 186) ? 1 + (int)($days / 31) : 7 + (int)(($days - 186) / 30);
-    $jd = 1 + (($days < 186) ? ($days % 31) : (($days - 186) % 30));
-    return array($jy, $jm, $jd);
+    $jm = $days < 186 ? 1 + (int) ($days / 31) : 7 + (int) (($days - 186) / 30);
+    $jd = 1 + ($days < 186 ? $days % 31 : ($days - 186) % 30);
+    return [$jy, $jm, $jd];
 }
 
-function getTehranTime() {
+function getTehranTime()
+{
     // Set the timezone to Tehran
-    date_default_timezone_set('Asia/Tehran');
+    date_default_timezone_set("Asia/Tehran");
 
     // Get the current date and time in Tehran
     $date = new DateTime();
 
     // Get the day of the week in English
-    $dayOfWeek = $date->format('D');
+    $dayOfWeek = $date->format("D");
 
     // Get the day of the month
-    $day = $date->format('d');
+    $day = $date->format("d");
 
     // Get the month and year
-    $month = (int)$date->format('m');
-    $year = (int)$date->format('Y');
+    $month = (int) $date->format("m");
+    $year = (int) $date->format("Y");
 
     // Convert Gregorian date to Jalali date
     list($jy, $jm, $jd) = gregorianToJalali($year, $month, $day);
 
     // Map Persian month names to their short forms
     $monthNames = [
-        1 => 'FAR',
-        2 => 'ORD',
-        3 => 'KHORDAD',
-        4 => 'TIR',
-        5 => 'MORDAD',
-        6 => 'SHAHRIVAR',
-        7 => 'MEHR',
-        8 => 'ABAN',
-        9 => 'AZAR',
-        10 => 'DEY',
-        11 => 'BAHMAN',
-        12 => 'ESFAND'
+        1 => "FAR",
+        2 => "ORD",
+        3 => "KHORDAD",
+        4 => "TIR",
+        5 => "MORDAD",
+        6 => "SHAHRIVAR",
+        7 => "MEHR",
+        8 => "ABAN",
+        9 => "AZAR",
+        10 => "DEY",
+        11 => "BAHMAN",
+        12 => "ESFAND",
     ];
     $shortMonth = $monthNames[$jm];
 
     // Get the time in 24-hour format
-    $time = $date->format('H:i');
+    $time = $date->format("H:i");
 
     // Construct the final formatted string
-    $formattedString = sprintf('%s-%02d-%s-%04d 🕑 %s', $dayOfWeek, $jd, $shortMonth, $jy, $time);
+    $formattedString = sprintf(
+        "%s-%02d-%s-%04d 🕑 %s",
+        $dayOfWeek,
+        $jd,
+        $shortMonth,
+        $jy,
+        $time
+    );
 
     return $formattedString;
 }
 
-function generateUpdateTime() {
+function generateUpdateTime()
+{
     $tehranTime = getTehranTime();
     return "vless://aaacbbc-cbaa-aabc-dacb-acbacbbcaacb@127.0.0.1:1080?security=tls&type=tcp#⚠️%20FREE%20TO%20USE!\nvless://aaacbbc-cbaa-aabc-dacb-acbacbbcaacb@127.0.0.1:1080?security=tls&type=tcp#🔄%20LATEST-UPDATE%20📅%20{$tehranTime}\n";
 }
 
-function generateEndofConfiguration() {
+function generateEndofConfiguration()
+{
     return "vless://acbabca-acab-bcaa-abdc-bbccaabaccab@127.0.0.1:8080?security=tls&type=tcp#👨🏻‍💻%20DEVELOPED-BY%20@YEBEKHE\nvless://acbabca-acab-bcaa-abdc-bbccaabaccab@127.0.0.1:8080?security=tls&type=tcp#📌%20SUPPORT-CONTACT @HiNGROUP.T.ME";
+}
+
+function addStringToBeginning($array, $string)
+{
+    // Initialize an empty array to hold the modified items
+    $modifiedArray = [];
+
+    // Loop through each item in the original array
+    foreach ($array as $item) {
+        // Prepend the string to the item and add it to the modified array
+        $modifiedArray[] = $string . $item;
+    }
+
+    // Return the modified array
+    return $modifiedArray;
+}
+
+function generateReadme($table1, $table2)
+{
+    $base = "### HiN VPN: Your Gateway to Secure and Free Internet Access
+
+    **HiN VPN** stands out as a pioneering open-source project designed to empower users with secure, unrestricted internet access. Unlike traditional VPN services, HiN VPN leverages the Telegram platform to collect and distribute VPN configurations, offering a unique and community-driven approach to online privacy and security.
+    
+    #### How It Works
+    
+    1. **Telegram Integration**: HiN VPN utilizes a Telegram bot to gather VPN configuration files from contributors. This bot acts as a central hub where users can submit their VPN configurations, ensuring a diverse and robust set of options for subscribers.
+    
+    2. **Subscription Link**: Once the configurations are collected, HiN VPN processes them and provides a subscription link. This link is freely accessible to anyone, allowing them to download the latest VPN configurations directly to their devices.
+    
+    3. **Open Source**: Being an open-source project, HiN VPN encourages collaboration and transparency. The source code is available for anyone to review, contribute to, or modify, ensuring that the service remains secure and up-to-date with the latest technological advancements.
+    
+    4. **PHP Backend**: The backend of HiN VPN is developed using PHP, a widely-used server-side scripting language known for its flexibility and ease of use. This choice of technology ensures that the service can be easily maintained and scaled as needed.
+    
+    #### Benefits
+    
+    - **Free Access**: HiN VPN is completely free to use, making it an excellent choice for users who are looking for a cost-effective solution to enhance their online privacy.
+    - **Community-Driven**: By relying on community contributions, HiN VPN offers a wide range of VPN configurations, ensuring that users have access to a variety of options that suit their specific needs.
+    - **Enhanced Security**: The open-source nature of HiN VPN allows for constant scrutiny and improvement, ensuring that the service remains secure and resilient against potential threats.
+    - **Easy to Use**: With a simple subscription link, users can quickly and easily set up their VPN connection, making the process accessible to both tech-savvy individuals and newcomers alike.
+    
+    #### Subscription Links
+    
+    To get started with HiN VPN, simply follow the subscription links provided below. This link will grant you access to the latest VPN configurations, allowing you to secure your internet connection and browse the web with peace of mind.
+    
+    {table1}
+    
+    Below is a table that shows the generated subscription links from each source, providing users with a variety of options to choose from.
+    
+    {table2}
+    
+    This table provides a quick reference for the different subscription links available through HiN VPN, allowing users to easily select the one that best suits their needs.
+    
+    **HiN VPN** is more than just a VPN service; it's a movement towards a more secure and open internet. By leveraging the power of community and open-source technology, HiN VPN is paving the way for a future where online privacy is a fundamental right for all.";
+
+    return str_replace(["{table1}", "{table2}"], [$table1, $table2], $base);
 }
 
 $source = file_get_contents("source.conf");
 getTelegramChannelConfigs($source);
 
-$types = ["mix", "vmess", "vless", "trojan", "ss", "tuic", "hysteria", "hysteria2"];
-$randKey = rand(0,7);
+$normals = addStringToBeginning(
+    listFilesInDirectory("subscription/normal"),
+    "https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main"
+);
+$base64 = addStringToBeginning(
+    listFilesInDirectory("subscription/base64"),
+    "https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main"
+);
+$hiddify = addStringToBeginning(
+    listFilesInDirectory("subscription/hiddify"),
+    "https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main"
+);
+
+$title1Array = ["Normal", "Base64", "Hiddify"];
+$cells1Array = convertArrays($normals, $base64, $hiddify);
+
+$sourceNormals = addStringToBeginning(
+    listFilesInDirectory("subscription/sources/normal"),
+    "https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main"
+);
+$sourceBase64 = addStringToBeginning(
+    listFilesInDirectory("subscription/sources/base64"),
+    "https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main"
+);
+$sourceHiddify = addStringToBeginning(
+    listFilesInDirectory("subscription/sources/hiddify"),
+    "https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main"
+);
+$sourcesColumn = getFileNamesInDirectory(
+    listFilesInDirectory("subscription/sources/normal")
+);
+
+$title2Array = ["Source", "Normal", "Base64", "Hiddify"];
+$cells2Array = convertArrays(
+    $sourcesColumn,
+    $sourceNormals,
+    $sourceBase64,
+    $sourceHiddify
+);
+
+$table1 = generateReadmeTable($title1Array, $cells1Array);
+$table2 = generateReadmeTable($title2Array, $cells2Array);
+
+$readmeMdNew = generateReadme($table1, $table2);
+file_put_contents("README.md", $readmeMdNew);
+
+$types = [
+    "mix",
+    "vmess",
+    "vless",
+    "trojan",
+    "ss",
+    "tuic",
+    "hysteria",
+    "hysteria2",
+];
+$randKey = rand(0, 7);
 $randType = $types[$randKey];
 $upperType = strtoupper($randType);
 
 $tehranTime = getTehranTime();
-$botToken = getenv('TELEGRAM_BOT_TOKEN');
+$botToken = getenv("TELEGRAM_BOT_TOKEN");
 $keyboard = [
     [
         [
             "text" => "📲 STREISAND",
-            "url" => maskUrl("streisand://import/https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/hiddify/" . $randType)
-        ]
+            "url" => maskUrl(
+                "streisand://import/https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/hiddify/" .
+                    $randType
+            ),
+        ],
     ],
     [
         [
-            "text" => "🚹 گیتهاب HiN VPN 🚹", 
-            "url" => "https://github.com/itsyebekhe/HiN-VPN/tree/main/subscription"
-        ]
-    ]
+            "text" => "🚹 گیتهاب HiN VPN 🚹",
+            "url" =>
+                "https://github.com/itsyebekhe/HiN-VPN/tree/main/subscription",
+        ],
+    ],
 ];
-
 
 $message = "🔺 لینک های اشتراک HiN بروزرسانی شدن! 🔻
 
