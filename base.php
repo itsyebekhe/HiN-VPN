@@ -79,9 +79,10 @@ function getTelegramChannelConfigs($username)
             $username = str_replace($source . ",", "", $username);
             $emptyArray = explode(",", $emptySource);
             if (!in_array($source, $emptyArray)) {
-                $emptySource .= $source . ",";
+                $emptyArray[] = $source;
+                $emptySource = implode(",", $emptyArray);
             }
-            if (file_exists()) removeFileInDirectory("subscription/source/normal/", $source);
+            removeFileInDirectory("subscription/source/normal/", $source);
             removeFileInDirectory("subscription/source/base64/", $source);
             removeFileInDirectory("subscription/source/hiddify/", $source);
             file_put_contents("source.conf", $username);
