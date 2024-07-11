@@ -9,6 +9,7 @@ function getTelegramChannelConfigs($username)
 {
     $sourceArray = explode(",", $username);
     $emptySource = "";
+    $mix = "";
     foreach ($sourceArray as $source) {
         echo "@{$source} => PROGRESS: 0%\n";
         $html = file_get_contents("https://t.me/s/" . $source);
@@ -989,19 +990,19 @@ $title1Array = ["Normal", "Base64", "Hiddify"];
 $cells1Array = convertArrays($normals, $base64, $hiddify);
 
 $sourceNormals = addStringToBeginning(
-    listFilesInDirectory("subscription/sources/normal"),
+    listFilesInDirectory("subscription/source/normal"),
     "https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main"
 );
 $sourceBase64 = addStringToBeginning(
-    listFilesInDirectory("subscription/sources/base64"),
+    listFilesInDirectory("subscription/source/base64"),
     "https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main"
 );
 $sourceHiddify = addStringToBeginning(
-    listFilesInDirectory("subscription/sources/hiddify"),
+    listFilesInDirectory("subscription/source/hiddify"),
     "https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main"
 );
 $sourcesColumn = getFileNamesInDirectory(
-    listFilesInDirectory("subscription/sources/normal")
+    listFilesInDirectory("subscription/source/normal")
 );
 
 $title2Array = ["Source", "Normal", "Base64", "Hiddify"];
@@ -1018,19 +1019,8 @@ $table2 = generateReadmeTable($title2Array, $cells2Array);
 $readmeMdNew = generateReadme($table1, $table2);
 file_put_contents("README.md", $readmeMdNew);
 
-$types = [
-    "mix",
-    "vmess",
-    "vless",
-    "trojan",
-    "ss",
-    "tuic",
-    "hysteria",
-    "hysteria2",
-];
-$randKey = rand(0, 7);
-$randType = $types[$randKey];
-$upperType = strtoupper($randType);
+$randKey = array_rand($hiddify);
+$randType = $hiddify[$randKey];
 
 $tehranTime = getTehranTime();
 $botToken = getenv("TELEGRAM_BOT_TOKEN");
@@ -1039,7 +1029,7 @@ $keyboard = [
         [
             "text" => "📲 STREISAND",
             "url" => maskUrl(
-                "streisand://import/https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/hiddify/" .
+                "streisand://import/" .
                     $randType
             ),
         ],
@@ -1048,7 +1038,7 @@ $keyboard = [
         [
             "text" => "🚹 گیتهاب HiN VPN 🚹",
             "url" =>
-                "https://github.com/itsyebekhe/HiN-VPN/tree/main/subscription",
+                "https://github.com/itsyebekhe/HiN-VPN/blob/main/README.md",
         ],
     ],
 ];
@@ -1058,7 +1048,7 @@ $message = "🔺 لینک های اشتراک HiN بروزرسانی شدن! �
 ⏱ آخرین آپدیت: 
 {$tehranTime}
 
-🔎 {$upperType}: <code>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/hiddify/{$randType}</code>
+🔎 <code>{$randType}</code>
 
 💥 برای لینک های بیشتر وارد گیتهاب پروژه بشید
 
