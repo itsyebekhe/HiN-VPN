@@ -694,40 +694,28 @@ function getNetwork($config, $type)
     return null;
 }
 
+<?php
+
 function getTLS($config, $type)
 {
-    if ($type === "vmess" && $config["tls"] === "tls") {
-        return "TLS";
-    }
-    if ($type === "vmess" && $config["tls"] === "") {
-        return "N/A";
-    }
-    if (
-        in_array($type, ["vless", "trojan"]) &&
-        $config["params"]["security"] === "tls"
-    ) {
+    if (($type === "vmess" && $config["tls"] === "tls") || $type === "ss") {
         return "TLS";
     }
     if (
-        in_array($type, ["vless", "trojan"]) &&
-        $config["params"]["security"] === "none"
+        ($type === "vmess" && $config["tls"] === "") ||
+        (in_array($type, ["vless", "trojan"]) &&
+            $config["params"]["security"] === "tls") ||
+        (in_array($type, ["vless", "trojan"]) &&
+            $config["params"]["security"] === "none") ||
+        (in_array($type, ["vless", "trojan"]) &&
+            empty($config["params"]["security"])) ||
+        in_array($type, ["tuic", "hysteria", "hysteria2", "hy2"])
     ) {
         return "N/A";
-    }
-    if (
-        in_array($type, ["vless", "trojan"]) &&
-        empty($config["params"]["security"])
-    ) {
-        return "N/A";
-    }
-    if (in_array($type, ["tuic", "hysteria", "hysteria2", "hy2"])) {
-        return "N/A";
-    }
-    if ($type === "ss") {
-        return "TLS";
     }
     return null;
 }
+
 
 function isEncrypted($config, $type)
 {
