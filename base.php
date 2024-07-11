@@ -57,7 +57,8 @@ function getTelegramChannelConfigs($username)
                 }
             }
         }
-        if (!empty($$source)) {
+        
+        if (!empty($$source) || $$source !== "" || !empty(explode("\n", $$source)[0])) {
             $configsSource =
                 generateUpdateTime() . $$source . generateEndofConfiguration();
             file_put_contents(
@@ -101,7 +102,7 @@ function getTelegramChannelConfigs($username)
         "hysteria2",
     ];
     foreach ($types as $filename) {
-        if (!empty($$filename)) {
+        if (!empty($$filename) || $$filename !== "" || !empty(explode("\n", $$filename)[0])) {
             $configsType =
                 generateUpdateTime() .
                 $$filename .
