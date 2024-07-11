@@ -724,7 +724,7 @@ function getTLS($config, $type)
         return "N/A";
     }
     if ($type === "ss") {
-        return "TCP";
+        return "TLS";
     }
     return null;
 }
