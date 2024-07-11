@@ -978,15 +978,15 @@ getTelegramChannelConfigs($source);
 
 $normals = addStringToBeginning(
     listFilesInDirectory("subscription/normal"),
-    "https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main"
+    "https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/"
 );
 $base64 = addStringToBeginning(
     listFilesInDirectory("subscription/base64"),
-    "https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main"
+    "https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/"
 );
 $hiddify = addStringToBeginning(
     listFilesInDirectory("subscription/hiddify"),
-    "https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main"
+    "https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/"
 );
 $protocolColumn = getFileNamesInDirectory(
     listFilesInDirectory("subscription/normal")
@@ -998,15 +998,15 @@ $cells1Array = convertArrays($protocolColumn, $normals, $base64, $hiddify);
 
 $sourceNormals = addStringToBeginning(
     listFilesInDirectory("subscription/source/normal"),
-    "https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main"
+    "https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/"
 );
 $sourceBase64 = addStringToBeginning(
     listFilesInDirectory("subscription/source/base64"),
-    "https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main"
+    "https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/"
 );
 $sourceHiddify = addStringToBeginning(
     listFilesInDirectory("subscription/source/hiddify"),
-    "https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main"
+    "https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/"
 );
 $sourcesColumn = getFileNamesInDirectory(
     listFilesInDirectory("subscription/source/normal")
