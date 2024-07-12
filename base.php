@@ -279,20 +279,16 @@ function addHash($obj)
 
 function removeFileInDirectory($directory, $fileName)
 {
-    // Check if the directory exists
     if (!is_dir($directory)) {
         return false;
     }
 
-    // Construct the full path to the file
     $filePath = $directory . "/" . $fileName;
 
-    // Check if the file exists
     if (!file_exists($filePath)) {
         return false;
     }
 
-    // Attempt to delete the file
     if (!unlink($filePath)) {
         return false;
     }
@@ -302,10 +298,8 @@ function removeFileInDirectory($directory, $fileName)
 
 function generateReadmeTable($titles, $data)
 {
-    // Initialize the table with the header row
     $table = "| " . implode(" | ", $titles) . " |" . PHP_EOL;
 
-    // Create the separator row
     $separator =
         "| " .
         implode(
@@ -317,10 +311,8 @@ function generateReadmeTable($titles, $data)
         " |" .
         PHP_EOL;
 
-    // Add the separator row to the table
     $table .= $separator;
 
-    // Add the data rows to the table
     foreach ($data as $row) {
         $table .= "| " . implode(" | ", $row) . " |" . PHP_EOL;
     }
@@ -330,35 +322,26 @@ function generateReadmeTable($titles, $data)
 
 function listFilesInDirectory($directory)
 {
-    // Check if the directory exists
     if (!is_dir($directory)) {
         throw new InvalidArgumentException("Directory does not exist.");
     }
 
-    // Initialize an array to hold the file paths
     $filePaths = [];
 
-    // Open the directory
     if ($handle = opendir($directory)) {
-        // Loop through each entry in the directory
         while (false !== ($entry = readdir($handle))) {
-            // Skip '.' and '..' entries
             if ($entry != "." && $entry != "..") {
-                // Construct the full path to the entry
                 $fullPath = $directory . "/" . $entry;
-                // If the entry is a directory, recursively list its files
                 if (is_dir($fullPath)) {
                     $filePaths = array_merge(
                         $filePaths,
                         listFilesInDirectory($fullPath)
                     );
                 } else {
-                    // If the entry is a file, add it to the filePaths array
                     $filePaths[] = $fullPath;
                 }
             }
         }
-        // Close the directory handle
         closedir($handle);
     } else {
         throw new RuntimeException("Failed to open directory.");
@@ -382,32 +365,23 @@ function getFileNamesInDirectory($filePaths)
 
 function convertArrays()
 {
-    // Get all arguments passed to the function
     $arrays = func_get_args();
 
-    // Initialize the result array
     $result = [];
 
-    // Check if at least one array is provided
     if (empty($arrays)) {
         return $result;
     }
-
-    // Get the number of elements in the first array
+    
     $count = count($arrays[0]);
 
-    // Loop through each element index
     for ($i = 0; $i < $count; $i++) {
-        // Initialize a sub-array for the current index
         $subArray = [];
 
-        // Loop through each array
         foreach ($arrays as $array) {
-            // Add the element at the current index to the sub-array
             $subArray[] = $array[$i];
         }
 
-        // Add the sub-array to the result array
         $result[] = $subArray;
     }
 
@@ -428,9 +402,7 @@ function getRandomName()
     $alphabet = "abcdefghijklmnopqrstuvwxyz";
     $name = "";
     for ($i = 0; $i < 10; $i++) {
-        // Get a random letter from the alphabet
         $randomLetter = $alphabet[rand(0, strlen($alphabet) - 1)];
-        // Add the letter to the name string
         $name .= $randomLetter;
     }
     return $name;
@@ -475,29 +447,21 @@ function maskUrl($url)
 
 function convertToJson($input)
 {
-    // Split the input string by newline
     $lines = explode("\n", $input);
 
-    // Initialize an empty array to store the key-value pairs
     $data = [];
 
-    // Loop through each line
     foreach ($lines as $line) {
-        // Split the line by the equals sign
         $parts = explode("=", $line);
 
-        // If the line has an equals sign and is not empty
         if (count($parts) == 2 && !empty($parts[0]) && !empty($parts[1])) {
-            // Trim any whitespace from the key and value
             $key = trim($parts[0]);
             $value = trim($parts[1]);
 
-            // Add the key-value pair to the data array
             $data[$key] = $value;
         }
     }
 
-    // Convert the data array to a JSON string
     $json = json_encode($data);
 
     return $json;
@@ -909,16 +873,12 @@ function generateEndofConfiguration()
 
 function addStringToBeginning($array, $string)
 {
-    // Initialize an empty array to hold the modified items
     $modifiedArray = [];
 
-    // Loop through each item in the original array
     foreach ($array as $item) {
-        // Prepend the string to the item and add it to the modified array
         $modifiedArray[] = $string . $item;
     }
 
-    // Return the modified array
     return $modifiedArray;
 }
 
@@ -949,17 +909,17 @@ function generateReadme($table1, $table2)
     
 To get started with HiN VPN, simply follow the subscription links provided below. This link will grant you access to the latest VPN configurations, allowing you to secure your internet connection and browse the web with peace of mind.
     
-{table1}
+" . $table1 . "
     
 Below is a table that shows the generated subscription links from each source, providing users with a variety of options to choose from.
     
-{table2}
+" . $table2 . "
     
 This table provides a quick reference for the different subscription links available through HiN VPN, allowing users to easily select the one that best suits their needs.
     
 **HiN VPN** is more than just a VPN service; it's a movement towards a more secure and open internet. By leveraging the power of community and open-source technology, HiN VPN is paving the way for a future where online privacy is a fundamental right for all.";
 
-    return str_replace(["{table1}", "{table2}"], [$table1, $table2], $base);
+    return $base;
 }
 
 $source = file_get_contents("source.conf");
@@ -1029,6 +989,13 @@ $keyboard = [
                     $randType
             ),
         ],
+        [
+            "text" => "📲 HIDDIFY",
+            "url" => maskUrl(
+                "hiddify://import/" . 
+                    $randType
+            )
+        ]
     ],
     [
         [
