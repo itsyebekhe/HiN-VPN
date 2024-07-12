@@ -102,11 +102,6 @@ Below is a table that shows the generated subscription links from each source, p
 | proxy_kafee | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/proxy_kafee | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/proxy_kafee | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/proxy_kafee |
 | Outline_Vpn | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/Outline_Vpn | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/Outline_Vpn | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/Outline_Vpn |
 | lightning6 | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/lightning6 | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/lightning6 | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/lightning6 |
-| yaney_01
- | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/yaney_01
- | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/yaney_01
- | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/yaney_01
- |
 | ConfigsHUB | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/ConfigsHUB | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/ConfigsHUB | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/ConfigsHUB |
 | CUSTOMVPNSERVER | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/CUSTOMVPNSERVER | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/CUSTOMVPNSERVER | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/CUSTOMVPNSERVER |
 | v2ray_swhil | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/v2ray_swhil | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/v2ray_swhil | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/v2ray_swhil |
