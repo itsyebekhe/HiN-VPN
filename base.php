@@ -922,7 +922,7 @@ This table provides a quick reference for the different subscription links avail
     return $base;
 }
 
-$source = file_get_contents("source.conf");
+$source = trim(file_get_contents("source.conf"));
 getTelegramChannelConfigs($source);
 
 $normals = addStringToBeginning(
