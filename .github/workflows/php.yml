@@ -28,3 +28,4 @@ jobs:
           git push
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
