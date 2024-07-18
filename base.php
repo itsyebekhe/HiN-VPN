@@ -39,6 +39,7 @@ function fetchGitHubContent($owner, $repo, $path, $token) {
     $headers[] = "Accept: application/vnd.github+json";
     $headers[] = "Authorization: Bearer $token";
     $headers[] = "X-GitHub-Api-Version: 2022-11-28";
+    $headers[] = "User-Agent: HiN-VPN"; // Add User-Agent header
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
     $result = curl_exec($ch);
