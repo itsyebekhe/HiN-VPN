@@ -69,7 +69,7 @@ function getTelegramChannelConfigs($username)
     
     $configs = getGitHubFileContent("itsyebekhe", "cGrabber", "configs.json", $GIT_TOKEN);
     //print_r($configs);
-    echo "OH! I GOT IT! CONFIGS ARE HERE!";
+    echo "OH! I GOT IT! CONFIGS ARE HERE!\n";
     if ($configs['status'] === "OK") {
         unset($configs['status']);
         foreach ($configs as $source => $configsArray) {
@@ -107,6 +107,7 @@ function getTelegramChannelConfigs($username)
                         generateHiddifyTags("@" . $source) . "\n" . $configsSource
                     )
                 );
+                echo "@{$source} => " . print_r(explode("\n", $$source), true);
                 echo "@{$source} => PROGRESS: 100%\n";
             } else {
                 $username = str_replace($source, "", $username);
@@ -1053,4 +1054,4 @@ $message = "🔺 لینک های اشتراک HiN بروزرسانی شدن! �
 
 🌐 <a href='https://t.me/Here_is_Nowhere'>𝗛.𝗜.𝗡 🫧</a>";
 
-sendMessage($botToken, -1002043507701, $message, "html", $keyboard);
+//sendMessage($botToken, -1002043507701, $message, "html", $keyboard);
