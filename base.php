@@ -52,7 +52,7 @@ function fetchGitHubContent($owner, $repo, $path, $token) {
 }
 
 function getGitHubFileContent($owner, $repo, $path, $token) {
-    $content = json_decode(fetchGitHubContent($owner, $repo, $path, $token));
+    $content = json_decode(fetchGitHubContent($owner, $repo, $path, $token), true);
 
     if (isset($content['content'])) {
         $output = json_decode(base64_decode($content['content']));
