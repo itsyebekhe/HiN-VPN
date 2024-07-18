@@ -999,45 +999,76 @@ function generateReadmeWeb($table1, $table2)
     <style>
         body {
             padding: 20px;
+            background-color: #f8f9fa;
+            color: #495057;
+        }
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .feature {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .feature h4 {
+            color: #007bff;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #343a40;
+            color: white;
+            border-radius: 8px;
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="header">
+            <h1>HiN VPN</h1>
+            <p>Your Gateway to Secure and Free Internet Access</p>
+        </div>
         <div class="row">
-            <div class="col-12">
-                <h3>Your Gateway to Secure and Free Internet Access</h3>
-                <p><strong>HiN VPN</strong> stands out as a pioneering open-source project designed to empower users with secure, unrestricted internet access. Unlike traditional VPN services, HiN VPN leverages the Telegram platform to collect and distribute VPN configurations, offering a unique and community-driven approach to online privacy and security.</p>
+            <div class="col-12 feature">
+                <h3>About HiN VPN</h3>
+                <p><strong>HiN VPN</strong> is an open-source project designed to provide secure, unrestricted internet access. It uses Telegram for collecting and distributing VPN configurations, offering a community-driven approach to online privacy.</p>
             </div>
-            <div class="col-12">
+            <div class="col-12 feature">
                 <h4>How It Works</h4>
                 <ol>
-                    <li><strong>Telegram Integration</strong>: HiN VPN utilizes a Telegram bot to gather VPN configuration files from contributors.</li>
-                    <li><strong>Subscription Link</strong>: Once the configurations are collected, HiN VPN processes them and provides a subscription link.</li>
-                    <li><strong>Open Source</strong>: Being an open-source project, HiN VPN encourages collaboration and transparency.</li>
-                    <li><strong>PHP Backend</strong>: The backend of HiN VPN is developed using PHP.</li>
+                    <li><strong>Telegram Integration</strong>: A Telegram bot collects VPN configuration files.</li>
+                    <li><strong>Subscription Link</strong>: Provides a link for users to subscribe to the VPN service.</li>
+                    <li><strong>Open Source</strong>: Encourages collaboration and transparency.</li>
+                    <li><strong>PHP Backend</strong>: The backend is developed using PHP.</li>
                 </ol>
             </div>
-            <div class="col-12">
+            <div class="col-12 feature">
                 <h4>Benefits</h4>
                 <ul>
-                    <li><strong>Free Access</strong>: HiN VPN is completely free to use.</li>
-                    <li><strong>Community-Driven</strong>: By relying on community contributions, HiN VPN offers a wide range of VPN configurations.</li>
-                    <li><strong>Enhanced Security</strong>: The open-source nature of HiN VPN allows for constant scrutiny and improvement.</li>
-                    <li><strong>Easy to Use</strong>: With a simple subscription link, users can quickly and easily set up their VPN connection.</li>
+                    <li><strong>Free Access</strong>: Completely free to use.</li>
+                    <li><strong>Community-Driven</strong>: Wide range of VPN configurations from community contributions.</li>
+                    <li><strong>Enhanced Security</strong>: Open-source nature allows for constant scrutiny and improvement.</li>
+                    <li><strong>Easy to Use</strong>: Simple subscription link for easy setup.</li>
                 </ul>
             </div>
-            <div class="col-12">
-                <h4>Subscription Links (Sort by Protocols)</h4>
-                <p>To get started with HiN VPN, simply follow the subscription links provided below. This link will grant you access to the latest VPN configurations, allowing you to secure your internet connection and browse the web with peace of mind.</p>
+            <div class="col-12 feature">
+                <h4>Subscription Links</h4>
+                <p>Get started with HiN VPN using the subscription links below. These links provide access to the latest VPN configurations.</p>
+                <!-- Placeholder for dynamic content -->
                 ' . $table1 . '
                 <p>Below is a table that shows the generated subscription links from each source, providing users with a variety of options to choose from.</p>
                 ' . $table2 . '
                 <p>This table provides a quick reference for the different subscription links available through HiN VPN, allowing users to easily select the one that best suits their needs.</p>
             </div>
-            <div class="col-12">
+            <div class="col-12 footer">
                 <h4>The Last Word</h4>
-                <p><strong>HiN VPN</strong> is more than just a VPN service; it\'s a movement towards a more secure and open internet. By leveraging the power of community and open-source technology, HiN VPN is paving the way for a future where online privacy is a fundamental right for all.</p>
+                <p>HiN VPN is more than just a VPN service; it\'s a movement towards a more secure and open internet. By leveraging the power of community and open-source technology, HiN VPN is paving the way for a future where online privacy is a fundamental right for all.</p>
             </div>
         </div>
     </div>
