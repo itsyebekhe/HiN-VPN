@@ -64,101 +64,105 @@ function getTelegramChannelConfigs($username)
 {
     $sourceArray = explode(",", $username);
     $mix = "";
-    $configs = getGitHubFileContent("itsyebekhe", "cGrabber", "configs.json", getenv('GIT_TOKEN'));
-    echo "OH! I GOT IT! CONFIGS ARE HERE!";
-
-    foreach ($configs as $source => $configsArray) {
-        foreach ($configsArray as $config) {
-            $configType = getTheType($config);
-            $fixedConfig = str_replace(
-                "amp;",
-                "",
-                removeAngleBrackets($config)
-            );
-            $correctedConfig = correctConfig(
-                "{$fixedConfig}",
-                $configType,
-                $source
-            );
-            $mix .= $correctedConfig . "\n";
-            $$configType .= $correctedConfig . "\n";
-            $$source .= $correctedConfig . "\n";
-        }
-
-        if (!empty(explode("\n", $$source))) {
-            $configsSource =
-                generateUpdateTime() . $$source . generateEndofConfiguration();
-            file_put_contents(
-                "subscription/source/normal/" . $source,
-                $configsSource
-            );
-            file_put_contents(
-                "subscription/source/base64/" . $source,
-                base64_encode($configsSource)
-            );
-            file_put_contents(
-                "subscription/source/hiddify/" . $source,
-                base64_encode(
-                    generateHiddifyTags("@" . $source) . "\n" . $configsSource
-                )
-            );
-            echo "@{$source} => PROGRESS: 100%\n";
-        } else {
-            $username = str_replace($source, "", $username);
-            $username = str_replace(",,", ",", $username);
-            file_put_contents("source.conf", $username);
-            
-            $emptySource = file_get_contents("empty.conf");
-            $emptyArray = explode(",", $emptySource);
-            if (!in_array($source, $emptyArray)) {
-                $emptyArray[] = $source;
-                $emptySource = implode(",", $emptyArray);
-            }
-            file_put_contents("empty.conf", $emptySource);
-
-            removeFileInDirectory("subscription/source/normal/", $source);
-            removeFileInDirectory("subscription/source/base64/", $source);
-            removeFileInDirectory("subscription/source/hiddify/", $source);
-            
-            echo "@{$source} => NO CONFIG FOUND, I REMOVED CHANNEL!\n";
-        }
-    }
+    $GIT_TOKEN = getenv('GIT_TOKEN');
     
-    $types = [
-        "mix",
-        "vmess",
-        "vless",
-        "trojan",
-        "ss",
-        "tuic",
-        "hysteria",
-        "hysteria2",
-    ];
-    foreach ($types as $filename) {
-        if (!empty(explode("\n", $$filename))) {
-            $configsType =
-                generateUpdateTime() .
-                $$filename .
-                generateEndofConfiguration();
-            file_put_contents("subscription/normal/" . $filename, $configsType);
-            file_put_contents(
-                "subscription/base64/" . $filename,
-                base64_encode($configsType)
-            );
-            file_put_contents(
-                "subscription/hiddify/" . $filename,
-                base64_encode(
-                    generateHiddifyTags(strtoupper($filename)) .
-                        "\n" .
-                        $configsType
-                )
-            );
-            echo "#{$filename} => CREATED SUCCESSFULLY!!\n";
-        } else {
-            removeFileInDirectory("subscription/normal/", $filename);
-            removeFileInDirectory("subscription/base64/", $filename);
-            removeFileInDirectory("subscription/hiddify/", $filename);
-            echo "#{$filename} => WAS EMPTY, I REMOVED IT!\n";
+    $configs = getGitHubFileContent("itsyebekhe", "cGrabber", "configs.json", $GIT_TOKEN);
+    echo "OH! I GOT IT! CONFIGS ARE HERE!";
+    if ($configs['status'] === "OK") {
+        unset($configs['status']);
+        foreach ($configs as $source => $configsArray) {
+            foreach ($configsArray as $config) {
+                $configType = getTheType($config);
+                $fixedConfig = str_replace(
+                    "amp;",
+                    "",
+                    removeAngleBrackets($config)
+                );
+                $correctedConfig = correctConfig(
+                    "{$fixedConfig}",
+                    $configType,
+                    $source
+                );
+                $mix .= $correctedConfig . "\n";
+                $$configType .= $correctedConfig . "\n";
+                $$source .= $correctedConfig . "\n";
+            }
+    
+            if (!empty(explode("\n", $$source))) {
+                $configsSource =
+                    generateUpdateTime() . $$source . generateEndofConfiguration();
+                file_put_contents(
+                    "subscription/source/normal/" . $source,
+                    $configsSource
+                );
+                file_put_contents(
+                    "subscription/source/base64/" . $source,
+                    base64_encode($configsSource)
+                );
+                file_put_contents(
+                    "subscription/source/hiddify/" . $source,
+                    base64_encode(
+                        generateHiddifyTags("@" . $source) . "\n" . $configsSource
+                    )
+                );
+                echo "@{$source} => PROGRESS: 100%\n";
+            } else {
+                $username = str_replace($source, "", $username);
+                $username = str_replace(",,", ",", $username);
+                file_put_contents("source.conf", $username);
+                
+                $emptySource = file_get_contents("empty.conf");
+                $emptyArray = explode(",", $emptySource);
+                if (!in_array($source, $emptyArray)) {
+                    $emptyArray[] = $source;
+                    $emptySource = implode(",", $emptyArray);
+                }
+                file_put_contents("empty.conf", $emptySource);
+    
+                removeFileInDirectory("subscription/source/normal/", $source);
+                removeFileInDirectory("subscription/source/base64/", $source);
+                removeFileInDirectory("subscription/source/hiddify/", $source);
+                
+                echo "@{$source} => NO CONFIG FOUND, I REMOVED CHANNEL!\n";
+            }
+        }
+        
+        $types = [
+            "mix",
+            "vmess",
+            "vless",
+            "trojan",
+            "ss",
+            "tuic",
+            "hysteria",
+            "hysteria2",
+        ];
+        foreach ($types as $filename) {
+            if (!empty(explode("\n", $$filename))) {
+                $configsType =
+                    generateUpdateTime() .
+                    $$filename .
+                    generateEndofConfiguration();
+                file_put_contents("subscription/normal/" . $filename, $configsType);
+                file_put_contents(
+                    "subscription/base64/" . $filename,
+                    base64_encode($configsType)
+                );
+                file_put_contents(
+                    "subscription/hiddify/" . $filename,
+                    base64_encode(
+                        generateHiddifyTags(strtoupper($filename)) .
+                            "\n" .
+                            $configsType
+                    )
+                );
+                echo "#{$filename} => CREATED SUCCESSFULLY!!\n";
+            } else {
+                removeFileInDirectory("subscription/normal/", $filename);
+                removeFileInDirectory("subscription/base64/", $filename);
+                removeFileInDirectory("subscription/hiddify/", $filename);
+                echo "#{$filename} => WAS EMPTY, I REMOVED IT!\n";
+            }
         }
     }
 }
@@ -1047,4 +1051,4 @@ $message = "🔺 لینک های اشتراک HiN بروزرسانی شدن! �
 
 🌐 <a href='https://t.me/Here_is_Nowhere'>𝗛.𝗜.𝗡 🫧</a>";
 
-sendMessage($botToken, -1002043507701, $message, "html", $keyboard);
+//sendMessage($botToken, -1002043507701, $message, "html", $keyboard);
