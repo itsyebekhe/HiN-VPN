@@ -68,8 +68,8 @@ function getTelegramChannelConfigs($username)
     $GIT_TOKEN = getenv('GIT_TOKEN');
     
     $configs = getGitHubFileContent("itsyebekhe", "cGrabber", "configs.json", $GIT_TOKEN);
-    print_r($configs);
-    //echo "OH! I GOT IT! CONFIGS ARE HERE!";
+    //print_r($configs);
+    echo "Configs Arrived!⚡️\n";
     if ($configs['status'] === "OK") {
         unset($configs['status']);
         foreach ($configs as $source => $configsArray) {
@@ -90,7 +90,7 @@ function getTelegramChannelConfigs($username)
                 $$source .= $correctedConfig . "\n";
             }
     
-            if (!empty(explode("\n", $$source))) {
+            if (!empty($configsArray)) {
                 $configsSource =
                     generateUpdateTime() . $$source . generateEndofConfiguration();
                 file_put_contents(
@@ -107,7 +107,7 @@ function getTelegramChannelConfigs($username)
                         generateHiddifyTags("@" . $source) . "\n" . $configsSource
                     )
                 );
-                echo "@{$source} => PROGRESS: 100%\n";
+                echo "@{$source} ✅\n";
             } else {
                 $username = str_replace($source, "", $username);
                 $username = str_replace(",,", ",", $username);
@@ -125,7 +125,7 @@ function getTelegramChannelConfigs($username)
                 removeFileInDirectory("subscription/source/base64/", $source);
                 removeFileInDirectory("subscription/source/hiddify/", $source);
                 
-                echo "@{$source} => NO CONFIG FOUND, I REMOVED CHANNEL!\n";
+                echo "@{$source} ❌\n";
             }
         }
         
@@ -140,7 +140,8 @@ function getTelegramChannelConfigs($username)
             "hysteria2",
         ];
         foreach ($types as $filename) {
-            if (!empty(explode("\n", $$filename))) {
+            $protocolCheckpoint = explode("\n", $$filename);
+            if (!empty($protocolCheckpoint)) {
                 $configsType =
                     generateUpdateTime() .
                     $$filename .
@@ -158,12 +159,12 @@ function getTelegramChannelConfigs($username)
                             $configsType
                     )
                 );
-                echo "#{$filename} => CREATED SUCCESSFULLY!!\n";
+                echo "#{$filename} ✅\n";
             } else {
                 removeFileInDirectory("subscription/normal/", $filename);
                 removeFileInDirectory("subscription/base64/", $filename);
                 removeFileInDirectory("subscription/hiddify/", $filename);
-                echo "#{$filename} => WAS EMPTY, I REMOVED IT!\n";
+                echo "#{$filename} ❌\n";
             }
         }
     }
@@ -1103,7 +1104,7 @@ file_put_contents("README.md", $readmeMdNew);
 $table1Html = generateHTMLTable($title1Array, $cells1Array);
 $table2Html = generateHTMLTable($title2Array, $cells2Array);
 
-$readmeHtmlNew = generateReadme($table1Html, $table2Html);
+$readmeHtmlNew = generateReadmeWeb($table1Html, $table2Html);
 file_put_contents("index.html", $readmeHtmlNew);
 
 $randKey = array_rand($hiddify);
