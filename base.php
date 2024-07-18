@@ -1133,7 +1133,7 @@ $keyboard = [
         [
             "text" => "🚹 گیتهاب HiN VPN 🚹",
             "url" =>
-                "https://github.com/itsyebekhe/HiN-VPN/blob/main/README.md",
+                "https://itsyebekhe.github.io/HiN-VPN/",
         ],
     ],
 ];
