@@ -30,14 +30,14 @@ function getTheType($input)
 function fetchGitHubContent($owner, $repo, $path, $token) {
     $ch = curl_init();
 
-    $url = "https://api.github.com/repos/{$owner}/{$repo}/contents/{$path}";
+    $url = "https://api.github.com/repos/$owner/$repo/contents/$path";
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
 
     $headers = array();
     $headers[] = "Accept: application/vnd.github+json";
-    $headers[] = "Authorization: Bearer {$token}";
+    $headers[] = "Authorization: Bearer $token";
     $headers[] = "X-GitHub-Api-Version: 2022-11-28";
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
@@ -54,7 +54,7 @@ function getGitHubFileContent($owner, $repo, $path, $token) {
     $content = fetchGitHubContent($owner, $repo, $path, $token);
 
     if (isset($content['content'])) {
-        $output = json_decode($content['content']);
+        $output = json_decode(base64_decode($content['content']));
     }
 
     return $output;
