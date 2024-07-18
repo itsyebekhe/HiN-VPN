@@ -68,8 +68,8 @@ function getTelegramChannelConfigs($username)
     $GIT_TOKEN = getenv('GIT_TOKEN');
     
     $configs = getGitHubFileContent("itsyebekhe", "cGrabber", "configs.json", $GIT_TOKEN);
-    print_r($configs);
-    //echo "OH! I GOT IT! CONFIGS ARE HERE!";
+    //print_r($configs);
+    echo "OH! I GOT IT! CONFIGS ARE HERE!";
     if ($configs['status'] === "OK") {
         unset($configs['status']);
         foreach ($configs as $source => $configsArray) {
