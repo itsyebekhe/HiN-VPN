@@ -5,58 +5,86 @@ ini_set("display_errors", 1);
 ini_set("display_startup_errors", 1);
 error_reporting(E_ERROR | E_PARSE);
 
+function getTheType($input)
+{
+    if (substr($input, 0, 8) === "vmess://") {
+        return "vmess";
+    } elseif (substr($input, 0, 8) === "vless://") {
+        return "vless";
+    } elseif (substr($input, 0, 9) === "trojan://") {
+        return "trojan";
+    } elseif (substr($input, 0, 5) === "ss://") {
+        return "ss";
+    } elseif (substr($input, 0, 7) === "tuic://") {
+        return "tuic";
+    } elseif (
+        substr($input, 0, 6) === "hy2://" ||
+        substr($input, 0, 12) === "hysteria2://"
+    ) {
+        return "hysteria2";
+    } elseif (substr($input, 0, 11) === "hysteria://") {
+        return "hysteria";
+    }
+}
+
+function fetchGitHubContent($owner, $repo, $path, $token) {
+    $ch = curl_init();
+
+    $url = "https://api.github.com/repos/{$owner}/{$repo}/contents/{$path}";
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+
+    $headers = array();
+    $headers[] = "Accept: application/vnd.github+json";
+    $headers[] = "Authorization: Bearer {$token}";
+    $headers[] = "X-GitHub-Api-Version: 2022-11-28";
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+    $result = curl_exec($ch);
+    if (curl_errno($ch)) {
+        echo 'Error:' . curl_error($ch);
+    }
+    curl_close($ch);
+
+    return $result;
+}
+
+function getGitHubFileContent($owner, $repo, $path, $token) {
+    $content = fetchGitHubContent($owner, $repo, $path, $token);
+
+    if (isset($content['content'])) {
+        $output = json_decode($content['content']);
+    }
+
+    return $output;
+}
+
 function getTelegramChannelConfigs($username)
 {
     $sourceArray = explode(",", $username);
     $mix = "";
-    foreach ($sourceArray as $source) {
-        echo "@{$source} => PROGRESS: 0%\n";
-        $html = file_get_contents("https://t.me/s/" . $source);
+    $configs = getGitHubFileContent("itsyebekhe", "cGrabber", "configs.json", getenv('GIT_TOKEN'));
+    echo "OH! I GOT IT! CONFIGS ARE HERE!";
 
-        $types = [
-            "vmess",
-            "vless",
-            "trojan",
-            "ss",
-            "tuic",
-            "hysteria",
-            "hysteria2",
-            "hy2",
-        ];
-        $configs = [];
-        foreach ($types as $type) {
-            if ($type === "hy2") {
-                $configs["hysteria2"] = array_merge(
-                    getConfigItems($type, $html),
-                    $configs["hysteria2"]
-                );
-            } else {
-                $configs[$type] = getConfigItems($type, $html);
-            }
+    foreach ($configs as $source => $configsArray) {
+        foreach ($configsArray as $config) {
+            $configType = getTheType($config);
+            $fixedConfig = str_replace(
+                "amp;",
+                "",
+                removeAngleBrackets($config)
+            );
+            $correctedConfig = correctConfig(
+                "{$fixedConfig}",
+                $configType,
+                $source
+            );
+            $mix .= $correctedConfig . "\n";
+            $$configType .= $correctedConfig . "\n";
+            $$source .= $correctedConfig . "\n";
         }
-        echo "@{$source} => PROGRESS: 50%\n";
-        $bySource = [];
-        $byType = [];
-        foreach ($configs as $theType => $configsArray) {
-            foreach ($configsArray as $config) {
-                if (is_valid($config)) {
-                    $fixedConfig = str_replace(
-                        "amp;",
-                        "",
-                        removeAngleBrackets($config)
-                    );
-                    $correctedConfig = correctConfig(
-                        "{$fixedConfig}",
-                        $theType,
-                        $source
-                    );
-                    $mix .= $correctedConfig . "\n";
-                    $$theType .= $correctedConfig . "\n";
-                    $$source .= $correctedConfig . "\n";
-                }
-            }
-        }
-        
+
         if (!empty(explode("\n", $$source))) {
             $configsSource =
                 generateUpdateTime() . $$source . generateEndofConfiguration();
@@ -76,7 +104,8 @@ function getTelegramChannelConfigs($username)
             );
             echo "@{$source} => PROGRESS: 100%\n";
         } else {
-            $username = str_replace($source . ",", "", $username);
+            $username = str_replace($source, "", $username);
+            $username = str_replace(",,", ",", $username);
             file_put_contents("source.conf", $username);
             
             $emptySource = file_get_contents("empty.conf");
@@ -94,6 +123,7 @@ function getTelegramChannelConfigs($username)
             echo "@{$source} => NO CONFIG FOUND, I REMOVED CHANNEL!\n";
         }
     }
+    
     $types = [
         "mix",
         "vmess",
