@@ -1103,7 +1103,7 @@ file_put_contents("README.md", $readmeMdNew);
 $table1Html = generateHTMLTable($title1Array, $cells1Array);
 $table2Html = generateHTMLTable($title2Array, $cells2Array);
 
-$readmeHtmlNew = generateReadme($table1Html, $table2Html);
+$readmeHtmlNew = generateReadmeWeb($table1Html, $table2Html);
 file_put_contents("index.html", $readmeHtmlNew);
 
 $randKey = array_rand($hiddify);
