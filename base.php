@@ -68,8 +68,8 @@ function getTelegramChannelConfigs($username)
     $GIT_TOKEN = getenv('GIT_TOKEN');
     
     $configs = getGitHubFileContent("itsyebekhe", "cGrabber", "configs.json", $GIT_TOKEN);
-    //print_r($configs);
-    echo "OH! I GOT IT! CONFIGS ARE HERE!\n";
+    print_r($configs);
+    //echo "OH! I GOT IT! CONFIGS ARE HERE!";
     if ($configs['status'] === "OK") {
         unset($configs['status']);
         foreach ($configs as $source => $configsArray) {
@@ -107,7 +107,6 @@ function getTelegramChannelConfigs($username)
                         generateHiddifyTags("@" . $source) . "\n" . $configsSource
                     )
                 );
-                echo "@{$source} => " . print_r(explode("\n", $$source), true);
                 echo "@{$source} => PROGRESS: 100%\n";
             } else {
                 $username = str_replace($source, "", $username);
@@ -595,6 +594,34 @@ function is_cloudflare_ip($ip)
     return false;
 }
 
+function generateHTMLTable($columnTitles, $columnData) {
+    // Start the HTML table with Bootstrap classes
+    $html = '<table class="table">';
+
+    // Add the table header
+    $html .= '<thead><tr>';
+    foreach ($columnTitles as $title) {
+        $html .= '<th scope="col">' . htmlspecialchars($title) . '</th>';
+    }
+    $html .= '</tr></thead>';
+
+    // Add the table rows
+    $html .= '<tbody>';
+    foreach ($columnData as $row) {
+        $html .= '<tr>';
+        foreach ($row as $cell) {
+            $html .= '<td>' . htmlspecialchars($cell) . '</td>';
+        }
+        $html .= '</tr>';
+    }
+    $html .= '</tbody>';
+
+    // Close the HTML table
+    $html .= '</table>';
+
+    return $html;
+}
+
 function cidr_match($ip, $range)
 {
     list($subnet, $bits) = explode("/", $range);
@@ -959,6 +986,67 @@ This table provides a quick reference for the different subscription links avail
     return $base;
 }
 
+function generateReadmeWeb($table1, $table2)
+{
+    $base = '<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HiN VPN: Your Gateway to Secure and Free Internet Access</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h3>Your Gateway to Secure and Free Internet Access</h3>
+                <p><strong>HiN VPN</strong> stands out as a pioneering open-source project designed to empower users with secure, unrestricted internet access. Unlike traditional VPN services, HiN VPN leverages the Telegram platform to collect and distribute VPN configurations, offering a unique and community-driven approach to online privacy and security.</p>
+            </div>
+            <div class="col-12">
+                <h4>How It Works</h4>
+                <ol>
+                    <li><strong>Telegram Integration</strong>: HiN VPN utilizes a Telegram bot to gather VPN configuration files from contributors.</li>
+                    <li><strong>Subscription Link</strong>: Once the configurations are collected, HiN VPN processes them and provides a subscription link.</li>
+                    <li><strong>Open Source</strong>: Being an open-source project, HiN VPN encourages collaboration and transparency.</li>
+                    <li><strong>PHP Backend</strong>: The backend of HiN VPN is developed using PHP.</li>
+                </ol>
+            </div>
+            <div class="col-12">
+                <h4>Benefits</h4>
+                <ul>
+                    <li><strong>Free Access</strong>: HiN VPN is completely free to use.</li>
+                    <li><strong>Community-Driven</strong>: By relying on community contributions, HiN VPN offers a wide range of VPN configurations.</li>
+                    <li><strong>Enhanced Security</strong>: The open-source nature of HiN VPN allows for constant scrutiny and improvement.</li>
+                    <li><strong>Easy to Use</strong>: With a simple subscription link, users can quickly and easily set up their VPN connection.</li>
+                </ul>
+            </div>
+            <div class="col-12">
+                <h4>Subscription Links (Sort by Protocols)</h4>
+                <p>To get started with HiN VPN, simply follow the subscription links provided below. This link will grant you access to the latest VPN configurations, allowing you to secure your internet connection and browse the web with peace of mind.</p>
+                ' . $table1 . '
+                <p>Below is a table that shows the generated subscription links from each source, providing users with a variety of options to choose from.</p>
+                ' . $table2 . '
+                <p>This table provides a quick reference for the different subscription links available through HiN VPN, allowing users to easily select the one that best suits their needs.</p>
+            </div>
+            <div class="col-12">
+                <h4>The Last Word</h4>
+                <p><strong>HiN VPN</strong> is more than just a VPN service; it\'s a movement towards a more secure and open internet. By leveraging the power of community and open-source technology, HiN VPN is paving the way for a future where online privacy is a fundamental right for all.</p>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>';
+
+    return $base;
+}
+
 $source = trim(file_get_contents("source.conf"));
 getTelegramChannelConfigs($source);
 
@@ -1012,6 +1100,12 @@ $table2 = generateReadmeTable($title2Array, $cells2Array);
 $readmeMdNew = generateReadme($table1, $table2);
 file_put_contents("README.md", $readmeMdNew);
 
+$table1Html = generateHTMLTable($title1Array, $cells1Array);
+$table2Html = generateHTMLTable($title2Array, $cells2Array);
+
+$readmeHtmlNew = generateReadme($table1Html, $table2Html);
+file_put_contents("index.html", $readmeHtmlNew);
+
 $randKey = array_rand($hiddify);
 $randType = $hiddify[$randKey];
 
@@ -1054,4 +1148,4 @@ $message = "🔺 لینک های اشتراک HiN بروزرسانی شدن! �
 
 🌐 <a href='https://t.me/Here_is_Nowhere'>𝗛.𝗜.𝗡 🫧</a>";
 
-//sendMessage($botToken, -1002043507701, $message, "html", $keyboard);
+sendMessage($botToken, -1002043507701, $message, "html", $keyboard);
