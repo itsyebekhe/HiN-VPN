@@ -47,12 +47,12 @@ function fetchGitHubContent($owner, $repo, $path, $token) {
         echo 'Error:' . curl_error($ch);
     }
     curl_close($ch);
-    echo $result;
+    
     return $result;
 }
 
 function getGitHubFileContent($owner, $repo, $path, $token) {
-    $content = fetchGitHubContent($owner, $repo, $path, $token);
+    $content = json_decode(fetchGitHubContent($owner, $repo, $path, $token));
 
     if (isset($content['content'])) {
         $output = json_decode(base64_decode($content['content']));
