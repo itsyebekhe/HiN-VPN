@@ -1196,7 +1196,7 @@ file_put_contents("README.md", $readmeMdNew);
 
 $table1Html = generateHTMLTable($title1Array, $cells1Array);
 $table2Html = generateHTMLTable($title2Array, $cells2Array);
-$table3Html = generateReadmeTable($title3Array, $cells3Array);
+$table3Html = generateHTMLTable($title3Array, $cells3Array);
 
 $readmeHtmlNew = generateReadmeWeb($table1Html, $table2Html, $table3Html);
 file_put_contents("index.html", $readmeHtmlNew);
