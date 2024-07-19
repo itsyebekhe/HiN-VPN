@@ -994,7 +994,7 @@ function generateReadme($table1, $table2, $table3)
     
 3. **Open Source**: Being an open-source project, HiN VPN encourages collaboration and transparency. The source code is available for anyone to review, contribute to, or modify, ensuring that the service remains secure and up-to-date with the latest technological advancements.
     
-4. **PHP Backend**: The backend of HiN VPN is developed using PHP, a widely-used server-side scripting language known for its flexibility and ease of use. This choice of technology ensures that the service can be easily maintained and scaled as needed.
+4. **PHP and Python Backend**: The backend of HiN VPN is developed using PHP + Python (Thanks to @NekoHanaku), two widely-used server-side scripting language known for their flexibility and ease of use. This choice of technology ensures that the service can be easily maintained and scaled as needed.
     
 #### Benefits
     
@@ -1082,7 +1082,7 @@ function generateReadmeWeb($table1, $table2, $table3)
                     <li><strong>Telegram Integration</strong>: A Telegram bot collects VPN configuration files.</li>
                     <li><strong>Subscription Link</strong>: Provides a link for users to subscribe to the VPN service.</li>
                     <li><strong>Open Source</strong>: Encourages collaboration and transparency.</li>
-                    <li><strong>PHP Backend</strong>: The backend is developed using PHP.</li>
+                    <li><strong>PHP and Python Backend</strong>: The backend is developed using PHP and Python (Thanks to @NekoHanaku).</li>
                 </ol>
             </div>
             <div class="col-12 feature">
