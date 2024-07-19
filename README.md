@@ -10,7 +10,7 @@
     
 3. **Open Source**: Being an open-source project, HiN VPN encourages collaboration and transparency. The source code is available for anyone to review, contribute to, or modify, ensuring that the service remains secure and up-to-date with the latest technological advancements.
     
-4. **PHP Backend**: The backend of HiN VPN is developed using PHP, a widely-used server-side scripting language known for its flexibility and ease of use. This choice of technology ensures that the service can be easily maintained and scaled as needed.
+4. **PHP and Python Backend**: The backend of HiN VPN is developed using PHP + Python (Thanks to @NekoHanaku), two widely-used server-side scripting language known for their flexibility and ease of use. This choice of technology ensures that the service can be easily maintained and scaled as needed.
     
 #### Benefits
     
@@ -106,6 +106,7 @@ Below is a table that shows the generated subscription links from each Location,
 | LT | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/LT | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/LT | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/LT |
 | SE | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/SE | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/SE | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/SE |
 | PL | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/PL | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/PL | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/PL |
+| PA | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/PA | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/PA | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/PA |
 | AT | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/AT | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/AT | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/AT |
 | IR | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/IR | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/IR | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/IR |
 | DE | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/DE | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/DE | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/DE |

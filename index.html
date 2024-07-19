@@ -1,671 +1,658 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HiN VPN: Your Gateway to Secure and Free Internet Access</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-      body {
-        padding: 20px;
-        background-color: #f8f9fa;
-        color: #495057;
-      }
-
-      .header {
-        background-color: #007bff;
-        color: white;
-        padding: 20px;
-        border-radius: 8px;
-        margin-bottom: 20px;
-      }
-
-      .feature {
-        background-color: white;
-        padding: 20px;
-        border-radius: 8px;
-        margin-bottom: 20px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      }
-
-      .feature h4 {
-        color: #007bff;
-      }
-
-      .footer {
-        text-align: center;
-        padding: 20px;
-        background-color: #343a40;
-        color: white;
-        border-radius: 8px;
-      }
+        body {
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #495057;
+        }
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .feature {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .feature h4 {
+            color: #007bff;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #343a40;
+            color: white;
+            border-radius: 8px;
+        }
     </style>
-  </head>
-  <body>
+</head>
+<body>
     <div class="container">
-      <div class="header">
-        <h1>HiN VPN</h1>
-        <p>Your Gateway to Secure and Free Internet Access</p>
-      </div>
-      <div class="row">
-        <div class="col-12 feature">
-          <h3>About HiN VPN</h3>
-          <p>
-            <strong>HiN VPN</strong> is an open-source project designed to provide secure, unrestricted internet access. It uses Telegram for collecting and distributing VPN configurations, offering a community-driven approach to online privacy.
-          </p>
+        <div class="header">
+            <h1>HiN VPN</h1>
+            <p>Your Gateway to Secure and Free Internet Access</p>
         </div>
-        <div class="col-12 feature">
-          <h4>How It Works</h4>
-          <ol>
-            <li>
-              <strong>Telegram Integration</strong>: A Telegram bot collects VPN configuration files.
-            </li>
-            <li>
-              <strong>Subscription Link</strong>: Provides a link for users to subscribe to the VPN service.
-            </li>
-            <li>
-              <strong>Open Source</strong>: Encourages collaboration and transparency.
-            </li>
-            <li>
-              <strong>PHP Backend</strong>: The backend is developed using PHP.
-            </li>
-          </ol>
+        <div class="row">
+            <div class="col-12 feature">
+                <h3>About HiN VPN</h3>
+                <p><strong>HiN VPN</strong> is an open-source project designed to provide secure, unrestricted internet access. It uses Telegram for collecting and distributing VPN configurations, offering a community-driven approach to online privacy.</p>
+            </div>
+            <div class="col-12 feature">
+                <h4>How It Works</h4>
+                <ol>
+                    <li><strong>Telegram Integration</strong>: A Telegram bot collects VPN configuration files.</li>
+                    <li><strong>Subscription Link</strong>: Provides a link for users to subscribe to the VPN service.</li>
+                    <li><strong>Open Source</strong>: Encourages collaboration and transparency.</li>
+                    <li><strong>PHP and Python Backend</strong>: The backend is developed using PHP and Python (Thanks to @NekoHanaku).</li>
+                </ol>
+            </div>
+            <div class="col-12 feature">
+                <h4>Benefits</h4>
+                <ul>
+                    <li><strong>Free Access</strong>: Completely free to use.</li>
+                    <li><strong>Community-Driven</strong>: Wide range of VPN configurations from community contributions.</li>
+                    <li><strong>Enhanced Security</strong>: Open-source nature allows for constant scrutiny and improvement.</li>
+                    <li><strong>Easy to Use</strong>: Simple subscription link for easy setup.</li>
+                </ul>
+            </div>
+            <div class="col-12 feature">
+                <h4>Subscription Links</h4>
+                <p>Get started with HiN VPN using the subscription links below. These links provide access to the latest VPN configurations.</p>
+                <!-- Placeholder for dynamic content -->
+                <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Protocol</th>
+      <th scope="col">Normal</th>
+      <th scope="col">Base64</th>
+      <th scope="col">Hiddify</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>vless</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/normal/vless</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/base64/vless</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/hiddify/vless</td>
+    </tr>
+    <tr>
+      <td>trojan</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/normal/trojan</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/base64/trojan</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/hiddify/trojan</td>
+    </tr>
+    <tr>
+      <td>vmess</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/normal/vmess</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/base64/vmess</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/hiddify/vmess</td>
+    </tr>
+    <tr>
+      <td>tuic</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/normal/tuic</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/base64/tuic</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/hiddify/tuic</td>
+    </tr>
+    <tr>
+      <td>mix</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/normal/mix</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/base64/mix</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/hiddify/mix</td>
+    </tr>
+    <tr>
+      <td>ss</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/normal/ss</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/base64/ss</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/hiddify/ss</td>
+    </tr>
+    <tr>
+      <td>hysteria</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/normal/hysteria</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/base64/hysteria</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/hiddify/hysteria</td>
+    </tr>
+    <tr>
+      <td>hysteria2</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/normal/hysteria2</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/base64/hysteria2</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/hiddify/hysteria2</td>
+    </tr>
+  </tbody>
+</table>
+
+                <p>Below is a table that shows the generated subscription links from each Source, providing users with a variety of options to choose from.</p>
+                <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Source</th>
+      <th scope="col">Normal</th>
+      <th scope="col">Base64</th>
+      <th scope="col">Hiddify</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>melov2ray</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/melov2ray</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/melov2ray</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/melov2ray</td>
+    </tr>
+    <tr>
+      <td>v2ray1_ng</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/v2ray1_ng</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/v2ray1_ng</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/v2ray1_ng</td>
+    </tr>
+    <tr>
+      <td>directvpn</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/directvpn</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/directvpn</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/directvpn</td>
+    </tr>
+    <tr>
+      <td>free_v2rayyy</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/free_v2rayyy</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/free_v2rayyy</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/free_v2rayyy</td>
+    </tr>
+    <tr>
+      <td>vpncustomize</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/vpncustomize</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/vpncustomize</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/vpncustomize</td>
+    </tr>
+    <tr>
+      <td>outline_vpn</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/outline_vpn</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/outline_vpn</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/outline_vpn</td>
+    </tr>
+    <tr>
+      <td>frev2ray</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/frev2ray</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/frev2ray</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/frev2ray</td>
+    </tr>
+    <tr>
+      <td>vlessconfig</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/vlessconfig</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/vlessconfig</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/vlessconfig</td>
+    </tr>
+    <tr>
+      <td>polproxy</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/polproxy</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/polproxy</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/polproxy</td>
+    </tr>
+    <tr>
+      <td>kiava</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/kiava</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/kiava</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/kiava</td>
+    </tr>
+    <tr>
+      <td>proxyforopeta</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/proxyforopeta</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/proxyforopeta</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/proxyforopeta</td>
+    </tr>
+    <tr>
+      <td>eliv2ray</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/eliv2ray</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/eliv2ray</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/eliv2ray</td>
+    </tr>
+    <tr>
+      <td>outlinevpnofficial</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/outlinevpnofficial</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/outlinevpnofficial</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/outlinevpnofficial</td>
+    </tr>
+    <tr>
+      <td>prrofile_purple</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/prrofile_purple</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/prrofile_purple</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/prrofile_purple</td>
+    </tr>
+    <tr>
+      <td>shh_proxy</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/shh_proxy</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/shh_proxy</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/shh_proxy</td>
+    </tr>
+    <tr>
+      <td>deamnet_proxy</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/deamnet_proxy</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/deamnet_proxy</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/deamnet_proxy</td>
+    </tr>
+    <tr>
+      <td>svnteam</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/svnteam</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/svnteam</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/svnteam</td>
+    </tr>
+    <tr>
+      <td>vless_vmess</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/vless_vmess</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/vless_vmess</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/vless_vmess</td>
+    </tr>
+    <tr>
+      <td>ipv2ray</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/ipv2ray</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/ipv2ray</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/ipv2ray</td>
+    </tr>
+    <tr>
+      <td>mehrosaboran</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/mehrosaboran</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/mehrosaboran</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/mehrosaboran</td>
+    </tr>
+    <tr>
+      <td>ip_cf</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/ip_cf</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/ip_cf</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/ip_cf</td>
+    </tr>
+    <tr>
+      <td>mftizi</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/mftizi</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/mftizi</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/mftizi</td>
+    </tr>
+    <tr>
+      <td>v2pedia</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/v2pedia</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/v2pedia</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/v2pedia</td>
+    </tr>
+    <tr>
+      <td>v2rayngn</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/v2rayngn</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/v2rayngn</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/v2rayngn</td>
+    </tr>
+    <tr>
+      <td>kingofilter</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/kingofilter</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/kingofilter</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/kingofilter</td>
+    </tr>
+    <tr>
+      <td>servernett</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/servernett</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/servernett</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/servernett</td>
+    </tr>
+    <tr>
+      <td>proxystore11</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/proxystore11</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/proxystore11</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/proxystore11</td>
+    </tr>
+    <tr>
+      <td>v2raytz</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/v2raytz</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/v2raytz</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/v2raytz</td>
+    </tr>
+    <tr>
+      <td>change_ip1</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/change_ip1</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/change_ip1</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/change_ip1</td>
+    </tr>
+    <tr>
+      <td>shadowproxy66</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/shadowproxy66</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/shadowproxy66</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/shadowproxy66</td>
+    </tr>
+    <tr>
+      <td>fnet00</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/fnet00</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/fnet00</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/fnet00</td>
+    </tr>
+    <tr>
+      <td>vmessprotocol</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/vmessprotocol</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/vmessprotocol</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/vmessprotocol</td>
+    </tr>
+    <tr>
+      <td>hope_net</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/hope_net</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/hope_net</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/hope_net</td>
+    </tr>
+    <tr>
+      <td>digiv2ray</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/digiv2ray</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/digiv2ray</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/digiv2ray</td>
+    </tr>
+    <tr>
+      <td>vmessorg</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/vmessorg</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/vmessorg</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/vmessorg</td>
+    </tr>
+    <tr>
+      <td>oneclickvpnkeys</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/oneclickvpnkeys</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/oneclickvpnkeys</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/oneclickvpnkeys</td>
+    </tr>
+    <tr>
+      <td>lrnbymaa</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/lrnbymaa</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/lrnbymaa</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/lrnbymaa</td>
+    </tr>
+    <tr>
+      <td>v2line</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/v2line</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/v2line</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/v2line</td>
+    </tr>
+    <tr>
+      <td>arv2ray</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/arv2ray</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/arv2ray</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/arv2ray</td>
+    </tr>
+    <tr>
+      <td>proxy_mtm</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/proxy_mtm</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/proxy_mtm</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/proxy_mtm</td>
+    </tr>
+    <tr>
+      <td>proxy_kafee</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/proxy_kafee</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/proxy_kafee</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/proxy_kafee</td>
+    </tr>
+    <tr>
+      <td>unlimiteddev</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/unlimiteddev</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/unlimiteddev</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/unlimiteddev</td>
+    </tr>
+    <tr>
+      <td>lightning6</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/lightning6</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/lightning6</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/lightning6</td>
+    </tr>
+    <tr>
+      <td>v2raycollector</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/v2raycollector</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/v2raycollector</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/v2raycollector</td>
+    </tr>
+    <tr>
+      <td>v2rayng_fast</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/v2rayng_fast</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/v2rayng_fast</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/v2rayng_fast</td>
+    </tr>
+    <tr>
+      <td>v2ray_swhil</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/v2ray_swhil</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/v2ray_swhil</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/v2ray_swhil</td>
+    </tr>
+    <tr>
+      <td>parsashonam</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/parsashonam</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/parsashonam</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/parsashonam</td>
+    </tr>
+    <tr>
+      <td>sinabigo</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/sinabigo</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/sinabigo</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/sinabigo</td>
+    </tr>
+    <tr>
+      <td>flyv2ray</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/flyv2ray</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/flyv2ray</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/flyv2ray</td>
+    </tr>
+    <tr>
+      <td>dailyv2ry</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/dailyv2ry</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/dailyv2ry</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/dailyv2ry</td>
+    </tr>
+    <tr>
+      <td>v2rayng_vpnrog</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/v2rayng_vpnrog</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/v2rayng_vpnrog</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/v2rayng_vpnrog</td>
+    </tr>
+    <tr>
+      <td>outlinev2rayng</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/outlinev2rayng</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/outlinev2rayng</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/outlinev2rayng</td>
+    </tr>
+    <tr>
+      <td>v2rayng_matsuri</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/v2rayng_matsuri</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/v2rayng_matsuri</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/v2rayng_matsuri</td>
+    </tr>
+    <tr>
+      <td>freakconfig</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/freakconfig</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/freakconfig</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/freakconfig</td>
+    </tr>
+    <tr>
+      <td>privatevpns</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/privatevpns</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/privatevpns</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/privatevpns</td>
+    </tr>
+  </tbody>
+</table>
+
+                <p>and Below is a table that shows the generated subscription links from each Location, providing users with a variety of options to choose from.</p>
+                <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Location</th>
+      <th scope="col">Normal</th>
+      <th scope="col">Base64</th>
+      <th scope="col">Hiddify</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>CN</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/CN</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/CN</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/CN</td>
+    </tr>
+    <tr>
+      <td>IN</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/IN</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/IN</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/IN</td>
+    </tr>
+    <tr>
+      <td>TR</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/TR</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/TR</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/TR</td>
+    </tr>
+    <tr>
+      <td>LT</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/LT</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/LT</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/LT</td>
+    </tr>
+    <tr>
+      <td>SE</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/SE</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/SE</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/SE</td>
+    </tr>
+    <tr>
+      <td>PL</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/PL</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/PL</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/PL</td>
+    </tr>
+    <tr>
+      <td>PA</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/PA</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/PA</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/PA</td>
+    </tr>
+    <tr>
+      <td>AT</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/AT</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/AT</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/AT</td>
+    </tr>
+    <tr>
+      <td>IR</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/IR</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/IR</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/IR</td>
+    </tr>
+    <tr>
+      <td>DE</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/DE</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/DE</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/DE</td>
+    </tr>
+    <tr>
+      <td>KZ</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/KZ</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/KZ</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/KZ</td>
+    </tr>
+    <tr>
+      <td>NO</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/NO</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/NO</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/NO</td>
+    </tr>
+    <tr>
+      <td>EE</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/EE</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/EE</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/EE</td>
+    </tr>
+    <tr>
+      <td>IT</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/IT</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/IT</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/IT</td>
+    </tr>
+    <tr>
+      <td>GI</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/GI</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/GI</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/GI</td>
+    </tr>
+    <tr>
+      <td>KR</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/KR</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/KR</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/KR</td>
+    </tr>
+    <tr>
+      <td>SG</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/SG</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/SG</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/SG</td>
+    </tr>
+    <tr>
+      <td>US</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/US</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/US</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/US</td>
+    </tr>
+    <tr>
+      <td>IE</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/IE</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/IE</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/IE</td>
+    </tr>
+    <tr>
+      <td>HK</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/HK</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/HK</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/HK</td>
+    </tr>
+    <tr>
+      <td>FR</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/FR</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/FR</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/FR</td>
+    </tr>
+    <tr>
+      <td>NL</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/NL</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/NL</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/NL</td>
+    </tr>
+    <tr>
+      <td>JP</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/JP</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/JP</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/JP</td>
+    </tr>
+    <tr>
+      <td>TW</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/TW</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/TW</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/TW</td>
+    </tr>
+    <tr>
+      <td>CA</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/CA</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/CA</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/CA</td>
+    </tr>
+    <tr>
+      <td>GB</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/GB</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/GB</td>
+      <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/GB</td>
+    </tr>
+  </tbody>
+</table>
+
+                <p>This tables provides a quick reference for the different subscription links available through HiN VPN, allowing users to easily select the one that best suits their needs.</p>
+            </div>
+            <div class="col-12 footer">
+                <h4>The Last Word</h4>
+                <p>HiN VPN is more than just a VPN service; it's a movement towards a more secure and open internet. By leveraging the power of community and open-source technology, HiN VPN is paving the way for a future where online privacy is a fundamental right for all.</p>
+            </div>
         </div>
-        <div class="col-12 feature">
-          <h4>Benefits</h4>
-          <ul>
-            <li>
-              <strong>Free Access</strong>: Completely free to use.
-            </li>
-            <li>
-              <strong>Community-Driven</strong>: Wide range of VPN configurations from community contributions.
-            </li>
-            <li>
-              <strong>Enhanced Security</strong>: Open-source nature allows for constant scrutiny and improvement.
-            </li>
-            <li>
-              <strong>Easy to Use</strong>: Simple subscription link for easy setup.
-            </li>
-          </ul>
-        </div>
-        <div class="col-12 feature">
-          <h4>Subscription Links</h4>
-          <p>Get started with HiN VPN using the subscription links below. These links provide access to the latest VPN configurations.</p>
-          <!-- Placeholder for dynamic content -->
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">Protocol</th>
-                <th scope="col">Normal</th>
-                <th scope="col">Base64</th>
-                <th scope="col">Hiddify</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>vless</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/normal/vless</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/base64/vless</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/hiddify/vless</td>
-              </tr>
-              <tr>
-                <td>trojan</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/normal/trojan</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/base64/trojan</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/hiddify/trojan</td>
-              </tr>
-              <tr>
-                <td>vmess</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/normal/vmess</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/base64/vmess</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/hiddify/vmess</td>
-              </tr>
-              <tr>
-                <td>tuic</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/normal/tuic</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/base64/tuic</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/hiddify/tuic</td>
-              </tr>
-              <tr>
-                <td>mix</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/normal/mix</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/base64/mix</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/hiddify/mix</td>
-              </tr>
-              <tr>
-                <td>ss</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/normal/ss</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/base64/ss</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/hiddify/ss</td>
-              </tr>
-              <tr>
-                <td>hysteria</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/normal/hysteria</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/base64/hysteria</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/hiddify/hysteria</td>
-              </tr>
-              <tr>
-                <td>hysteria2</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/normal/hysteria2</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/base64/hysteria2</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/hiddify/hysteria2</td>
-              </tr>
-            </tbody>
-          </table>
-          <p>Below is a table that shows the generated subscription links from each Source, providing users with a variety of options to choose from.</p>
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">Source</th>
-                <th scope="col">Normal</th>
-                <th scope="col">Base64</th>
-                <th scope="col">Hiddify</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>melov2ray</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/melov2ray</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/melov2ray</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/melov2ray</td>
-              </tr>
-              <tr>
-                <td>v2ray1_ng</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/v2ray1_ng</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/v2ray1_ng</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/v2ray1_ng</td>
-              </tr>
-              <tr>
-                <td>directvpn</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/directvpn</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/directvpn</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/directvpn</td>
-              </tr>
-              <tr>
-                <td>free_v2rayyy</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/free_v2rayyy</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/free_v2rayyy</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/free_v2rayyy</td>
-              </tr>
-              <tr>
-                <td>vpncustomize</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/vpncustomize</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/vpncustomize</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/vpncustomize</td>
-              </tr>
-              <tr>
-                <td>outline_vpn</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/outline_vpn</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/outline_vpn</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/outline_vpn</td>
-              </tr>
-              <tr>
-                <td>frev2ray</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/frev2ray</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/frev2ray</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/frev2ray</td>
-              </tr>
-              <tr>
-                <td>vlessconfig</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/vlessconfig</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/vlessconfig</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/vlessconfig</td>
-              </tr>
-              <tr>
-                <td>polproxy</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/polproxy</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/polproxy</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/polproxy</td>
-              </tr>
-              <tr>
-                <td>kiava</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/kiava</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/kiava</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/kiava</td>
-              </tr>
-              <tr>
-                <td>proxyforopeta</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/proxyforopeta</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/proxyforopeta</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/proxyforopeta</td>
-              </tr>
-              <tr>
-                <td>eliv2ray</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/eliv2ray</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/eliv2ray</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/eliv2ray</td>
-              </tr>
-              <tr>
-                <td>outlinevpnofficial</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/outlinevpnofficial</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/outlinevpnofficial</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/outlinevpnofficial</td>
-              </tr>
-              <tr>
-                <td>prrofile_purple</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/prrofile_purple</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/prrofile_purple</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/prrofile_purple</td>
-              </tr>
-              <tr>
-                <td>shh_proxy</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/shh_proxy</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/shh_proxy</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/shh_proxy</td>
-              </tr>
-              <tr>
-                <td>deamnet_proxy</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/deamnet_proxy</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/deamnet_proxy</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/deamnet_proxy</td>
-              </tr>
-              <tr>
-                <td>svnteam</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/svnteam</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/svnteam</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/svnteam</td>
-              </tr>
-              <tr>
-                <td>vless_vmess</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/vless_vmess</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/vless_vmess</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/vless_vmess</td>
-              </tr>
-              <tr>
-                <td>ipv2ray</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/ipv2ray</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/ipv2ray</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/ipv2ray</td>
-              </tr>
-              <tr>
-                <td>mehrosaboran</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/mehrosaboran</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/mehrosaboran</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/mehrosaboran</td>
-              </tr>
-              <tr>
-                <td>ip_cf</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/ip_cf</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/ip_cf</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/ip_cf</td>
-              </tr>
-              <tr>
-                <td>mftizi</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/mftizi</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/mftizi</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/mftizi</td>
-              </tr>
-              <tr>
-                <td>v2pedia</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/v2pedia</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/v2pedia</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/v2pedia</td>
-              </tr>
-              <tr>
-                <td>v2rayngn</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/v2rayngn</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/v2rayngn</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/v2rayngn</td>
-              </tr>
-              <tr>
-                <td>kingofilter</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/kingofilter</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/kingofilter</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/kingofilter</td>
-              </tr>
-              <tr>
-                <td>servernett</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/servernett</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/servernett</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/servernett</td>
-              </tr>
-              <tr>
-                <td>proxystore11</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/proxystore11</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/proxystore11</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/proxystore11</td>
-              </tr>
-              <tr>
-                <td>v2raytz</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/v2raytz</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/v2raytz</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/v2raytz</td>
-              </tr>
-              <tr>
-                <td>change_ip1</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/change_ip1</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/change_ip1</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/change_ip1</td>
-              </tr>
-              <tr>
-                <td>shadowproxy66</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/shadowproxy66</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/shadowproxy66</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/shadowproxy66</td>
-              </tr>
-              <tr>
-                <td>fnet00</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/fnet00</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/fnet00</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/fnet00</td>
-              </tr>
-              <tr>
-                <td>vmessprotocol</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/vmessprotocol</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/vmessprotocol</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/vmessprotocol</td>
-              </tr>
-              <tr>
-                <td>hope_net</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/hope_net</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/hope_net</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/hope_net</td>
-              </tr>
-              <tr>
-                <td>digiv2ray</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/digiv2ray</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/digiv2ray</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/digiv2ray</td>
-              </tr>
-              <tr>
-                <td>vmessorg</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/vmessorg</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/vmessorg</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/vmessorg</td>
-              </tr>
-              <tr>
-                <td>oneclickvpnkeys</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/oneclickvpnkeys</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/oneclickvpnkeys</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/oneclickvpnkeys</td>
-              </tr>
-              <tr>
-                <td>lrnbymaa</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/lrnbymaa</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/lrnbymaa</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/lrnbymaa</td>
-              </tr>
-              <tr>
-                <td>v2line</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/v2line</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/v2line</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/v2line</td>
-              </tr>
-              <tr>
-                <td>arv2ray</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/arv2ray</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/arv2ray</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/arv2ray</td>
-              </tr>
-              <tr>
-                <td>proxy_mtm</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/proxy_mtm</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/proxy_mtm</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/proxy_mtm</td>
-              </tr>
-              <tr>
-                <td>proxy_kafee</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/proxy_kafee</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/proxy_kafee</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/proxy_kafee</td>
-              </tr>
-              <tr>
-                <td>unlimiteddev</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/unlimiteddev</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/unlimiteddev</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/unlimiteddev</td>
-              </tr>
-              <tr>
-                <td>lightning6</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/lightning6</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/lightning6</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/lightning6</td>
-              </tr>
-              <tr>
-                <td>v2raycollector</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/v2raycollector</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/v2raycollector</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/v2raycollector</td>
-              </tr>
-              <tr>
-                <td>v2rayng_fast</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/v2rayng_fast</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/v2rayng_fast</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/v2rayng_fast</td>
-              </tr>
-              <tr>
-                <td>v2ray_swhil</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/v2ray_swhil</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/v2ray_swhil</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/v2ray_swhil</td>
-              </tr>
-              <tr>
-                <td>parsashonam</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/parsashonam</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/parsashonam</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/parsashonam</td>
-              </tr>
-              <tr>
-                <td>sinabigo</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/sinabigo</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/sinabigo</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/sinabigo</td>
-              </tr>
-              <tr>
-                <td>flyv2ray</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/flyv2ray</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/flyv2ray</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/flyv2ray</td>
-              </tr>
-              <tr>
-                <td>dailyv2ry</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/dailyv2ry</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/dailyv2ry</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/dailyv2ry</td>
-              </tr>
-              <tr>
-                <td>v2rayng_vpnrog</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/v2rayng_vpnrog</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/v2rayng_vpnrog</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/v2rayng_vpnrog</td>
-              </tr>
-              <tr>
-                <td>outlinev2rayng</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/outlinev2rayng</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/outlinev2rayng</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/outlinev2rayng</td>
-              </tr>
-              <tr>
-                <td>v2rayng_matsuri</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/v2rayng_matsuri</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/v2rayng_matsuri</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/v2rayng_matsuri</td>
-              </tr>
-              <tr>
-                <td>freakconfig</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/freakconfig</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/freakconfig</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/freakconfig</td>
-              </tr>
-              <tr>
-                <td>privatevpns</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/privatevpns</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/privatevpns</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/privatevpns</td>
-              </tr>
-            </tbody>
-          </table>
-          <p>and Below is a table that shows the generated subscription links from each Location, providing users with a variety of options to choose from.</p>
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">Location</th>
-                <th scope="col">Normal</th>
-                <th scope="col">Base64</th>
-                <th scope="col">Hiddify</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>CN</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/CN</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/CN</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/CN</td>
-              </tr>
-              <tr>
-                <td>IN</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/IN</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/IN</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/IN</td>
-              </tr>
-              <tr>
-                <td>TR</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/TR</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/TR</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/TR</td>
-              </tr>
-              <tr>
-                <td>LT</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/LT</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/LT</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/LT</td>
-              </tr>
-              <tr>
-                <td>SE</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/SE</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/SE</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/SE</td>
-              </tr>
-              <tr>
-                <td>PL</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/PL</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/PL</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/PL</td>
-              </tr>
-              <tr>
-                <td>AT</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/AT</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/AT</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/AT</td>
-              </tr>
-              <tr>
-                <td>IR</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/IR</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/IR</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/IR</td>
-              </tr>
-              <tr>
-                <td>DE</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/DE</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/DE</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/DE</td>
-              </tr>
-              <tr>
-                <td>KZ</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/KZ</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/KZ</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/KZ</td>
-              </tr>
-              <tr>
-                <td>NO</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/NO</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/NO</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/NO</td>
-              </tr>
-              <tr>
-                <td>EE</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/EE</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/EE</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/EE</td>
-              </tr>
-              <tr>
-                <td>IT</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/IT</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/IT</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/IT</td>
-              </tr>
-              <tr>
-                <td>GI</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/GI</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/GI</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/GI</td>
-              </tr>
-              <tr>
-                <td>KR</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/KR</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/KR</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/KR</td>
-              </tr>
-              <tr>
-                <td>SG</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/SG</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/SG</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/SG</td>
-              </tr>
-              <tr>
-                <td>US</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/US</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/US</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/US</td>
-              </tr>
-              <tr>
-                <td>IE</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/IE</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/IE</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/IE</td>
-              </tr>
-              <tr>
-                <td>HK</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/HK</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/HK</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/HK</td>
-              </tr>
-              <tr>
-                <td>FR</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/FR</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/FR</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/FR</td>
-              </tr>
-              <tr>
-                <td>NL</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/NL</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/NL</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/NL</td>
-              </tr>
-              <tr>
-                <td>JP</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/JP</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/JP</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/JP</td>
-              </tr>
-              <tr>
-                <td>TW</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/TW</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/TW</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/TW</td>
-              </tr>
-              <tr>
-                <td>CA</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/CA</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/CA</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/CA</td>
-              </tr>
-              <tr>
-                <td>GB</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/GB</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/GB</td>
-                <td>https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/GB</td>
-              </tr>
-            </tbody>
-          </table>
-          <p>This tables provides a quick reference for the different subscription links available through HiN VPN, allowing users to easily select the one that best suits their needs.</p>
-        </div>
-        <div class="col-12 footer">
-          <h4>The Last Word</h4>
-          <p>HiN VPN is more than just a VPN service; it's a movement towards a more secure and open internet. By leveraging the power of community and open-source technology, HiN VPN is paving the way for a future where online privacy is a fundamental right for all.</p>
-        </div>
-      </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-  </body>
+</body>
 </html>
