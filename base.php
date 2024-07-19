@@ -66,6 +66,7 @@ function getTelegramChannelConfigs($username)
     $sourceArray = explode(",", $username);
     $mix = "";
     $GIT_TOKEN = getenv('GIT_TOKEN');
+    $locationsArray = [];
     
     $configs = getGitHubFileContent("itsyebekhe", "cGrabber", "configs.json", $GIT_TOKEN);
     //print_r($configs);
@@ -80,14 +81,18 @@ function getTelegramChannelConfigs($username)
                     "",
                     removeAngleBrackets($config)
                 );
-                $correctedConfig = correctConfig(
+                $correctedConfigArray = correctConfig(
                     "{$fixedConfig}",
                     $configType,
                     $source
                 );
+                $configLocation = $correctedConfigArray["loc"];
+                $correctedConfig = $correctedConfigArray["config"];
                 $mix .= $correctedConfig . "\n";
                 $$configType .= $correctedConfig . "\n";
                 $$source .= $correctedConfig . "\n";
+                $locationsArray[] = $configLocation;
+                $$configLocation .= $correctedConfig . "\n";
             }
     
             if (!empty($configsArray)) {
@@ -165,6 +170,35 @@ function getTelegramChannelConfigs($username)
                 removeFileInDirectory("subscription/base64/", $filename);
                 removeFileInDirectory("subscription/hiddify/", $filename);
                 echo "#{$filename} ❌\n";
+            }
+        }
+
+        foreach ($locationsArray as $location) {
+            $locationCheckpoint = explode("\n", $$location);
+            if (!empty($locationCheckpoint)) {
+                $configsLocation =
+                    generateUpdateTime() .
+                    $$location .
+                    generateEndofConfiguration();
+                file_put_contents("subscription/location/normal/" . $location, $configsLocation);
+                file_put_contents(
+                    "subscription/location/base64/" . $location,
+                     base64_encode($configsLocation)
+                );
+                file_put_contents(
+                    "subscription/location/hiddify/" . $location,
+                    base64_encode(
+                        generateHiddifyTags(strtoupper($location)) .
+                            "\n" .
+                            $configsLocation
+                    )
+                );
+                echo "#{$location} ✅\n";
+            } else {
+                removeFileInDirectory("subscription/location/normal/", $location);
+                removeFileInDirectory("subscription/location/base64/", $location);
+                removeFileInDirectory("subscription/location/hiddify/", $location);
+                echo "#{$location} ❌\n";
             }
         }
     }
@@ -460,11 +494,16 @@ function correctConfig($config, $type, $source)
     $configHashName = $configsHashName[$type];
 
     $parsedConfig = configParse($config, $type);
-    $configHashTag = generateName($parsedConfig, $type, $source);
+    $generateName = generateName($parsedConfig, $type, $source)["loc"];
+    $configLocation = $generateName["loc"];
+    $configHashTag = $generateName["name"];
     $parsedConfig[$configHashName] = $configHashTag;
 
     $rebuildedConfig = reparseConfig($parsedConfig, $type);
-    return $rebuildedConfig;
+    return [
+        "loc" => $configLocation,
+        "config" => $rebuildedConfig
+    ];
 }
 
 function is_ip($string)
@@ -504,74 +543,63 @@ function convertToJson($input)
     return $json;
 }
 
-function ip_info($ip)
-{
-    // Check if the IP is from Cloudflare
-    /*if (is_cloudflare_ip($ip)) {
-        $traceUrl = "http://$ip/cdn-cgi/trace";
-        $traceData = convertToJson(file_get_contents($traceUrl));
-        $country = $traceData['loc'] ?? "CF";
-        return (object) [
-            "country" => $country,
-        ];
-    }*/
+function getIPLocation($ip) {
+    $result = [
+        "traceInfo" => [
+            "loc" => ""
+        ],
+        "countryInfo" => [
+            "loc" => ""
+        ]
+    ];
+    $traceUrl = "http://$ip/cdn-cgi/trace";
+    $countryApiUrl = "https://api.country.is/$ip";
 
-    if (is_ip($ip) === false) {
-        $ip_address_array = dns_get_record($ip, DNS_A);
-        if (empty($ip_address_array)) {
-            return null;
+    // Set up stream context for timeout
+    $context = stream_context_create([
+        'http' => [
+            'timeout' => 2 // 2 seconds timeout
+        ]
+    ]);
+
+    // Try to get the trace information from Cloudflare with timeout
+    $traceInfo = @file_get_contents($traceUrl, false, $context);
+    if ($traceInfo !== false) {
+
+        // Parse the trace information
+        $lines = explode("\n", $traceInfo);
+        $traceData = [];
+        foreach ($lines as $line) {
+            $parts = explode('=', $line);
+            if (count($parts) == 2) {
+                $traceData[$parts[0]] = $parts[1];
+            }
         }
-        $randomKey = array_rand($ip_address_array);
-        $ip = $ip_address_array[$randomKey]["ip"];
+
+        // Check if 'loc' is available in the trace data
+        if (isset($traceData['loc'])) {
+            $result["traceInfo"]["loc"] = $traceData['loc'];
+            return $result;
+        }
+    } else {
+        $result["traceInfo"] = [
+            "message" => "Failed to fetch trace information or timed out after 2 seconds",
+            "loc" => ""
+        ];
     }
 
-    // List of API endpoints
-    $endpoints = [
-        "https://ipapi.co/{ip}/json/",
-        "https://ipwhois.app/json/{ip}",
-        "http://www.geoplugin.net/json.gp?ip={ip}",
-        "https://api.ipbase.com/v1/json/{ip}",
-    ];
-
-    // Initialize an empty result object
-    $result = (object) [
-        "country" => "XX",
-    ];
-
-    // Loop through each endpoint
-    foreach ($endpoints as $endpoint) {
-        // Construct the full URL
-        $url = str_replace("{ip}", $ip, $endpoint);
-
-        $options = [
-            "http" => [
-                "header" =>
-                    "User-Agent: Mozilla/5.0 (iPad; U; CPU OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B334b Safari/531.21.102011-10-16 20:23:10\r\n", // i.e. An iPad
-            ],
-        ];
-
-        $context = stream_context_create($options);
-        $response = file_get_contents($url, false, $context);
-
-        if ($response !== false) {
-            $data = json_decode($response);
-
-            // Extract relevant information and update the result object
-            if ($endpoint == $endpoints[0]) {
-                // Data from ipapi.co
-                $result->country = $data->country_code ?? "XX";
-            } elseif ($endpoint == $endpoints[1]) {
-                // Data from ipwhois.app
-                $result->country = $data->country_code ?? "XX";
-            } elseif ($endpoint == $endpoints[2]) {
-                // Data from geoplugin.net
-                $result->country = $data->geoplugin_countryCode ?? "XX";
-            } elseif ($endpoint == $endpoints[3]) {
-                // Data from ipbase.com
-                $result->country = $data->country_code ?? "XX";
-            }
-            // Break out of the loop since we found a successful endpoint
-            break;
+    // If trace information is not available or failed, use the country API
+    $countryInfo = @file_get_contents($countryApiUrl);
+    if ($countryInfo !== false) {
+        $countryData = json_decode($countryInfo, true);
+        if (isset($countryData['country'])) {
+            $result["countryInfo"]["loc"] = $countryData['country'];
+            return $result;
+        } elseif (isset($countryData['error'])) {
+            $result["countryInfo"] = [
+                "message" => "Error: " . $countryData['error']['message'],
+                "loc" => ""
+            ];
         }
     }
 
@@ -689,7 +717,11 @@ function generateName($config, $type, $source)
 
     $configIp = $config[$configIpName];
     $configPort = $config[$configPortName];
-    $configLocation = ip_info($configIp)->country ?? "XX";
+    $getIPLocation = getIPLocation($configIp);
+    $configLocation = 
+        $getIPLocation["traceInfo"]["loc"] !== ""
+            ? $getIPLocation["traceInfo"]["loc"]
+            : $getIPLocation["countryInfo"]["loc"];
     $configFlag =
         $configLocation === "XX"
             ? "❔"
@@ -703,7 +735,10 @@ function generateName($config, $type, $source)
 
     $lantency = ping($configIp, $configPort, 1);
 
-    return "🆔{$source} {$isEncrypted} {$configType}-{$configNetwork}-{$configTLS} {$configFlag} {$configLocation} {$lantency}";
+    return [
+        "loc" => $configLocation,
+        "name" => "🆔{$source} {$isEncrypted} {$configType}-{$configNetwork}-{$configTLS} {$configFlag} {$configLocation} {$lantency}"
+    ];
 }
 
 function getNetwork($config, $type)
