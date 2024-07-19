@@ -982,7 +982,7 @@ function addStringToBeginning($array, $string)
     return $modifiedArray;
 }
 
-function generateReadme($table1, $table2)
+function generateReadme($table1, $table2, $table3)
 {
     $base = "### HiN VPN: Your Gateway to Secure and Free Internet Access
 
@@ -1011,9 +1011,13 @@ To get started with HiN VPN, simply follow the subscription links provided below
     
 " . $table1 . "
     
-Below is a table that shows the generated subscription links from each source, providing users with a variety of options to choose from.
+Below is a table that shows the generated subscription links from each Source, providing users with a variety of options to choose from.
     
 " . $table2 . "
+
+Below is a table that shows the generated subscription links from each Location, providing users with a variety of options to choose from.
+
+" . $table3 . "
     
 This table provides a quick reference for the different subscription links available through HiN VPN, allowing users to easily select the one that best suits their needs.
     
@@ -1022,7 +1026,7 @@ This table provides a quick reference for the different subscription links avail
     return $base;
 }
 
-function generateReadmeWeb($table1, $table2)
+function generateReadmeWeb($table1, $table2, $table3)
 {
     $base = '<!DOCTYPE html>
 <html lang="en">
@@ -1097,9 +1101,11 @@ function generateReadmeWeb($table1, $table2)
                 <p>Get started with HiN VPN using the subscription links below. These links provide access to the latest VPN configurations.</p>
                 <!-- Placeholder for dynamic content -->
                 ' . $table1 . '
-                <p>Below is a table that shows the generated subscription links from each source, providing users with a variety of options to choose from.</p>
+                <p>Below is a table that shows the generated subscription links from each Source, providing users with a variety of options to choose from.</p>
                 ' . $table2 . '
-                <p>This table provides a quick reference for the different subscription links available through HiN VPN, allowing users to easily select the one that best suits their needs.</p>
+                <p>and Below is a table that shows the generated subscription links from each Location, providing users with a variety of options to choose from.</p>
+                ' . $table3 . '
+                <p>This tables provides a quick reference for the different subscription links available through HiN VPN, allowing users to easily select the one that best suits their needs.</p>
             </div>
             <div class="col-12 footer">
                 <h4>The Last Word</h4>
@@ -1161,16 +1167,42 @@ $cells2Array = convertArrays(
     $sourceHiddify
 );
 
+$locationNormals = addStringToBeginning(
+    listFilesInDirectory("subscription/source/location/normal"),
+    "https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/"
+);
+$locationBase64 = addStringToBeginning(
+    listFilesInDirectory("subscription/source/location/base64"),
+    "https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/"
+);
+$locationHiddify = addStringToBeginning(
+    listFilesInDirectory("subscription/source/location/hiddify"),
+    "https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/"
+);
+$locationColumn = getFileNamesInDirectory(
+    listFilesInDirectory("subscription/source/location/normal")
+);
+
+$title3Array = ["Location", "Normal", "Base64", "Hiddify"];
+$cells3Array = convertArrays(
+    $locationColumn,
+    $locationNormals,
+    $locationBase64,
+    $locationHiddify
+);
+
 $table1 = generateReadmeTable($title1Array, $cells1Array);
 $table2 = generateReadmeTable($title2Array, $cells2Array);
+$table3 = generateReadmeTable($title3Array, $cells3Array);
 
-$readmeMdNew = generateReadme($table1, $table2);
+$readmeMdNew = generateReadme($table1, $table2, $table3);
 file_put_contents("README.md", $readmeMdNew);
 
 $table1Html = generateHTMLTable($title1Array, $cells1Array);
 $table2Html = generateHTMLTable($title2Array, $cells2Array);
+$table3Html = generateReadmeTable($title3Array, $cells3Array);
 
-$readmeHtmlNew = generateReadmeWeb($table1Html, $table2Html);
+$readmeHtmlNew = generateReadmeWeb($table1Html, $table2Html, $table3Html);
 file_put_contents("index.html", $readmeHtmlNew);
 
 $randKey = array_rand($hiddify);
