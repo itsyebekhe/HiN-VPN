@@ -76,11 +76,7 @@ function getTelegramChannelConfigs($username)
         foreach ($configs as $source => $configsArray) {
             foreach ($configsArray as $config) {
                 $configType = getTheType($config);
-                $fixedConfig = str_replace(
-                    "amp;",
-                    "",
-                    removeAngleBrackets($config)
-                );
+                $fixedConfig = $config;
                 $correctedConfigArray = correctConfig(
                     "{$fixedConfig}",
                     $configType,
@@ -494,7 +490,7 @@ function correctConfig($config, $type, $source)
     $configHashName = $configsHashName[$type];
 
     $parsedConfig = configParse($config, $type);
-    $generateName = generateName($parsedConfig, $type, $source)["loc"];
+    $generateName = generateName($parsedConfig, $type, $source);
     $configLocation = $generateName["loc"];
     $configHashTag = $generateName["name"];
     $parsedConfig[$configHashName] = $configHashTag;
@@ -1168,19 +1164,19 @@ $cells2Array = convertArrays(
 );
 
 $locationNormals = addStringToBeginning(
-    listFilesInDirectory("subscription/source/location/normal"),
+    listFilesInDirectory("subscription/location/normal"),
     "https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/"
 );
 $locationBase64 = addStringToBeginning(
-    listFilesInDirectory("subscription/source/location/base64"),
+    listFilesInDirectory("subscription/location/base64"),
     "https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/"
 );
 $locationHiddify = addStringToBeginning(
-    listFilesInDirectory("subscription/source/location/hiddify"),
+    listFilesInDirectory("subscription/location/hiddify"),
     "https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/"
 );
 $locationColumn = getFileNamesInDirectory(
-    listFilesInDirectory("subscription/source/location/normal")
+    listFilesInDirectory("subscription/location/normal")
 );
 
 $title3Array = ["Location", "Normal", "Base64", "Hiddify"];
