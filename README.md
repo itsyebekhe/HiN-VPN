@@ -35,7 +35,7 @@ To get started with HiN VPN, simply follow the subscription links provided below
 | hysteria2 | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/normal/hysteria2 | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/base64/hysteria2 | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/hiddify/hysteria2 |
 
     
-Below is a table that shows the generated subscription links from each source, providing users with a variety of options to choose from.
+Below is a table that shows the generated subscription links from each Source, providing users with a variety of options to choose from.
     
 | Source | Normal | Base64 | Hiddify |
 | ------ | ------ | ------ | ------- |
@@ -94,6 +94,37 @@ Below is a table that shows the generated subscription links from each source, p
 | v2rayng_matsuri | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/v2rayng_matsuri | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/v2rayng_matsuri | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/v2rayng_matsuri |
 | freakconfig | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/freakconfig | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/freakconfig | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/freakconfig |
 | privatevpns | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/privatevpns | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/privatevpns | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/privatevpns |
+
+
+Below is a table that shows the generated subscription links from each Location, providing users with a variety of options to choose from.
+
+| Location | Normal | Base64 | Hiddify |
+| -------- | ------ | ------ | ------- |
+| CN | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/CN | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/CN | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/CN |
+| IN | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/IN | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/IN | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/IN |
+| TR | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/TR | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/TR | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/TR |
+| LT | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/LT | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/LT | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/LT |
+| SE | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/SE | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/SE | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/SE |
+| PL | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/PL | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/PL | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/PL |
+| AT | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/AT | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/AT | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/AT |
+| IR | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/IR | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/IR | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/IR |
+| DE | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/DE | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/DE | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/DE |
+| KZ | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/KZ | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/KZ | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/KZ |
+| NO | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/NO | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/NO | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/NO |
+| EE | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/EE | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/EE | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/EE |
+| IT | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/IT | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/IT | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/IT |
+| GI | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/GI | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/GI | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/GI |
+| KR | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/KR | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/KR | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/KR |
+| SG | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/SG | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/SG | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/SG |
+| US | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/US | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/US | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/US |
+| IE | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/IE | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/IE | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/IE |
+| HK | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/HK | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/HK | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/HK |
+| FR | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/FR | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/FR | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/FR |
+| NL | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/NL | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/NL | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/NL |
+| JP | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/JP | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/JP | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/JP |
+| TW | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/TW | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/TW | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/TW |
+| CA | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/CA | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/CA | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/CA |
+| GB | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/GB | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/GB | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/GB |
 
     
 This table provides a quick reference for the different subscription links available through HiN VPN, allowing users to easily select the one that best suits their needs.
