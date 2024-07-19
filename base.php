@@ -621,28 +621,30 @@ function is_cloudflare_ip($ip)
 
 function generateHTMLTable($columnTitles, $columnData) {
     // Start the HTML table with Bootstrap classes
-    $html = '<table class="table">';
+    $html = '<table class="table">' . "\n";
 
     // Add the table header
-    $html .= '<thead><tr>';
+    $html .= '  <thead>' . "\n";
+    $html .= '    <tr>' . "\n";
     foreach ($columnTitles as $title) {
-        $html .= '<th scope="col">' . htmlspecialchars($title) . '</th>';
+        $html .= '      <th scope="col">' . htmlspecialchars($title) . '</th>' . "\n";
     }
-    $html .= '</tr></thead>';
+    $html .= '    </tr>' . "\n";
+    $html .= '  </thead>' . "\n";
 
     // Add the table rows
-    $html .= '<tbody>';
+    $html .= '  <tbody>' . "\n";
     foreach ($columnData as $row) {
-        $html .= '<tr>';
+        $html .= '    <tr>' . "\n";
         foreach ($row as $cell) {
-            $html .= '<td>' . htmlspecialchars($cell) . '</td>';
+            $html .= '      <td>' . htmlspecialchars($cell) . '</td>' . "\n";
         }
-        $html .= '</tr>';
+        $html .= '    </tr>' . "\n";
     }
-    $html .= '</tbody>';
+    $html .= '  </tbody>' . "\n";
 
     // Close the HTML table
-    $html .= '</table>';
+    $html .= '</table>' . "\n";
 
     return $html;
 }
