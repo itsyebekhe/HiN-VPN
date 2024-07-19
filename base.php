@@ -540,29 +540,43 @@ function convertToJson($input)
 }
 
 function getIPLocation($ip) {
-    $result = [
-        "traceInfo" => [
-            "loc" => ""
-        ],
-        "countryInfo" => [
-            "loc" => ""
-        ]
-    ];
+    $result = [];
+
     $traceUrl = "http://$ip/cdn-cgi/trace";
     $countryApiUrl = "https://api.country.is/$ip";
+    $findipApiUrl = "https://api.findip.net/{$ip}/?token=9ca4634d98114db3a48c3571f4f613a8";
 
-    // Set up stream context for timeout
-    $context = stream_context_create([
-        'http' => [
-            'timeout' => 2 // 2 seconds timeout
-        ]
-    ]);
+    $ch1 = curl_init($traceUrl);
+    $ch2 = curl_init($countryApiUrl);
+    $ch3 = curl_init($findipApiUrl);
 
-    // Try to get the trace information from Cloudflare with timeout
-    $traceInfo = @file_get_contents($traceUrl, false, $context);
+    curl_setopt($ch1, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch1, CURLOPT_TIMEOUT, 2); // 2 seconds timeout
+    curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch2, CURLOPT_TIMEOUT, 2); // 2 seconds timeout
+    curl_setopt($ch3, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch3, CURLOPT_TIMEOUT, 2); // 2 seconds timeout
+
+    $mh = curl_multi_init();
+    curl_multi_add_handle($mh, $ch1);
+    curl_multi_add_handle($mh, $ch2);
+    curl_multi_add_handle($mh, $ch3);
+
+    $running = null;
+    do {
+        curl_multi_exec($mh, $running);
+    } while ($running);
+
+    $traceInfo = curl_multi_getcontent($ch1);
+    $countryInfo = curl_multi_getcontent($ch2);
+    $findipInfo = curl_multi_getcontent($ch3);
+
+    curl_multi_remove_handle($mh, $ch1);
+    curl_multi_remove_handle($mh, $ch2);
+    curl_multi_remove_handle($mh, $ch3);
+    curl_multi_close($mh);
+
     if ($traceInfo !== false) {
-
-        // Parse the trace information
         $lines = explode("\n", $traceInfo);
         $traceData = [];
         foreach ($lines as $line) {
@@ -572,7 +586,6 @@ function getIPLocation($ip) {
             }
         }
 
-        // Check if 'loc' is available in the trace data
         if (isset($traceData['loc'])) {
             $result["traceInfo"]["loc"] = $traceData['loc'];
             return $result;
@@ -584,8 +597,6 @@ function getIPLocation($ip) {
         ];
     }
 
-    // If trace information is not available or failed, use the country API
-    $countryInfo = @file_get_contents($countryApiUrl);
     if ($countryInfo !== false) {
         $countryData = json_decode($countryInfo, true);
         if (isset($countryData['country'])) {
@@ -594,6 +605,19 @@ function getIPLocation($ip) {
         } elseif (isset($countryData['error'])) {
             $result["countryInfo"] = [
                 "message" => "Error: " . $countryData['error']['message'],
+                "loc" => ""
+            ];
+        }
+    }
+
+    if ($findipInfo !== false) {
+        $findipData = json_decode($findipInfo, true);
+        if (isset($findipData['country'])) {
+            $result["findipInfo"]["loc"] = $findipData['country']['iso_code'];
+            return $result;
+        } elseif (isset($findipData['Message']) || is_null($findipData)) {
+            $result["countryInfo"] = [
+                "message" => "Error: " . $findipData['message'] ?? null,
                 "loc" => ""
             ];
         }
@@ -719,7 +743,9 @@ function generateName($config, $type, $source)
     $configLocation = 
         $getIPLocation["traceInfo"]["loc"] !== ""
             ? $getIPLocation["traceInfo"]["loc"]
-            : $getIPLocation["countryInfo"]["loc"];
+            : $getIPLocation["countryInfo"]["loc"]
+                ? $getIPLocation["findipInfo"]["loc"]
+                : $getIPLocation["findipInfo"]["loc"];
     $configFlag =
         $configLocation === "XX"
             ? "❔"
