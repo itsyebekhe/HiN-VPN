@@ -774,7 +774,7 @@ function generateName($config, $type, $source)
     $configFlag =
         $configLocation === "XX"
             ? "❔"
-            : getFlags($configLocation));
+            : getFlags($configLocation);
     $isEncrypted = isEncrypted($config, $type) ? "🔒" : "🔓";
     $configType = $configsTypeName[$type];
     $configNetwork = getNetwork($config, $type);
