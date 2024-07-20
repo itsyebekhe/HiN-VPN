@@ -99,6 +99,9 @@ function getTelegramChannelConfigs($username)
     if ($configs['status'] === "OK") {
         unset($configs['status']);
         foreach ($configs as $source => $configsArray) {
+            //timer
+            $time_start = microtime(true);
+
             if (!empty($configsArray)) {
                 foreach ($configsArray as $config) {
                     $configType = getTheType($config);
@@ -148,6 +151,8 @@ function getTelegramChannelConfigs($username)
                 
                 echo "@{$source} ❌\n";
             }
+            //timer
+            echo 'Total time in seconds: ' . (microtime(true) - $time_start) . "\n";
         }
         
         $types = [
@@ -222,6 +227,8 @@ function getTelegramChannelConfigs($username)
 
 function configParse($input, $configType)
 {
+    echo "parse config\n";
+
     if ($configType === "vmess") {
         $vmess_data = substr($input, 8);
         $decoded_data = json_decode(base64_decode($vmess_data), true);
@@ -282,6 +289,8 @@ function configParse($input, $configType)
 
 function reparseConfig($configArray, $configType)
 {
+    echo "reparse config\n";
+
     if ($configType === "vmess") {
         $encoded_data = base64_encode(json_encode($configArray));
         $vmess_config = "vmess://" . $encoded_data;
@@ -317,6 +326,8 @@ function reparseConfig($configArray, $configType)
 
 function addUsernameAndPassword($obj)
 {
+    echo "add Username And Password\n";
+
     $url = "";
     if ($obj["username"] !== "") {
         $url .= $obj["username"];
@@ -330,6 +341,8 @@ function addUsernameAndPassword($obj)
 
 function addPort($obj)
 {
+    echo "add Port\n";
+
     $url = "";
     if (isset($obj["port"]) && $obj["port"] !== "") {
         $url .= ":" . $obj["port"];
@@ -339,6 +352,8 @@ function addPort($obj)
 
 function addParams($obj)
 {
+    echo "add Params\n";
+
     $url = "";
     if (!empty($obj["params"])) {
         $url .= "?" . http_build_query($obj["params"]);
@@ -366,6 +381,8 @@ function addHash($obj)
 
 function removeFileInDirectory($directory, $fileName)
 {
+    echo "remove File In Directory\n";
+    
     if (!is_dir($directory)) {
         return false;
     }
@@ -385,6 +402,8 @@ function removeFileInDirectory($directory, $fileName)
 
 function generateReadmeTable($titles, $data)
 {
+    echo "generate Readme Table\n";
+    
     $table = "| " . implode(" | ", $titles) . " |" . PHP_EOL;
 
     $separator =
@@ -409,6 +428,8 @@ function generateReadmeTable($titles, $data)
 
 function listFilesInDirectory($directory)
 {
+    echo "list Files In Directory\n";
+    
     if (!is_dir($directory)) {
         throw new InvalidArgumentException("Directory does not exist.");
     }
@@ -439,6 +460,8 @@ function listFilesInDirectory($directory)
 
 function getFileNamesInDirectory($filePaths)
 {
+    echo "get File Names In Directory\n";
+    
     $fileNames = [];
 
     foreach ($filePaths as $filePath) {
@@ -452,6 +475,8 @@ function getFileNamesInDirectory($filePaths)
 
 function convertArrays()
 {
+    echo "convert Arrays\n";
+    
     $arrays = func_get_args();
 
     $result = [];
@@ -497,6 +522,8 @@ function getRandomName()
 
 function correctConfig($config, $type, $source)
 {
+    echo "correct Config\n";
+    
     $configsHashName = [
         "vmess" => "ps",
         "vless" => "hash",
@@ -560,6 +587,8 @@ function convertToJson($input)
 }
 
 function resolveToIP($var) {
+    echo "resolve To IP\n";
+    
     if (filter_var($var, FILTER_VALIDATE_IP)) {
         return $var;
     } else {
@@ -573,6 +602,8 @@ function resolveToIP($var) {
 }
 
 function getIPLocation($ip) {
+    echo "get IP Location\n";
+    
     $token = getenv("FINDIP_TOKEN");
     $ip = resolveToIP($ip);
     $result = [];
@@ -692,6 +723,8 @@ function getIPLocation($ip) {
 }
 function is_cloudflare_ip($ip)
 {
+    echo "is_cloudflare_ip\n";
+    
     // Get the Cloudflare IP ranges
     $cloudflare_ranges = file_get_contents(
         "https://raw.githubusercontent.com/ircfspace/cf-ip-ranges/main/export.ipv4"
@@ -708,6 +741,8 @@ function is_cloudflare_ip($ip)
 }
 
 function generateHTMLTable($columnTitles, $columnData) {
+    echo "generate HTML Table\n";
+    
     // Start the HTML table with Bootstrap classes
     $html = '<table class="table">' . "\n";
 
@@ -767,6 +802,8 @@ function getFlags($country_code)
 
 function generateName($config, $type, $source)
 {
+    echo "generate Name\n";
+    
     $configsTypeName = [
         "vmess" => "VM",
         "vless" => "VL",
@@ -912,6 +949,8 @@ function removeAngleBrackets($link)
 
 function ping($host, $port, $timeout)
 {
+    echo "Ping\n";
+    
     $tB = microtime(true);
     $fP = fSockOpen($host, $port, $errno, $errstr, $timeout);
     if (!$fP) {
@@ -957,6 +996,8 @@ function generateHiddifyTags($type)
 
 function gregorianToJalali($gy, $gm, $gd)
 {
+    echo "gregorian To Jalali\n";
+    
     $g_d_m = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
     if ($gy > 1600) {
         $jy = 979;
@@ -989,6 +1030,8 @@ function gregorianToJalali($gy, $gm, $gd)
 
 function getTehranTime()
 {
+    echo "get Tehran Time\n";
+    
     // Set the timezone to Tehran
     date_default_timezone_set("Asia/Tehran");
 
@@ -1328,4 +1371,4 @@ $message = "🔺 لینک های اشتراک HiN بروزرسانی شدن! �
 
 🌐 <a href='https://t.me/Here_is_Nowhere'>𝗛.𝗜.𝗡 🫧</a>";
 
-sendMessage($botToken, -1002043507701, $message, "html", $keyboard);
+//sendMessage($botToken, -1002043507701, $message, "html", $keyboard);
