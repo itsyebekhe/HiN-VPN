@@ -113,7 +113,9 @@ function getTelegramChannelConfigs($username)
                     $mix .= $correctedConfig . "\n";
                     $$configType .= $correctedConfig . "\n";
                     $$source .= $correctedConfig . "\n";
-                    $locationsArray[] = $configLocation;
+                    if (!in_array($configLocation, $locationsArray)) {
+                        $locationsArray[] = $configLocation;
+                    }
                     $$configLocation .= $correctedConfig . "\n";
                 }
     
