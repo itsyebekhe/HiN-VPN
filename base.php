@@ -596,12 +596,12 @@ function resolveToIP($var)
     $time_start = microtime(true);
 
     if (filter_var($var, FILTER_VALIDATE_IP)) {
-        echo 'Total execution time in seconds: ' . (microtime(true) - $time_start);
+        echo 'Total resolve ip exec time in seconds: ' . (microtime(true) - $time_start);
         return $var;
     } else {
         $ip = gethostbyname($var);
         if ($ip !== $var) {
-            echo 'Total execution time in seconds: ' . (microtime(true) - $time_start);
+            echo 'Total resolve ip exec time in seconds: ' . (microtime(true) - $time_start);
             return $ip;
         } else {
             echo 'Total resolve ip exec time in seconds: ' . (microtime(true) - $time_start);
