@@ -29,3 +29,4 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
+          FINDIP_TOKEN: ${{ secrets.FINDIP_TOKEN }}
