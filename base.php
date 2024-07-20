@@ -770,18 +770,11 @@ function generateName($config, $type, $source)
     $configIp = $config[$configIpName];
     $configPort = $config[$configPortName];
     $getIPLocation = getIPLocation($configIp);
-    $configLocation = 
-        $getIPLocation["traceInfo"]["loc"] !== ""
-            ? $getIPLocation["traceInfo"]["loc"]
-            : $getIPLocation["countryInfo"]["loc"]
-                ? $getIPLocation["findipInfo"]["loc"]
-                : $getIPLocation["findipInfo"]["loc"];
+    $configLocation = $getIPLocation["loc"] ?? "XX";
     $configFlag =
         $configLocation === "XX"
             ? "❔"
-            : ($configLocation === "CF"
-                ? "🚩"
-                : getFlags($configLocation));
+            : getFlags($configLocation));
     $isEncrypted = isEncrypted($config, $type) ? "🔒" : "🔓";
     $configType = $configsTypeName[$type];
     $configNetwork = getNetwork($config, $type);
