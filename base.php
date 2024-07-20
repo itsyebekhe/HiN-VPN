@@ -101,9 +101,6 @@ function getTelegramChannelConfigs($username)
         foreach ($configs as $source => $configsArray) {
             if (!empty($configsArray)) {
                 foreach ($configsArray as $config) {
-                    //config timer
-                    $time_start = microtime(true); 
-
                     $configType = getTheType($config);
                     $fixedConfig = $config;
                     $correctedConfigArray = correctConfig(
@@ -120,8 +117,6 @@ function getTelegramChannelConfigs($username)
                         $locationsArray[] = $configLocation;
                     }
                     $$configLocation .= $correctedConfig . "\n";
-
-                    echo 'config execution time in seconds: ' . (microtime(true) - $time_start);
                 }
     
                 $configsSource =
