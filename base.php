@@ -540,11 +540,12 @@ function convertToJson($input)
 }
 
 function getIPLocation($ip) {
+    $token = getenv("FINDIP_TOKEN");
     $result = [];
 
-    $traceUrl = "http://$ip/cdn-cgi/trace";
+    $traceUrl = "http://{$ip}/cdn-cgi/trace";
     $countryApiUrl = "https://api.country.is/$ip";
-    $findipApiUrl = "https://api.findip.net/{$ip}/?token=9ca4634d98114db3a48c3571f4f613a8";
+    $findipApiUrl = "https://api.findip.net/{$ip}/?token={$token}";
 
     $ch1 = curl_init($traceUrl);
     $ch2 = curl_init($countryApiUrl);
@@ -587,8 +588,14 @@ function getIPLocation($ip) {
         }
 
         if (isset($traceData['loc'])) {
-            $result["traceInfo"]["loc"] = $traceData['loc'];
-            return $result;
+            $result["traceInfo"] = [
+                "loc" => $traceData['loc']
+            ];
+        } else {
+            $result["traceInfo"] = [
+                "message" => "Trace information incomplete",
+                "loc" => ""
+            ];
         }
     } else {
         $result["traceInfo"] = [
@@ -600,32 +607,55 @@ function getIPLocation($ip) {
     if ($countryInfo !== false) {
         $countryData = json_decode($countryInfo, true);
         if (isset($countryData['country'])) {
-            $result["countryInfo"]["loc"] = $countryData['country'];
-            return $result;
+            $result["countryInfo"] = [
+                "loc" => $countryData['country']
+            ];
         } elseif (isset($countryData['error'])) {
             $result["countryInfo"] = [
                 "message" => "Error: " . $countryData['error']['message'],
                 "loc" => ""
             ];
         }
+    } else {
+        $result["countryInfo"] = [
+            "message" => "Failed to fetch country information or timed out after 2 seconds",
+            "loc" => ""
+        ];
     }
 
     if ($findipInfo !== false) {
         $findipData = json_decode($findipInfo, true);
         if (isset($findipData['country'])) {
-            $result["findipInfo"]["loc"] = $findipData['country']['iso_code'];
-            return $result;
+            $result["findipInfo"] = [
+                "loc" => $findipData['country']['iso_code']
+            ];
         } elseif (isset($findipData['Message']) || is_null($findipData)) {
-            $result["countryInfo"] = [
-                "message" => "Error: " . $findipData['message'] ?? null,
+            $result["findipInfo"] = [
+                "message" => "Error: " . ($findipData['message'] ?? "Unknown error"),
                 "loc" => ""
             ];
         }
+    } else {
+        $result["findipInfo"] = [
+            "message" => "Failed to fetch findip information or timed out after 2 seconds",
+            "loc" => ""
+        ];
     }
+
+    // Consolidate the loc value from all sources
+    $loc = "";
+    if (!empty($result["traceInfo"]["loc"])) {
+        $loc = $result["traceInfo"]["loc"];
+    } elseif (!empty($result["countryInfo"]["loc"])) {
+        $loc = $result["countryInfo"]["loc"];
+    } elseif (!empty($result["findipInfo"]["loc"])) {
+        $loc = $result["findipInfo"]["loc"];
+    }
+
+    $result["loc"] = $loc;
 
     return $result;
 }
-
 function is_cloudflare_ip($ip)
 {
     // Get the Cloudflare IP ranges
