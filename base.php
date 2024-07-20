@@ -61,6 +61,31 @@ function getGitHubFileContent($owner, $repo, $path, $token) {
     return $output;
 }
 
+function modifyString($inputString, $itemToRemove) {
+    $array = explode(',', $inputString);
+    
+    if (($key = array_search($itemToRemove, $array)) !== false) {
+        unset($array[$key]);
+    }
+    
+    $resultString = implode(',', $array);
+    
+    return $resultString;
+}
+
+function modifyStringAddItem($inputString, $itemToAdd) {
+    $array = explode(',', $inputString);
+    
+    if (!in_array($itemToAdd, $array)) {
+        $array[] = $itemToAdd;
+    }
+    
+    $resultString = implode(',', $array);
+    
+    return $resultString;
+}
+
+
 function getTelegramChannelConfigs($username)
 {
     $sourceArray = explode(",", $username);
@@ -74,24 +99,24 @@ function getTelegramChannelConfigs($username)
     if ($configs['status'] === "OK") {
         unset($configs['status']);
         foreach ($configs as $source => $configsArray) {
-            foreach ($configsArray as $config) {
-                $configType = getTheType($config);
-                $fixedConfig = $config;
-                $correctedConfigArray = correctConfig(
-                    "{$fixedConfig}",
-                    $configType,
-                    $source
-                );
-                $configLocation = $correctedConfigArray["loc"];
-                $correctedConfig = $correctedConfigArray["config"];
-                $mix .= $correctedConfig . "\n";
-                $$configType .= $correctedConfig . "\n";
-                $$source .= $correctedConfig . "\n";
-                $locationsArray[] = $configLocation;
-                $$configLocation .= $correctedConfig . "\n";
-            }
-    
             if (!empty($configsArray)) {
+                foreach ($configsArray as $config) {
+                    $configType = getTheType($config);
+                    $fixedConfig = $config;
+                    $correctedConfigArray = correctConfig(
+                        "{$fixedConfig}",
+                        $configType,
+                        $source
+                    );
+                    $configLocation = $correctedConfigArray["loc"];
+                    $correctedConfig = $correctedConfigArray["config"];
+                    $mix .= $correctedConfig . "\n";
+                    $$configType .= $correctedConfig . "\n";
+                    $$source .= $correctedConfig . "\n";
+                    $locationsArray[] = $configLocation;
+                    $$configLocation .= $correctedConfig . "\n";
+                }
+    
                 $configsSource =
                     generateUpdateTime() . $$source . generateEndofConfiguration();
                 file_put_contents(
@@ -110,17 +135,10 @@ function getTelegramChannelConfigs($username)
                 );
                 echo "@{$source} ✅\n";
             } else {
-                $username = str_replace($source, "", $username);
-                $username = str_replace(",,", ",", $username);
-                file_put_contents("source.conf", $username);
+                file_put_contents("source.conf", modifyString($username, $source));
                 
                 $emptySource = file_get_contents("empty.conf");
-                $emptyArray = explode(",", $emptySource);
-                if (!in_array($source, $emptyArray)) {
-                    $emptyArray[] = $source;
-                    $emptySource = implode(",", $emptyArray);
-                }
-                file_put_contents("empty.conf", $emptySource);
+                file_put_contents("empty.conf", modifyStringAddItem($emptySource, $source));
     
                 removeFileInDirectory("subscription/source/normal/", $source);
                 removeFileInDirectory("subscription/source/base64/", $source);
