@@ -27,7 +27,8 @@ function getTheType($input)
     }
 }
 
-function fetchGitHubContent($owner, $repo, $path, $token) {
+function fetchGitHubContent($owner, $repo, $path, $token)
+{
     $ch = curl_init();
 
     $url = "https://api.github.com/repos/$owner/$repo/contents/$path";
@@ -47,11 +48,12 @@ function fetchGitHubContent($owner, $repo, $path, $token) {
         echo 'Error:' . curl_error($ch);
     }
     curl_close($ch);
-    
+
     return $result;
 }
 
-function getGitHubFileContent($owner, $repo, $path, $token) {
+function getGitHubFileContent($owner, $repo, $path, $token)
+{
     $content = json_decode(fetchGitHubContent($owner, $repo, $path, $token), true);
 
     if (isset($content['content'])) {
@@ -61,27 +63,29 @@ function getGitHubFileContent($owner, $repo, $path, $token) {
     return $output;
 }
 
-function modifyString($inputString, $itemToRemove) {
+function modifyString($inputString, $itemToRemove)
+{
     $array = explode(',', $inputString);
-    
+
     if (($key = array_search($itemToRemove, $array)) !== false) {
         unset($array[$key]);
     }
-    
+
     $resultString = implode(',', $array);
-    
+
     return $resultString;
 }
 
-function modifyStringAddItem($inputString, $itemToAdd) {
+function modifyStringAddItem($inputString, $itemToAdd)
+{
     $array = explode(',', $inputString);
-    
+
     if (!in_array($itemToAdd, $array)) {
         $array[] = $itemToAdd;
     }
-    
+
     $resultString = implode(',', $array);
-    
+
     return $resultString;
 }
 
@@ -92,13 +96,16 @@ function getTelegramChannelConfigs($username)
     $mix = "";
     $GIT_TOKEN = getenv('GIT_TOKEN');
     $locationsArray = [];
-    
+
     $configs = getGitHubFileContent("itsyebekhe", "cGrabber", "configs.json", $GIT_TOKEN);
     //print_r($configs);
     echo "Configs Arrived!⚡️\n";
     if ($configs['status'] === "OK") {
         unset($configs['status']);
         foreach ($configs as $source => $configsArray) {
+            //channel timer
+            $time_start = microtime(true);
+
             if (!empty($configsArray)) {
                 foreach ($configsArray as $config) {
                     $configType = getTheType($config);
@@ -118,7 +125,7 @@ function getTelegramChannelConfigs($username)
                     }
                     $$configLocation .= $correctedConfig . "\n";
                 }
-    
+
                 $configsSource =
                     generateUpdateTime() . $$source . generateEndofConfiguration();
                 file_put_contents(
@@ -138,18 +145,20 @@ function getTelegramChannelConfigs($username)
                 echo "@{$source} ✅\n";
             } else {
                 file_put_contents("source.conf", modifyString($username, $source));
-                
+
                 $emptySource = file_get_contents("empty.conf");
                 file_put_contents("empty.conf", modifyStringAddItem($emptySource, $source));
-    
+
                 removeFileInDirectory("subscription/source/normal/", $source);
                 removeFileInDirectory("subscription/source/base64/", $source);
                 removeFileInDirectory("subscription/source/hiddify/", $source);
-                
+
                 echo "@{$source} ❌\n";
             }
+            //channel timer
+            echo 'Total channel exec time in seconds: ' . (microtime(true) - $time_start) . "\n\n";
         }
-        
+
         $types = [
             "mix",
             "vmess",
@@ -176,8 +185,8 @@ function getTelegramChannelConfigs($username)
                     "subscription/hiddify/" . $filename,
                     base64_encode(
                         generateHiddifyTags(strtoupper($filename)) .
-                            "\n" .
-                            $configsType
+                        "\n" .
+                        $configsType
                     )
                 );
                 echo "#{$filename} ✅\n";
@@ -199,14 +208,14 @@ function getTelegramChannelConfigs($username)
                 file_put_contents("subscription/location/normal/" . $location, $configsLocation);
                 file_put_contents(
                     "subscription/location/base64/" . $location,
-                     base64_encode($configsLocation)
+                    base64_encode($configsLocation)
                 );
                 file_put_contents(
                     "subscription/location/hiddify/" . $location,
                     base64_encode(
                         generateHiddifyTags(strtoupper($location)) .
-                            "\n" .
-                            $configsLocation
+                        "\n" .
+                        $configsLocation
                     )
                 );
                 echo "#{$location} ✅\n";
@@ -459,7 +468,7 @@ function convertArrays()
     if (empty($arrays)) {
         return $result;
     }
-    
+
     $count = count($arrays[0]);
 
     for ($i = 0; $i < $count; $i++) {
@@ -559,7 +568,8 @@ function convertToJson($input)
     return $json;
 }
 
-function resolveToIP($var) {
+function resolveToIP($var)
+{
     if (filter_var($var, FILTER_VALIDATE_IP)) {
         return $var;
     } else {
@@ -572,7 +582,8 @@ function resolveToIP($var) {
     }
 }
 
-function getIPLocation($ip) {
+function getIPLocation($ip)
+{
     $token = getenv("FINDIP_TOKEN");
     $ip = resolveToIP($ip);
     $result = [];
@@ -707,7 +718,8 @@ function is_cloudflare_ip($ip)
     return false;
 }
 
-function generateHTMLTable($columnTitles, $columnData) {
+function generateHTMLTable($columnTitles, $columnData)
+{
     // Start the HTML table with Bootstrap classes
     $html = '<table class="table">' . "\n";
 
@@ -807,8 +819,8 @@ function generateName($config, $type, $source)
     $configLocation = $getIPLocation["loc"] ?? "XX";
     $configFlag =
         $configLocation === "XX"
-            ? "❔"
-            : getFlags($configLocation);
+        ? "❔"
+        : getFlags($configLocation);
     $isEncrypted = isEncrypted($config, $type) ? "🔒" : "🔓";
     $configType = $configsTypeName[$type];
     $configNetwork = getNetwork($config, $type);
@@ -1297,14 +1309,14 @@ $keyboard = [
             "text" => "📲 STREISAND",
             "url" => maskUrl(
                 "streisand://import/" .
-                    $randType
+                $randType
             ),
         ],
         [
             "text" => "📲 HIDDIFY",
             "url" => maskUrl(
-                "hiddify://import/" . 
-                    $randType
+                "hiddify://import/" .
+                $randType
             )
         ]
     ],
