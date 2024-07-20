@@ -559,8 +559,22 @@ function convertToJson($input)
     return $json;
 }
 
+function resolveToIP($var) {
+    if (filter_var($var, FILTER_VALIDATE_IP)) {
+        return $var;
+    } else {
+        $ip = gethostbyname($var);
+        if ($ip !== $var) {
+            return $ip;
+        } else {
+            return false;
+        }
+    }
+}
+
 function getIPLocation($ip) {
     $token = getenv("FINDIP_TOKEN");
+    $ip = resolveToIP($ip);
     $result = [];
 
     $traceUrl = "http://{$ip}/cdn-cgi/trace";
