@@ -588,14 +588,18 @@ function convertToJson($input)
 
 function resolveToIP($var) {
     echo "resolve To IP\n";
-    
+    $time_start = microtime(true); 
+
     if (filter_var($var, FILTER_VALIDATE_IP)) {
+        echo 'Total execution time in seconds: ' . (microtime(true) - $time_start);
         return $var;
     } else {
         $ip = gethostbyname($var);
         if ($ip !== $var) {
+            echo 'Total execution time in seconds: ' . (microtime(true) - $time_start);
             return $ip;
         } else {
+            echo 'Total execution time in seconds: ' . (microtime(true) - $time_start);
             return false;
         }
     }
@@ -950,13 +954,14 @@ function removeAngleBrackets($link)
 function ping($host, $port, $timeout)
 {
     echo "Ping\n";
-    
+    $time_start = microtime(true); 
     $tB = microtime(true);
     $fP = fSockOpen($host, $port, $errno, $errstr, $timeout);
     if (!$fP) {
         return "down";
     }
     $tA = microtime(true);
+    echo 'Total execution time in seconds: ' . (microtime(true) - $time_start);
     return round(($tA - $tB) * 1000, 0) . "ms";
 }
 
