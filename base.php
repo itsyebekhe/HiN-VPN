@@ -27,7 +27,8 @@ function getTheType($input)
     }
 }
 
-function fetchGitHubContent($owner, $repo, $path, $token) {
+function fetchGitHubContent($owner, $repo, $path, $token)
+{
     $ch = curl_init();
 
     $url = "https://api.github.com/repos/$owner/$repo/contents/$path";
@@ -47,11 +48,12 @@ function fetchGitHubContent($owner, $repo, $path, $token) {
         echo 'Error:' . curl_error($ch);
     }
     curl_close($ch);
-    
+
     return $result;
 }
 
-function getGitHubFileContent($owner, $repo, $path, $token) {
+function getGitHubFileContent($owner, $repo, $path, $token)
+{
     $content = json_decode(fetchGitHubContent($owner, $repo, $path, $token), true);
 
     if (isset($content['content'])) {
@@ -61,27 +63,29 @@ function getGitHubFileContent($owner, $repo, $path, $token) {
     return $output;
 }
 
-function modifyString($inputString, $itemToRemove) {
+function modifyString($inputString, $itemToRemove)
+{
     $array = explode(',', $inputString);
-    
+
     if (($key = array_search($itemToRemove, $array)) !== false) {
         unset($array[$key]);
     }
-    
+
     $resultString = implode(',', $array);
-    
+
     return $resultString;
 }
 
-function modifyStringAddItem($inputString, $itemToAdd) {
+function modifyStringAddItem($inputString, $itemToAdd)
+{
     $array = explode(',', $inputString);
-    
+
     if (!in_array($itemToAdd, $array)) {
         $array[] = $itemToAdd;
     }
-    
+
     $resultString = implode(',', $array);
-    
+
     return $resultString;
 }
 
@@ -92,7 +96,7 @@ function getTelegramChannelConfigs($username)
     $mix = "";
     $GIT_TOKEN = getenv('GIT_TOKEN');
     $locationsArray = [];
-    
+
     $configs = getGitHubFileContent("itsyebekhe", "cGrabber", "configs.json", $GIT_TOKEN);
     //print_r($configs);
     echo "Configs Arrived!⚡️\n";
@@ -121,7 +125,7 @@ function getTelegramChannelConfigs($username)
                     }
                     $$configLocation .= $correctedConfig . "\n";
                 }
-    
+
                 $configsSource =
                     generateUpdateTime() . $$source . generateEndofConfiguration();
                 file_put_contents(
@@ -141,20 +145,20 @@ function getTelegramChannelConfigs($username)
                 echo "@{$source} ✅\n";
             } else {
                 file_put_contents("source.conf", modifyString($username, $source));
-                
+
                 $emptySource = file_get_contents("empty.conf");
                 file_put_contents("empty.conf", modifyStringAddItem($emptySource, $source));
-    
+
                 removeFileInDirectory("subscription/source/normal/", $source);
                 removeFileInDirectory("subscription/source/base64/", $source);
                 removeFileInDirectory("subscription/source/hiddify/", $source);
-                
+
                 echo "@{$source} ❌\n";
             }
             //timer
             echo 'Total time in seconds: ' . (microtime(true) - $time_start) . "\n";
         }
-        
+
         $types = [
             "mix",
             "vmess",
@@ -181,8 +185,8 @@ function getTelegramChannelConfigs($username)
                     "subscription/hiddify/" . $filename,
                     base64_encode(
                         generateHiddifyTags(strtoupper($filename)) .
-                            "\n" .
-                            $configsType
+                        "\n" .
+                        $configsType
                     )
                 );
                 echo "#{$filename} ✅\n";
@@ -204,14 +208,14 @@ function getTelegramChannelConfigs($username)
                 file_put_contents("subscription/location/normal/" . $location, $configsLocation);
                 file_put_contents(
                     "subscription/location/base64/" . $location,
-                     base64_encode($configsLocation)
+                    base64_encode($configsLocation)
                 );
                 file_put_contents(
                     "subscription/location/hiddify/" . $location,
                     base64_encode(
                         generateHiddifyTags(strtoupper($location)) .
-                            "\n" .
-                            $configsLocation
+                        "\n" .
+                        $configsLocation
                     )
                 );
                 echo "#{$location} ✅\n";
@@ -382,7 +386,7 @@ function addHash($obj)
 function removeFileInDirectory($directory, $fileName)
 {
     echo "remove File In Directory\n";
-    
+
     if (!is_dir($directory)) {
         return false;
     }
@@ -403,7 +407,7 @@ function removeFileInDirectory($directory, $fileName)
 function generateReadmeTable($titles, $data)
 {
     echo "generate Readme Table\n";
-    
+
     $table = "| " . implode(" | ", $titles) . " |" . PHP_EOL;
 
     $separator =
@@ -429,7 +433,7 @@ function generateReadmeTable($titles, $data)
 function listFilesInDirectory($directory)
 {
     echo "list Files In Directory\n";
-    
+
     if (!is_dir($directory)) {
         throw new InvalidArgumentException("Directory does not exist.");
     }
@@ -461,7 +465,7 @@ function listFilesInDirectory($directory)
 function getFileNamesInDirectory($filePaths)
 {
     echo "get File Names In Directory\n";
-    
+
     $fileNames = [];
 
     foreach ($filePaths as $filePath) {
@@ -476,7 +480,7 @@ function getFileNamesInDirectory($filePaths)
 function convertArrays()
 {
     echo "convert Arrays\n";
-    
+
     $arrays = func_get_args();
 
     $result = [];
@@ -484,7 +488,7 @@ function convertArrays()
     if (empty($arrays)) {
         return $result;
     }
-    
+
     $count = count($arrays[0]);
 
     for ($i = 0; $i < $count; $i++) {
@@ -523,7 +527,7 @@ function getRandomName()
 function correctConfig($config, $type, $source)
 {
     echo "correct Config\n";
-    
+
     $configsHashName = [
         "vmess" => "ps",
         "vless" => "hash",
@@ -586,9 +590,10 @@ function convertToJson($input)
     return $json;
 }
 
-function resolveToIP($var) {
+function resolveToIP($var)
+{
     echo "resolve To IP\n";
-    $time_start = microtime(true); 
+    $time_start = microtime(true);
 
     if (filter_var($var, FILTER_VALIDATE_IP)) {
         echo 'Total execution time in seconds: ' . (microtime(true) - $time_start);
@@ -599,15 +604,16 @@ function resolveToIP($var) {
             echo 'Total execution time in seconds: ' . (microtime(true) - $time_start);
             return $ip;
         } else {
-            echo 'Total execution time in seconds: ' . (microtime(true) - $time_start);
+            echo 'Total resolve ip exec time in seconds: ' . (microtime(true) - $time_start);
             return false;
         }
     }
 }
 
-function getIPLocation($ip) {
+function getIPLocation($ip)
+{
     echo "get IP Location\n";
-    
+
     $token = getenv("FINDIP_TOKEN");
     $ip = resolveToIP($ip);
     $result = [];
@@ -728,7 +734,7 @@ function getIPLocation($ip) {
 function is_cloudflare_ip($ip)
 {
     echo "is_cloudflare_ip\n";
-    
+
     // Get the Cloudflare IP ranges
     $cloudflare_ranges = file_get_contents(
         "https://raw.githubusercontent.com/ircfspace/cf-ip-ranges/main/export.ipv4"
@@ -744,9 +750,10 @@ function is_cloudflare_ip($ip)
     return false;
 }
 
-function generateHTMLTable($columnTitles, $columnData) {
+function generateHTMLTable($columnTitles, $columnData)
+{
     echo "generate HTML Table\n";
-    
+
     // Start the HTML table with Bootstrap classes
     $html = '<table class="table">' . "\n";
 
@@ -807,7 +814,7 @@ function getFlags($country_code)
 function generateName($config, $type, $source)
 {
     echo "generate Name\n";
-    
+
     $configsTypeName = [
         "vmess" => "VM",
         "vless" => "VL",
@@ -848,8 +855,8 @@ function generateName($config, $type, $source)
     $configLocation = $getIPLocation["loc"] ?? "XX";
     $configFlag =
         $configLocation === "XX"
-            ? "❔"
-            : getFlags($configLocation);
+        ? "❔"
+        : getFlags($configLocation);
     $isEncrypted = isEncrypted($config, $type) ? "🔒" : "🔓";
     $configType = $configsTypeName[$type];
     $configNetwork = getNetwork($config, $type);
@@ -954,14 +961,14 @@ function removeAngleBrackets($link)
 function ping($host, $port, $timeout)
 {
     echo "Ping\n";
-    $time_start = microtime(true); 
+    $time_start = microtime(true);
     $tB = microtime(true);
     $fP = fSockOpen($host, $port, $errno, $errstr, $timeout);
     if (!$fP) {
         return "down";
     }
     $tA = microtime(true);
-    echo 'Total execution time in seconds: ' . (microtime(true) - $time_start);
+    echo 'Total ping exec time in seconds: ' . (microtime(true) - $time_start);
     return round(($tA - $tB) * 1000, 0) . "ms";
 }
 
@@ -1002,7 +1009,7 @@ function generateHiddifyTags($type)
 function gregorianToJalali($gy, $gm, $gd)
 {
     echo "gregorian To Jalali\n";
-    
+
     $g_d_m = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
     if ($gy > 1600) {
         $jy = 979;
@@ -1036,7 +1043,7 @@ function gregorianToJalali($gy, $gm, $gd)
 function getTehranTime()
 {
     echo "get Tehran Time\n";
-    
+
     // Set the timezone to Tehran
     date_default_timezone_set("Asia/Tehran");
 
@@ -1345,14 +1352,14 @@ $keyboard = [
             "text" => "📲 STREISAND",
             "url" => maskUrl(
                 "streisand://import/" .
-                    $randType
+                $randType
             ),
         ],
         [
             "text" => "📲 HIDDIFY",
             "url" => maskUrl(
-                "hiddify://import/" . 
-                    $randType
+                "hiddify://import/" .
+                $randType
             )
         ]
     ],
