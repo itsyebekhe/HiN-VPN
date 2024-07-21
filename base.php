@@ -94,7 +94,6 @@ function modifyStringAddItem($inputString, $itemToAdd)
 
 function getTelegramChannelConfigs($username)
 {
-    $sourceArray = explode(",", $username);
     $mix = "";
     $GIT_TOKEN = getenv("GIT_TOKEN");
     $locationsArray = [];
@@ -113,8 +112,11 @@ function getTelegramChannelConfigs($username)
             //channel timer
             $time_start = microtime(true);
 
-            if (!empty($configsArray)) {
-                foreach ($configsArray as $config) {
+            // Limit the configsArray to the first 20 items
+            $limitedConfigsArray = array_slice($configsArray, 0, 20);
+
+            if (!empty($limitedConfigsArray)) {
+                foreach ($limitedConfigsArray as $config) {
                     $configType = getTheType($config);
                     $fixedConfig = $config;
                     $correctedConfigArray = correctConfig(
@@ -191,8 +193,13 @@ function getTelegramChannelConfigs($username)
             "hysteria2",
         ];
         foreach ($types as $filename) {
-            $protocolCheckpoint = explode("\n", $$filename);
-            if (!empty($protocolCheckpoint)) {
+            // Trim the content and check if it's empty
+            if (empty(trim($$filename))) {
+                removeFileInDirectory("subscription/normal/", $filename);
+                removeFileInDirectory("subscription/base64/", $filename);
+                removeFileInDirectory("subscription/hiddify/", $filename);
+                echo "#{$filename} ❌\n";
+            } else {
                 $configsType =
                     generateUpdateTime() .
                     $$filename .
@@ -214,17 +221,26 @@ function getTelegramChannelConfigs($username)
                     )
                 );
                 echo "#{$filename} ✅\n";
-            } else {
-                removeFileInDirectory("subscription/normal/", $filename);
-                removeFileInDirectory("subscription/base64/", $filename);
-                removeFileInDirectory("subscription/hiddify/", $filename);
-                echo "#{$filename} ❌\n";
             }
         }
 
         foreach ($locationsArray as $location) {
-            $locationCheckpoint = explode("\n", $$location);
-            if (!empty($locationCheckpoint)) {
+            // Trim the content and check if it's empty
+            if (empty(trim($$location))) {
+                removeFileInDirectory(
+                    "subscription/location/normal/",
+                    $location
+                );
+                removeFileInDirectory(
+                    "subscription/location/base64/",
+                    $location
+                );
+                removeFileInDirectory(
+                    "subscription/location/hiddify/",
+                    $location
+                );
+                echo "#{$location} ❌\n";
+            } else {
                 $configsLocation =
                     generateUpdateTime() .
                     $$location .
@@ -246,20 +262,6 @@ function getTelegramChannelConfigs($username)
                     )
                 );
                 echo "#{$location} ✅\n";
-            } else {
-                removeFileInDirectory(
-                    "subscription/location/normal/",
-                    $location
-                );
-                removeFileInDirectory(
-                    "subscription/location/base64/",
-                    $location
-                );
-                removeFileInDirectory(
-                    "subscription/location/hiddify/",
-                    $location
-                );
-                echo "#{$location} ❌\n";
             }
         }
     }
