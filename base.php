@@ -36,7 +36,7 @@ function fetchGitHubContent($owner, $repo, $path, $token)
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
 
-    $headers = array();
+    $headers = [];
     $headers[] = "Accept: application/vnd.github+json";
     $headers[] = "Authorization: Bearer $token";
     $headers[] = "X-GitHub-Api-Version: 2022-11-28";
@@ -45,7 +45,7 @@ function fetchGitHubContent($owner, $repo, $path, $token)
 
     $result = curl_exec($ch);
     if (curl_errno($ch)) {
-        echo 'Error:' . curl_error($ch);
+        echo "Error:" . curl_error($ch);
     }
     curl_close($ch);
 
@@ -54,10 +54,13 @@ function fetchGitHubContent($owner, $repo, $path, $token)
 
 function getGitHubFileContent($owner, $repo, $path, $token)
 {
-    $content = json_decode(fetchGitHubContent($owner, $repo, $path, $token), true);
+    $content = json_decode(
+        fetchGitHubContent($owner, $repo, $path, $token),
+        true
+    );
 
-    if (isset($content['content'])) {
-        $output = json_decode(base64_decode($content['content']), true);
+    if (isset($content["content"])) {
+        $output = json_decode(base64_decode($content["content"]), true);
     }
 
     return $output;
@@ -65,43 +68,47 @@ function getGitHubFileContent($owner, $repo, $path, $token)
 
 function modifyString($inputString, $itemToRemove)
 {
-    $array = explode(',', $inputString);
+    $array = explode(",", $inputString);
 
     if (($key = array_search($itemToRemove, $array)) !== false) {
         unset($array[$key]);
     }
 
-    $resultString = implode(',', $array);
+    $resultString = implode(",", $array);
 
     return $resultString;
 }
 
 function modifyStringAddItem($inputString, $itemToAdd)
 {
-    $array = explode(',', $inputString);
+    $array = explode(",", $inputString);
 
     if (!in_array($itemToAdd, $array)) {
         $array[] = $itemToAdd;
     }
 
-    $resultString = implode(',', $array);
+    $resultString = implode(",", $array);
 
     return $resultString;
 }
-
 
 function getTelegramChannelConfigs($username)
 {
     $sourceArray = explode(",", $username);
     $mix = "";
-    $GIT_TOKEN = getenv('GIT_TOKEN');
+    $GIT_TOKEN = getenv("GIT_TOKEN");
     $locationsArray = [];
 
-    $configs = getGitHubFileContent("itsyebekhe", "cGrabber", "configs.json", $GIT_TOKEN);
+    $configs = getGitHubFileContent(
+        "itsyebekhe",
+        "cGrabber",
+        "configs.json",
+        $GIT_TOKEN
+    );
     //print_r($configs);
     echo "Configs Arrived!⚡️\n";
-    if ($configs['status'] === "OK") {
-        unset($configs['status']);
+    if ($configs["status"] === "OK") {
+        unset($configs["status"]);
         foreach ($configs as $source => $configsArray) {
             //channel timer
             $time_start = microtime(true);
@@ -115,19 +122,23 @@ function getTelegramChannelConfigs($username)
                         $configType,
                         $source
                     );
-                    $configLocation = $correctedConfigArray["loc"];
-                    $correctedConfig = $correctedConfigArray["config"];
-                    $mix .= $correctedConfig . "\n";
-                    $$configType .= $correctedConfig . "\n";
-                    $$source .= $correctedConfig . "\n";
-                    if (!in_array($configLocation, $locationsArray)) {
-                        $locationsArray[] = $configLocation;
+                    if ($correctedConfigArray !== false) {
+                        $configLocation = $correctedConfigArray["loc"];
+                        $correctedConfig = $correctedConfigArray["config"];
+                        $mix .= $correctedConfig . "\n";
+                        $$configType .= $correctedConfig . "\n";
+                        $$source .= $correctedConfig . "\n";
+                        if (!in_array($configLocation, $locationsArray)) {
+                            $locationsArray[] = $configLocation;
+                        }
+                        $$configLocation .= $correctedConfig . "\n";
                     }
-                    $$configLocation .= $correctedConfig . "\n";
                 }
 
                 $configsSource =
-                    generateUpdateTime() . $$source . generateEndofConfiguration();
+                    generateUpdateTime() .
+                    $$source .
+                    generateEndofConfiguration();
                 file_put_contents(
                     "subscription/source/normal/" . $source,
                     $configsSource
@@ -139,15 +150,23 @@ function getTelegramChannelConfigs($username)
                 file_put_contents(
                     "subscription/source/hiddify/" . $source,
                     base64_encode(
-                        generateHiddifyTags("@" . $source) . "\n" . $configsSource
+                        generateHiddifyTags("@" . $source) .
+                            "\n" .
+                            $configsSource
                     )
                 );
                 echo "@{$source} ✅\n";
             } else {
-                file_put_contents("source.conf", modifyString($username, $source));
+                file_put_contents(
+                    "source.conf",
+                    modifyString($username, $source)
+                );
 
                 $emptySource = file_get_contents("empty.conf");
-                file_put_contents("empty.conf", modifyStringAddItem($emptySource, $source));
+                file_put_contents(
+                    "empty.conf",
+                    modifyStringAddItem($emptySource, $source)
+                );
 
                 removeFileInDirectory("subscription/source/normal/", $source);
                 removeFileInDirectory("subscription/source/base64/", $source);
@@ -156,7 +175,9 @@ function getTelegramChannelConfigs($username)
                 echo "@{$source} ❌\n";
             }
             //channel timer
-            echo 'Total channel exec time in seconds: ' . (microtime(true) - $time_start) . "\n\n";
+            echo "Total channel exec time in seconds: " .
+                (microtime(true) - $time_start) .
+                "\n\n";
         }
 
         $types = [
@@ -176,7 +197,10 @@ function getTelegramChannelConfigs($username)
                     generateUpdateTime() .
                     $$filename .
                     generateEndofConfiguration();
-                file_put_contents("subscription/normal/" . $filename, $configsType);
+                file_put_contents(
+                    "subscription/normal/" . $filename,
+                    $configsType
+                );
                 file_put_contents(
                     "subscription/base64/" . $filename,
                     base64_encode($configsType)
@@ -185,8 +209,8 @@ function getTelegramChannelConfigs($username)
                     "subscription/hiddify/" . $filename,
                     base64_encode(
                         generateHiddifyTags(strtoupper($filename)) .
-                        "\n" .
-                        $configsType
+                            "\n" .
+                            $configsType
                     )
                 );
                 echo "#{$filename} ✅\n";
@@ -205,7 +229,10 @@ function getTelegramChannelConfigs($username)
                     generateUpdateTime() .
                     $$location .
                     generateEndofConfiguration();
-                file_put_contents("subscription/location/normal/" . $location, $configsLocation);
+                file_put_contents(
+                    "subscription/location/normal/" . $location,
+                    $configsLocation
+                );
                 file_put_contents(
                     "subscription/location/base64/" . $location,
                     base64_encode($configsLocation)
@@ -214,15 +241,24 @@ function getTelegramChannelConfigs($username)
                     "subscription/location/hiddify/" . $location,
                     base64_encode(
                         generateHiddifyTags(strtoupper($location)) .
-                        "\n" .
-                        $configsLocation
+                            "\n" .
+                            $configsLocation
                     )
                 );
                 echo "#{$location} ✅\n";
             } else {
-                removeFileInDirectory("subscription/location/normal/", $location);
-                removeFileInDirectory("subscription/location/base64/", $location);
-                removeFileInDirectory("subscription/location/hiddify/", $location);
+                removeFileInDirectory(
+                    "subscription/location/normal/",
+                    $location
+                );
+                removeFileInDirectory(
+                    "subscription/location/base64/",
+                    $location
+                );
+                removeFileInDirectory(
+                    "subscription/location/hiddify/",
+                    $location
+                );
                 echo "#{$location} ❌\n";
             }
         }
@@ -511,15 +547,18 @@ function correctConfig($config, $type, $source)
 
     $parsedConfig = configParse($config, $type);
     $generateName = generateName($parsedConfig, $type, $source);
-    $configLocation = $generateName["loc"];
-    $configHashTag = $generateName["name"];
-    $parsedConfig[$configHashName] = $configHashTag;
+    if ($generateName !== false) {
+        $configLocation = $generateName["loc"];
+        $configHashTag = $generateName["name"];
+        $parsedConfig[$configHashName] = $configHashTag;
 
-    $rebuildedConfig = reparseConfig($parsedConfig, $type);
-    return [
-        "loc" => $configLocation,
-        "config" => $rebuildedConfig
-    ];
+        $rebuildedConfig = reparseConfig($parsedConfig, $type);
+        return [
+            "loc" => $configLocation,
+            "config" => $rebuildedConfig,
+        ];
+    }
+    return false;
 }
 
 function maskUrl($url)
@@ -648,7 +687,8 @@ function getIPLocation($ip)
                     if (isset($data["country_code"])) {
                         $locs[] = [
                             "loc" => $data["country_code"],
-                            "cloudflare" => $data["asn"]["name"] === "Cloudflare, Inc.",
+                            "cloudflare" =>
+                                $data["asn"]["name"] === "Cloudflare, Inc.",
                         ];
                     } elseif (isset($data["error"])) {
                         $errors[] = "IP Wiki API error: " . $data["error"];
@@ -709,31 +749,40 @@ function generateHTMLTable($columnTitles, $columnData)
     $html = '<table class="table table-striped">' . "\n";
 
     // Add the table header
-    $html .= '  <thead>' . "\n";
-    $html .= '    <tr>' . "\n";
+    $html .= "  <thead>" . "\n";
+    $html .= "    <tr>" . "\n";
     foreach ($columnTitles as $title) {
-        $html .= '      <th scope="col">' . htmlspecialchars($title) . '</th>' . "\n";
+        $html .=
+            '      <th scope="col">' .
+            htmlspecialchars($title) .
+            "</th>" .
+            "\n";
     }
-    $html .= '    </tr>' . "\n";
-    $html .= '  </thead>' . "\n";
+    $html .= "    </tr>" . "\n";
+    $html .= "  </thead>" . "\n";
 
     // Add the table rows
-    $html .= '  <tbody>' . "\n";
+    $html .= "  <tbody>" . "\n";
     foreach ($columnData as $row) {
-        $html .= '    <tr>' . "\n";
+        $html .= "    <tr>" . "\n";
         foreach ($row as $index => $cell) {
             if ($index == 0) {
-                $html .= '      <td>' . htmlspecialchars($cell) . '</td>' . "\n";
+                $html .=
+                    "      <td>" . htmlspecialchars($cell) . "</td>" . "\n";
             } else {
-                $html .= '      <td><button class="btn btn-primary btn-copy" data-text="' . htmlspecialchars($cell) . '">𝗖𝗢𝗣𝗬 𝗨𝗥𝗟 📎</button></td>' . "\n";
+                $html .=
+                    '      <td><button class="btn btn-primary btn-copy" data-text="' .
+                    htmlspecialchars($cell) .
+                    '">𝗖𝗢𝗣𝗬 𝗨𝗥𝗟 📎</button></td>' .
+                    "\n";
             }
         }
-        $html .= '    </tr>' . "\n";
+        $html .= "    </tr>" . "\n";
     }
-    $html .= '  </tbody>' . "\n";
+    $html .= "  </tbody>" . "\n";
 
     // Close the HTML table
-    $html .= '</table>' . "\n";
+    $html .= "</table>" . "\n";
 
     return $html;
 }
@@ -791,23 +840,23 @@ function generateName($config, $type, $source)
 
     $configIp = $config[$configIpName];
     $configPort = $config[$configPortName];
-    $getIPLocation = getIPLocation($configIp);
-    $configLocation = $getIPLocation["loc"] ?? "XX";
-    $configFlag =
-        $configLocation === "XX"
-        ? "❔"
-        : getFlags($configLocation);
-    $isEncrypted = isEncrypted($config, $type) ? "🔒" : "🔓";
-    $configType = $configsTypeName[$type];
-    $configNetwork = getNetwork($config, $type);
-    $configTLS = getTLS($config, $type);
-
     $lantency = ping($configIp, $configPort, 1);
+    if ($lantency !== "down") {
+        $getIPLocation = getIPLocation($configIp);
+        $configLocation = $getIPLocation["loc"] ?? "XX";
+        $configFlag =
+            $configLocation === "XX" ? "❔" : getFlags($configLocation);
+        $isEncrypted = isEncrypted($config, $type) ? "🔒" : "🔓";
+        $configType = $configsTypeName[$type];
+        $configNetwork = getNetwork($config, $type);
+        $configTLS = getTLS($config, $type);
 
-    return [
-        "loc" => $configLocation,
-        "name" => "🆔{$source} {$isEncrypted} {$configType}-{$configNetwork}-{$configTLS} {$configFlag} {$configLocation} {$lantency}"
-    ];
+        return [
+            "loc" => $configLocation,
+            "name" => "🆔{$source} {$isEncrypted} {$configType}-{$configNetwork}-{$configTLS} {$configFlag} {$configLocation} {$lantency}",
+        ];
+    }
+    return false;
 }
 
 function getNetwork($config, $type)
@@ -846,7 +895,6 @@ function getTLS($config, $type)
     }
     return null;
 }
-
 
 function isEncrypted($config, $type)
 {
@@ -1040,7 +1088,8 @@ function addStringToBeginning($array, $string)
 
 function generateReadme($table1, $table2, $table3)
 {
-    $base = "### HiN VPN: Your Gateway to Secure and Free Internet Access
+    $base =
+        "### HiN VPN: Your Gateway to Secure and Free Internet Access
 
 **HiN VPN** stands out as a pioneering open-source project designed to empower users with secure, unrestricted internet access. Unlike traditional VPN services, HiN VPN leverages the Telegram platform to collect and distribute VPN configurations, offering a unique and community-driven approach to online privacy and security.
     
@@ -1065,15 +1114,21 @@ function generateReadme($table1, $table2, $table3)
     
 To get started with HiN VPN, simply follow the subscription links provided below. This link will grant you access to the latest VPN configurations, allowing you to secure your internet connection and browse the web with peace of mind.
     
-" . $table1 . "
+" .
+        $table1 .
+        "
     
 Below is a table that shows the generated subscription links from each Source, providing users with a variety of options to choose from.
     
-" . $table2 . "
+" .
+        $table2 .
+        "
 
 Below is a table that shows the generated subscription links from each Location, providing users with a variety of options to choose from.
 
-" . $table3 . "
+" .
+        $table3 .
+        "
     
 This table provides a quick reference for the different subscription links available through HiN VPN, allowing users to easily select the one that best suits their needs.
     
@@ -1084,7 +1139,8 @@ This table provides a quick reference for the different subscription links avail
 
 function generateReadmeWeb($table1, $table2, $table3)
 {
-    $base = '<!DOCTYPE html>
+    $base =
+        '<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -1156,11 +1212,17 @@ function generateReadmeWeb($table1, $table2, $table3)
                 <h4>Subscription Links</h4>
                 <p>Get started with HiN VPN using the subscription links below. These links provide access to the latest VPN configurations.</p>
                 <!-- Placeholder for dynamic content -->
-                ' . $table1 . '
+                ' .
+        $table1 .
+        '
                 <p>Below is a table that shows the generated subscription links from each Source, providing users with a variety of options to choose from.</p>
-                ' . $table2 . '
+                ' .
+        $table2 .
+        '
                 <p>and Below is a table that shows the generated subscription links from each Location, providing users with a variety of options to choose from.</p>
-                ' . $table3 . '
+                ' .
+        $table3 .
+        '
                 <p>This tables provides a quick reference for the different subscription links available through HiN VPN, allowing users to easily select the one that best suits their needs.</p>
             </div>
             <div class="col-12 footer">
@@ -1207,7 +1269,6 @@ $hiddify = addStringToBeginning(
 $protocolColumn = getFileNamesInDirectory(
     listFilesInDirectory("subscription/normal")
 );
-
 
 $title1Array = ["Protocol", "Normal", "Base64", "Hiddify"];
 $cells1Array = convertArrays($protocolColumn, $normals, $base64, $hiddify);
@@ -1283,24 +1344,17 @@ $keyboard = [
     [
         [
             "text" => "📲 STREISAND",
-            "url" => maskUrl(
-                "streisand://import/" .
-                $randType
-            ),
+            "url" => maskUrl("streisand://import/" . $randType),
         ],
         [
             "text" => "📲 HIDDIFY",
-            "url" => maskUrl(
-                "hiddify://import/" .
-                $randType
-            )
-        ]
+            "url" => maskUrl("hiddify://import/" . $randType),
+        ],
     ],
     [
         [
             "text" => "🚹 گیتهاب HiN VPN 🚹",
-            "url" =>
-                "https://itsyebekhe.github.io/HiN-VPN/",
+            "url" => "https://itsyebekhe.github.io/HiN-VPN/",
         ],
     ],
 ];
