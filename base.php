@@ -554,74 +554,40 @@ function getIPLocation($ip)
     $token = getenv("FINDIP_TOKEN");
     $result = [];
 
-    $iplocationUrl = "https://api.iplocation.net/?ip={$ip}";
-    $countryApiUrl = "https://api.country.is/$ip";
-    $findipApiUrl = "https://api.findip.net/{$ip}/?token={$token}";
-    $ipApiUrl = "http://ip-api.com/json/{$ip}";
-    $ipapiCoUrl = "https://ipapi.co/{$ip}/json/";
-    $ipWikiUrl = "https://ip.wiki/{$ip}/json";
+    $urls = [
+        "iplocation" => "https://api.iplocation.net/?ip={$ip}",
+        "country" => "https://api.country.is/$ip",
+        "findip" => "https://api.findip.net/{$ip}/?token={$token}",
+        "ipapi" => "http://ip-api.com/json/{$ip}",
+        "ipwiki" => "https://ip.wiki/{$ip}/json",
+    ];
 
-    $ch1 = curl_init($iplocationUrl);
-    $ch2 = curl_init($countryApiUrl);
-    $ch3 = curl_init($findipApiUrl);
-    $ch4 = curl_init($ipApiUrl);
-    $ch5 = curl_init($ipapiCoUrl);
-    $ch6 = curl_init($ipWikiUrl);
-
-    curl_setopt($ch1, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch1, CURLOPT_TIMEOUT, 2); // 2 seconds timeout
-    curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch2, CURLOPT_TIMEOUT, 2); // 2 seconds timeout
-    curl_setopt($ch3, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch3, CURLOPT_TIMEOUT, 2); // 2 seconds timeout
-    curl_setopt($ch4, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch4, CURLOPT_TIMEOUT, 2); // 2 seconds timeout
-    curl_setopt($ch5, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch5, CURLOPT_TIMEOUT, 2); // 2 seconds timeout
-    curl_setopt($ch6, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch6, CURLOPT_TIMEOUT, 2); // 2 seconds timeout
-
+    $chs = [];
     $mh = curl_multi_init();
-    curl_multi_add_handle($mh, $ch1);
-    curl_multi_add_handle($mh, $ch2);
-    curl_multi_add_handle($mh, $ch3);
-    curl_multi_add_handle($mh, $ch4);
-    curl_multi_add_handle($mh, $ch5);
-    curl_multi_add_handle($mh, $ch6);
+
+    foreach ($urls as $apiName => $url) {
+        $chs[$apiName] = curl_init($url);
+        curl_setopt($chs[$apiName], CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($chs[$apiName], CURLOPT_TIMEOUT, 1); // 1 seconds timeout
+        curl_multi_add_handle($mh, $chs[$apiName]);
+    }
 
     $running = null;
     do {
         curl_multi_exec($mh, $running);
     } while ($running);
 
-    $iplocationInfo = curl_multi_getcontent($ch1);
-    $countryInfo = curl_multi_getcontent($ch2);
-    $findipInfo = curl_multi_getcontent($ch3);
-    $ipapiInfo = curl_multi_getcontent($ch4);
-    $ipapicoInfo = curl_multi_getcontent($ch5);
-    $ipWikiInfo = curl_multi_getcontent($ch6);
-
-    curl_multi_remove_handle($mh, $ch1);
-    curl_multi_remove_handle($mh, $ch2);
-    curl_multi_remove_handle($mh, $ch3);
-    curl_multi_remove_handle($mh, $ch4);
-    curl_multi_remove_handle($mh, $ch5);
-    curl_multi_remove_handle($mh, $ch6);
+    $responses = [];
+    foreach ($chs as $apiName => $ch) {
+        $responses[$apiName] = curl_multi_getcontent($ch);
+        curl_multi_remove_handle($mh, $ch);
+    }
     curl_multi_close($mh);
 
     $locs = [];
     $errors = [];
 
-    $apis = [
-        "iplocation" => $iplocationInfo,
-        "country" => $countryInfo,
-        "findip" => $findipInfo,
-        "ipapi" => $ipapiInfo,
-        "ipapico" => $ipapicoInfo,
-        "ipwiki" => $ipWikiInfo,
-    ];
-
-    foreach ($apis as $apiName => $apiResponse) {
+    foreach ($responses as $apiName => $apiResponse) {
         if ($apiResponse !== false) {
             $data = json_decode($apiResponse, true);
             switch ($apiName) {
@@ -678,18 +644,6 @@ function getIPLocation($ip)
                             ($data["message"] ?? "Unknown error");
                     }
                     break;
-                case "ipapico":
-                    if (isset($data["country_code"])) {
-                        $locs[] = [
-                            "loc" => $data["country_code"],
-                            "cloudflare" => $data["org"] === "CLOUDFLARENET",
-                        ];
-                    } elseif (isset($data["message"]) || is_null($data)) {
-                        $errors[] =
-                            "IPAPICO error: " .
-                            ($data["message"] ?? "Unknown error");
-                    }
-                    break;
                 case "ipwiki":
                     if (isset($data["country_code"])) {
                         $locs[] = [
@@ -702,7 +656,7 @@ function getIPLocation($ip)
                     break;
             }
         } else {
-            $errors[] = "Failed to fetch {$apiName} information or timed out after 2 seconds";
+            $errors[] = "Failed to fetch {$apiName} information or timed out after 1 second";
         }
     }
 
