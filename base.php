@@ -750,10 +750,12 @@ function getIPLocation($ip)
 }
 
 
+<?php
+
 function generateHTMLTable($columnTitles, $columnData)
 {
     // Start the HTML table with Bootstrap classes
-    $html = '<table class="table">' . "\n";
+    $html = '<table class="table table-striped">' . "\n";
 
     // Add the table header
     $html .= '  <thead>' . "\n";
@@ -772,7 +774,7 @@ function generateHTMLTable($columnTitles, $columnData)
             if ($index == 0) {
                 $html .= '      <td>' . htmlspecialchars($cell) . '</td>' . "\n";
             } else {
-                $html .= '      <td><button class="btn-copy" data-text="' . htmlspecialchars($cell) . '">𝕔𝕠𝕡𝕪📎</button></td>' . "\n";
+                $html .= '      <td><button class="btn btn-primary btn-copy" data-text="' . htmlspecialchars($cell) . '">𝗖𝗢𝗣𝗬 𝗨𝗥𝗟 📎</button></td>' . "\n";
             }
         }
         $html .= '    </tr>' . "\n";
