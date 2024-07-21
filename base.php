@@ -105,7 +105,7 @@ function getTelegramChannelConfigs($username)
         "configs.json",
         $GIT_TOKEN
     );
-    //print_r($configs);
+    
     echo "Configs Arrived!⚡️\n";
     if ($configs["status"] === "OK") {
         unset($configs["status"]);
@@ -183,17 +183,6 @@ function getTelegramChannelConfigs($username)
                 "\n\n";
         }
 
-        // Check and clean up the location directory
-        $locationFiles = listFilesInDirectory("subscription/location/normal/");
-        foreach ($locationFiles as $filePath) {
-            $fileName = basename($filePath);
-            if (!in_array($fileName, $locationsArray)) {
-                removeFileInDirectory("subscription/location/normal/", $fileName);
-                removeFileInDirectory("subscription/location/base64/", $fileName);
-                removeFileInDirectory("subscription/location/hiddify/", $fileName);
-            }
-        }
-
         $types = [
             "mix",
             "vmess",
@@ -233,6 +222,18 @@ function getTelegramChannelConfigs($username)
                     )
                 );
                 echo "#{$filename} ✅\n";
+            }
+        }
+
+        // Check and clean up the location directory
+        $locationFiles = listFilesInDirectory("subscription/location/normal/");
+        foreach ($locationFiles as $filePath) {
+            $fileName = basename($filePath);
+            if (!in_array($fileName, $locationsArray)) {
+                removeFileInDirectory("subscription/location/normal/", $fileName);
+                removeFileInDirectory("subscription/location/base64/", $fileName);
+                removeFileInDirectory("subscription/location/hiddify/", $fileName);
+                echo "#{$fileName} ❌\n";
             }
         }
 
@@ -1026,26 +1027,19 @@ function gregorianToJalali($gy, $gm, $gd)
 
 function getTehranTime()
 {
-    // Set the timezone to Tehran
     date_default_timezone_set("Asia/Tehran");
 
-    // Get the current date and time in Tehran
     $date = new DateTime();
 
-    // Get the day of the week in English
     $dayOfWeek = $date->format("D");
 
-    // Get the day of the month
     $day = $date->format("d");
 
-    // Get the month and year
     $month = (int) $date->format("m");
     $year = (int) $date->format("Y");
 
-    // Convert Gregorian date to Jalali date
     list($jy, $jm, $jd) = gregorianToJalali($year, $month, $day);
 
-    // Map Persian month names to their short forms
     $monthNames = [
         1 => "FAR",
         2 => "ORD",
@@ -1062,10 +1056,8 @@ function getTehranTime()
     ];
     $shortMonth = $monthNames[$jm];
 
-    // Get the time in 24-hour format
     $time = $date->format("H:i");
 
-    // Construct the final formatted string
     $formattedString = sprintf(
         "%s-%02d-%s-%04d 🕑 %s",
         $dayOfWeek,
