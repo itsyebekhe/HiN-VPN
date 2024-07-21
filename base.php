@@ -749,9 +749,6 @@ function getIPLocation($ip)
     return $result;
 }
 
-
-<?php
-
 function generateHTMLTable($columnTitles, $columnData)
 {
     // Start the HTML table with Bootstrap classes
