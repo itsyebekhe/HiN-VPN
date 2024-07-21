@@ -94,6 +94,7 @@ function modifyStringAddItem($inputString, $itemToAdd)
 
 function getTelegramChannelConfigs($username)
 {
+    $sourceArray = explode(",", $username);
     $mix = "";
     $GIT_TOKEN = getenv("GIT_TOKEN");
     $locationsArray = [];
@@ -180,6 +181,17 @@ function getTelegramChannelConfigs($username)
             echo "Total channel exec time in seconds: " .
                 (microtime(true) - $time_start) .
                 "\n\n";
+        }
+
+        // Check and clean up the location directory
+        $locationFiles = listFilesInDirectory("subscription/location/normal/");
+        foreach ($locationFiles as $filePath) {
+            $fileName = basename($filePath);
+            if (!in_array($fileName, $locationsArray)) {
+                removeFileInDirectory("subscription/location/normal/", $fileName);
+                removeFileInDirectory("subscription/location/base64/", $fileName);
+                removeFileInDirectory("subscription/location/hiddify/", $fileName);
+            }
         }
 
         $types = [
