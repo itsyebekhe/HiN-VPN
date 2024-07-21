@@ -364,15 +364,6 @@ function addHash($obj)
     return $url;
 }
 
-/*function is_reality($input)
-{
-    $type = detect_type($input);
-    if (stripos($input, "reality") !== false && $type === "vless") {
-        return true;
-    }
-    return false;
-}*/
-
 function removeFileInDirectory($directory, $fileName)
 {
     if (!is_dir($directory)) {
@@ -529,16 +520,6 @@ function correctConfig($config, $type, $source)
         "loc" => $configLocation,
         "config" => $rebuildedConfig
     ];
-}
-
-function is_ip($string)
-{
-    $ip_pattern = '/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/';
-    if (preg_match($ip_pattern, $string)) {
-        return true;
-    } else {
-        return false;
-    }
 }
 
 function maskUrl($url)
@@ -701,22 +682,6 @@ function getIPLocation($ip)
 
     return $result;
 }
-function is_cloudflare_ip($ip)
-{
-    // Get the Cloudflare IP ranges
-    $cloudflare_ranges = file_get_contents(
-        "https://raw.githubusercontent.com/ircfspace/cf-ip-ranges/main/export.ipv4"
-    );
-    $cloudflare_ranges = explode("\n", $cloudflare_ranges);
-
-    foreach ($cloudflare_ranges as $range) {
-        if (cidr_match($ip, $range)) {
-            return true;
-        }
-    }
-
-    return false;
-}
 
 function generateHTMLTable($columnTitles, $columnData)
 {
@@ -736,8 +701,12 @@ function generateHTMLTable($columnTitles, $columnData)
     $html .= '  <tbody>' . "\n";
     foreach ($columnData as $row) {
         $html .= '    <tr>' . "\n";
-        foreach ($row as $cell) {
-            $html .= '      <td>' . htmlspecialchars($cell) . '</td>' . "\n";
+        foreach ($row as $index => $cell) {
+            if ($index == 0) {
+                $html .= '      <td>' . htmlspecialchars($cell) . '</td>' . "\n";
+            } else {
+                $html .= '      <td><button class="btn-copy" data-text="' . htmlspecialchars($cell) . '">𝕔𝕠𝕡𝕪📎</button></td>' . "\n";
+            }
         }
         $html .= '    </tr>' . "\n";
     }
@@ -747,19 +716,6 @@ function generateHTMLTable($columnTitles, $columnData)
     $html .= '</table>' . "\n";
 
     return $html;
-}
-
-function cidr_match($ip, $range)
-{
-    list($subnet, $bits) = explode("/", $range);
-    if ($bits === null) {
-        $bits = 32;
-    }
-    $ip = ip2long($ip);
-    $subnet = ip2long($subnet);
-    $mask = -1 << 32 - $bits;
-    $subnet &= $mask;
-    return ($ip & $mask) == $subnet;
 }
 
 function getFlags($country_code)
@@ -907,19 +863,6 @@ function getConfigItems($prefix, $string)
         }
     }
     return $output;
-}
-
-function is_valid($input)
-{
-    if (stripos($input, "…") !== false or stripos($input, "...") !== false) {
-        return false;
-    }
-    return true;
-}
-
-function removeAngleBrackets($link)
-{
-    return preg_replace("/<.*?>/", "", $link);
 }
 
 function ping($host, $port, $timeout)
@@ -1207,6 +1150,19 @@ function generateReadmeWeb($table1, $table2, $table3)
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll(".btn-copy").forEach(function(button) {
+            button.addEventListener("click", function() {
+                navigator.clipboard.writeText(button.getAttribute("data-text")).then(function() {
+                    alert("Text copied to clipboard!");
+                }, function(err) {
+                    console.error("Could not copy text: ", err);
+                });
+            });
+        });
+    });
+    </script>
 </body>
 </html>';
 
