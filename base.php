@@ -761,7 +761,7 @@ function getIPLocation($ip)
 function generateHTMLTable($columnTitles, $columnData)
 {
     // Start the HTML table with Bootstrap classes
-    $html = '<table class="table table-striped">' . "\n";
+    $html = '<div class="table-responsive"><table class="table table-striped">' . "\n";
 
     // Add the table header
     $html .= "  <thead>" . "\n";
@@ -797,7 +797,7 @@ function generateHTMLTable($columnTitles, $columnData)
     $html .= "  </tbody>" . "\n";
 
     // Close the HTML table
-    $html .= "</table>" . "\n";
+    $html .= "</table></div>" . "\n";
 
     return $html;
 }
