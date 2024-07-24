@@ -126,7 +126,7 @@ function getTelegramChannelConfigs($username)
                         $source
                     );
                     if ($correctedConfigArray !== false) {
-                        $configLocation = $correctedConfigArray["loc"];
+                        $configLocation =  getFlags($correctedConfigArray["loc"]) . " " . $correctedConfigArray["loc"];
                         $correctedConfig = $correctedConfigArray["config"];
                         $mix .= $correctedConfig . "\n";
                         $$configType .= $correctedConfig . "\n";
@@ -802,6 +802,87 @@ function generateHTMLTable($columnTitles, $columnData)
     return $html;
 }
 
+function generateDropdownMenu($columnTitles, $columnData, $selectWhat)
+{
+    // Generate a unique identifier for this instance
+    $uniqueId = uniqid();
+
+    // Start the HTML structure
+    $html = '<div class="dropdown-menu-container">' . "\n";
+
+    // Add the first dropdown menu for the first column data
+    $html .= '  <select class="form-select" id="first-dropdown-' . $uniqueId . '">' . "\n";
+    $html .= '    <option value="">Select a ' . $selectWhat . '</option>' . "\n";
+    foreach ($columnData as $row) {
+        $html .= '    <option value="' . htmlspecialchars($row[0]) . '">' . htmlspecialchars($row[0]) . '</option>' . "\n";
+    }
+    $html .= '  </select>' . "\n";
+
+    // Add the second dropdown menu for the titles
+    $html .= '  <select class="form-select" id="second-dropdown-' . $uniqueId . '" disabled>' . "\n";
+    $html .= '    <option value="">Select a configuration type</option>' . "\n";
+    $html .= '  </select>' . "\n";
+
+    // Add the label to show the related item with Bootstrap styling
+    $html .= '  <div class="input-group mt-3">' . "\n";
+    $html .= '    <input type="text" class="form-control" id="related-item-' . $uniqueId . '" readonly>' . "\n";
+    $html .= '    <button class="btn btn-outline-secondary" type="button" id="copy-button-' . $uniqueId . '">Copy</button>' . "\n";
+    $html .= '  </div>' . "\n";
+
+    // Close the HTML structure
+    $html .= '</div>' . "\n";
+
+    // Add JavaScript to handle the dropdown change and populate the second dropdown
+    $html .= '<script>' . "\n";
+    $html .= '  (function() {' . "\n";
+    $html .= '    var columnData = ' . json_encode($columnData) . ';' . "\n";
+    $html .= '    var columnTitles = ' . json_encode($columnTitles) . ';' . "\n";
+    $html .= '    var firstDropdown = document.getElementById("first-dropdown-' . $uniqueId . '");' . "\n";
+    $html .= '    var secondDropdown = document.getElementById("second-dropdown-' . $uniqueId . '");' . "\n";
+    $html .= '    var relatedItem = document.getElementById("related-item-' . $uniqueId . '");' . "\n";
+    $html .= '    var copyButton = document.getElementById("copy-button-' . $uniqueId . '");' . "\n";
+    $html .= '    firstDropdown.addEventListener("change", function() {' . "\n";
+    $html .= '      var selectedValue = this.value;' . "\n";
+    $html .= '      secondDropdown.innerHTML = \'<option value="">Select a title</option>\';' . "\n";
+    $html .= '      secondDropdown.disabled = true;' . "\n";
+    $html .= '      if (selectedValue) {' . "\n";
+    $html .= '        secondDropdown.disabled = false;' . "\n";
+    $html .= '        var selectedRow = null;' . "\n";
+    $html .= '        for (var i = 0; i < columnData.length; i++) {' . "\n";
+    $html .= '          if (columnData[i][0] === selectedValue) {' . "\n";
+    $html .= '            selectedRow = columnData[i];' . "\n";
+    $html .= '            break;' . "\n";
+    $html .= '          }' . "\n";
+    $html .= '        }' . "\n";
+    $html .= '        if (selectedRow) {' . "\n";
+    $html .= '          for (var j = 1; j < selectedRow.length; j++) {' . "\n";
+    $html .= '            var option = document.createElement("option");' . "\n";
+    $html .= '            option.value = selectedRow[j];' . "\n";
+    $html .= '            option.text = columnTitles[j - 1];' . "\n";
+    $html .= '            secondDropdown.appendChild(option);' . "\n";
+    $html .= '          }' . "\n";
+    $html .= '        }' . "\n";
+    $html .= '      }' . "\n";
+    $html .= '    });' . "\n";
+
+    // Add JavaScript to handle the second dropdown change and show the related item
+    $html .= '    secondDropdown.addEventListener("change", function() {' . "\n";
+    $html .= '      var selectedValue = this.value;' . "\n";
+    $html .= '      relatedItem.value = selectedValue;' . "\n";
+    $html .= '    });' . "\n";
+
+    // Add JavaScript to handle the copy button click
+    $html .= '    copyButton.addEventListener("click", function() {' . "\n";
+    $html .= '      relatedItem.select();' . "\n";
+    $html .= '      document.execCommand("copy");' . "\n";
+    $html .= '      alert("Copied to clipboard: " + relatedItem.value);' . "\n";
+    $html .= '    });' . "\n";
+    $html .= '  })();' . "\n";
+    $html .= '</script>' . "\n";
+
+    return $html;
+}
+
 function getFlags($country_code)
 {
     $flag = mb_convert_encoding(
@@ -1143,7 +1224,7 @@ This table provides a quick reference for the different subscription links avail
     return $base;
 }
 
-function generateReadmeWeb($table1, $table2, $table3)
+function generateReadmeWeb($drop1, $drop2, $drop3)
 {
     $base =
         '<!DOCTYPE html>
@@ -1219,15 +1300,15 @@ function generateReadmeWeb($table1, $table2, $table3)
                 <p>Get started with HiN VPN using the subscription links below. These links provide access to the latest VPN configurations.</p>
                 <!-- Placeholder for dynamic content -->
                 ' .
-        $table1 .
+        $drop1 .
         '
-                <p>Below is a table that shows the generated subscription links from each Source, providing users with a variety of options to choose from.</p>
+                <p>Below is a Drop-Down menu that shows the generated subscription links from each Source, providing users with a variety of options to choose from.</p>
                 ' .
-        $table2 .
+        $drop2 .
         '
-                <p>and Below is a table that shows the generated subscription links from each Location, providing users with a variety of options to choose from.</p>
+                <p>and Below is a Drop-Down that shows the generated subscription links from each Location, providing users with a variety of options to choose from.</p>
                 ' .
-        $table3 .
+        $drop3 .
         '
                 <p>This tables provides a quick reference for the different subscription links available through HiN VPN, allowing users to easily select the one that best suits their needs.</p>
             </div>
@@ -1277,6 +1358,7 @@ $protocolColumn = getFileNamesInDirectory(
 );
 
 $title1Array = ["Protocol", "Normal", "Base64", "Hiddify"];
+$title1ArrayHtml = ["Normal", "Base64", "Hiddify"];
 $cells1Array = convertArrays($protocolColumn, $normals, $base64, $hiddify);
 
 $sourceNormals = addStringToBeginning(
@@ -1296,6 +1378,7 @@ $sourcesColumn = getFileNamesInDirectory(
 );
 
 $title2Array = ["Source", "Normal", "Base64", "Hiddify"];
+$title2ArrayHtml = ["Normal", "Base64", "Hiddify"];
 $cells2Array = convertArrays(
     $sourcesColumn,
     $sourceNormals,
@@ -1320,6 +1403,7 @@ $locationColumn = getFileNamesInDirectory(
 );
 
 $title3Array = ["Location", "Normal", "Base64", "Hiddify"];
+$title3ArrayHtml = ["Normal", "Base64", "Hiddify"];
 $cells3Array = convertArrays(
     $locationColumn,
     $locationNormals,
@@ -1334,11 +1418,11 @@ $table3 = generateReadmeTable($title3Array, $cells3Array);
 $readmeMdNew = generateReadme($table1, $table2, $table3);
 file_put_contents("README.md", $readmeMdNew);
 
-$table1Html = generateHTMLTable($title1Array, $cells1Array);
-$table2Html = generateHTMLTable($title2Array, $cells2Array);
-$table3Html = generateHTMLTable($title3Array, $cells3Array);
+$drop1Html = generateDropdownMenu($title1ArrayHtml, $cells1Array, "Protocol");
+$drop2Html = generateDropdownMenu($title2ArrayHtml, $cells2Array, "Source");
+$drop3Html = generateDropdownMenu($title3ArrayHtml, $cells3Array, "Location");
 
-$readmeHtmlNew = generateReadmeWeb($table1Html, $table2Html, $table3Html);
+$readmeHtmlNew = generateReadmeWeb($drop1Html, $drop2Html, $drop3Html);
 file_put_contents("index.html", $readmeHtmlNew);
 
 $randKey = array_rand($hiddify);
