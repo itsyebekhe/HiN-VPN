@@ -469,7 +469,7 @@ function listFilesInDirectory($directory)
     if ($handle = opendir($directory)) {
         while (false !== ($entry = readdir($handle))) {
             if ($entry != "." && $entry != "..") {
-                $fullPath = $directory . "/" . $entry;
+                $fullPath = $directory . "/" . urlencode($entry);
                 if (is_dir($fullPath)) {
                     $filePaths = array_merge(
                         $filePaths,
