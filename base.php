@@ -469,7 +469,7 @@ function listFilesInDirectory($directory)
     if ($handle = opendir($directory)) {
         while (false !== ($entry = readdir($handle))) {
             if ($entry != "." && $entry != "..") {
-                $fullPath = $directory . "/" . urlencode($entry);
+                $fullPath = $directory . "/" . str_replace("+", "%20", urlencode($entry));
                 if (is_dir($fullPath)) {
                     $filePaths = array_merge(
                         $filePaths,
@@ -814,7 +814,7 @@ function generateDropdownMenu($columnTitles, $columnData, $selectWhat)
     $html .= '  <select class="form-select" id="first-dropdown-' . $uniqueId . '">' . "\n";
     $html .= '    <option value="">Select a ' . $selectWhat . '</option>' . "\n";
     foreach ($columnData as $row) {
-        $html .= '    <option value="' . htmlspecialchars($row[0]) . '">' . htmlspecialchars($row[0]) . '</option>' . "\n";
+        $html .= '    <option value="' . urldecode(htmlspecialchars($row[0])) . '">' . urldecode(htmlspecialchars($row[0])) . '</option>' . "\n";
     }
     $html .= '  </select>' . "\n";
 
