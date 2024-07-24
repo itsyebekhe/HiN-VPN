@@ -814,12 +814,12 @@ function generateDropdownMenu($columnTitles, $columnData, $selectWhat)
     $html .= '  <select class="form-select" id="first-dropdown-' . $uniqueId . '">' . "\n";
     $html .= '    <option value="">Select a ' . $selectWhat . '</option>' . "\n";
     foreach ($columnData as $row) {
-        $html .= '    <option value="' . urldecode(htmlspecialchars($row[0])) . '">' . urldecode(htmlspecialchars($row[0])) . '</option>' . "\n";
+        $html .= '    <option value="' . htmlspecialchars($row[0]) . '">' . urldecode(htmlspecialchars($row[0])) . '</option>' . "\n";
     }
     $html .= '  </select>' . "\n";
 
     // Add the second dropdown menu for the titles
-    $html .= '  <select class="form-select" id="second-dropdown-' . $uniqueId . '" disabled>' . "\n";
+    $html .= '  <select class="form-select mt-3" id="second-dropdown-' . $uniqueId . '" disabled>' . "\n";
     $html .= '    <option value="">Select a configuration type</option>' . "\n";
     $html .= '  </select>' . "\n";
 
@@ -1234,11 +1234,17 @@ function generateReadmeWeb($drop1, $drop2, $drop3)
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HiN VPN: Your Gateway to Secure and Free Internet Access</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <style>
         body {
             padding: 20px;
             background-color: #f8f9fa;
             color: #495057;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        body.dark-theme {
+            background-color: #343a40;
+            color: #f8f9fa;
         }
         .header {
             background-color: #007bff;
@@ -1253,6 +1259,11 @@ function generateReadmeWeb($drop1, $drop2, $drop3)
             border-radius: 8px;
             margin-bottom: 20px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: background-color 0.3s;
+        }
+        .feature.dark-theme {
+            background-color: #495057;
+            color: #f8f9fa;
         }
         .feature h4 {
             color: #007bff;
@@ -1263,14 +1274,49 @@ function generateReadmeWeb($drop1, $drop2, $drop3)
             background-color: #343a40;
             color: white;
             border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+        .footer.dark-theme {
+            background-color: #212529;
+        }
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            transition: background-color 0.3s;
+        }
+        .topbar.dark-theme {
+            background-color: #0056b3;
+        }
+        .topbar h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        .topbar p {
+            margin: 0;
+            font-size: 1rem;
+        }
+        .theme-toggle {
+            cursor: pointer;
+            font-size: 1.5rem;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>HiN VPN</h1>
-            <p>Your Gateway to Secure and Free Internet Access</p>
+        <div class="topbar">
+            <div>
+                <h1>HiN VPN</h1>
+                <p>Your Gateway to Secure and Free Internet Access</p>
+            </div>
+            <div class="theme-toggle" id="theme-toggle">
+                <i class="bi bi-moon-fill"></i>
+            </div>
         </div>
         <div class="row">
             <div class="col-12 feature">
@@ -1321,6 +1367,39 @@ function generateReadmeWeb($drop1, $drop2, $drop3)
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
     document.addEventListener("DOMContentLoaded", function() {
+        const themeToggle = document.getElementById(\'theme-toggle\');
+        const body = document.body;
+
+        // Load theme preference from local storage
+        const currentTheme = localStorage.getItem(\'theme\');
+        if (currentTheme) {
+            body.classList.add(currentTheme);
+            themeToggle.innerHTML = currentTheme === \'dark-theme\' ? \'<i class="bi bi-sun-fill"></i>\' : \'<i class="bi bi-moon-fill"></i>\';
+            document.querySelectorAll(\'.feature, .footer, .topbar\').forEach(el => el.classList.add(currentTheme));
+        }
+
+        themeToggle.addEventListener(\'click\', () => {
+            if (body.classList.contains(\'dark-theme\')) {
+                body.classList.remove(\'dark-theme\');
+                body.classList.add(\'light-theme\');
+                themeToggle.innerHTML = \'<i class="bi bi-moon-fill"></i>\';
+                localStorage.setItem(\'theme\', \'light-theme\');
+                document.querySelectorAll(\'.feature, .footer, .topbar\').forEach(el => {
+                    el.classList.remove(\'dark-theme\');
+                    el.classList.add(\'light-theme\');
+                });
+            } else {
+                body.classList.remove(\'light-theme\');
+                body.classList.add(\'dark-theme\');
+                themeToggle.innerHTML = \'<i class="bi bi-sun-fill"></i>\';
+                localStorage.setItem(\'theme\', \'dark-theme\');
+                document.querySelectorAll(\'.feature, .footer, .topbar\').forEach(el => {
+                    el.classList.remove(\'light-theme\');
+                    el.classList.add(\'dark-theme\');
+                });
+            }
+        });
+
         document.querySelectorAll(".btn-copy").forEach(function(button) {
             button.addEventListener("click", function() {
                 navigator.clipboard.writeText(button.getAttribute("data-text")).then(function() {
@@ -1443,7 +1522,7 @@ $keyboard = [
     ],
     [
         [
-            "text" => "🚹 گیتهاب HiN VPN 🚹",
+            "text" => "🚹 HiN VPN GITHUB 🚹",
             "url" => "https://itsyebekhe.github.io/HiN-VPN/",
         ],
     ],
