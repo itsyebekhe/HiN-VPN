@@ -19,6 +19,7 @@ function getTheType($input)
     ];
     foreach ($types as $type) {
         if (substr($input, 0, strlen($type) + 3) === $type . "://") {
+            if ($type === "hy2) return "hysteria2";
             return $type;
         }
     }
