@@ -105,7 +105,7 @@ function getTelegramChannelConfigs($username)
         "configs.json",
         $GIT_TOKEN
     );
-    
+
     echo "Configs Arrived!⚡️\n";
     if ($configs["status"] === "OK") {
         unset($configs["status"]);
@@ -126,12 +126,18 @@ function getTelegramChannelConfigs($username)
                         $source
                     );
                     if ($correctedConfigArray !== false) {
-                        $configLocation =  getFlags($correctedConfigArray["loc"]) . " " . $correctedConfigArray["loc"];
+                        $configLocation =
+                            getFlags($correctedConfigArray["loc"]) .
+                            " " .
+                            $correctedConfigArray["loc"];
                         $correctedConfig = $correctedConfigArray["config"];
                         $mix .= $correctedConfig . "\n";
                         $$configType .= $correctedConfig . "\n";
                         $$source .= $correctedConfig . "\n";
-                        if (!in_array($configLocation, $locationsArray)) {
+                        if (
+                            !in_array($configLocation, $locationsArray) &&
+                            $configLocation !== getFlags("") . " "
+                        ) {
                             $locationsArray[] = $configLocation;
                         }
                         $$configLocation .= $correctedConfig . "\n";
@@ -142,40 +148,9 @@ function getTelegramChannelConfigs($username)
                     generateUpdateTime() .
                     $$source .
                     generateEndofConfiguration();
-                file_put_contents(
-                    "subscription/source/normal/" . $source,
-                    $configsSource
-                );
-                file_put_contents(
-                    "subscription/source/base64/" . $source,
-                    base64_encode($configsSource)
-                );
-                file_put_contents(
-                    "subscription/source/hiddify/" . $source,
-                    base64_encode(
-                        generateHiddifyTags("@" . $source) .
-                            "\n" .
-                            $configsSource
-                    )
-                );
-                echo "@{$source} ✅\n";
+                saveConfigs($source, $configsSource, "source/");
             } else {
-                file_put_contents(
-                    "source.conf",
-                    modifyString($username, $source)
-                );
-
-                $emptySource = file_get_contents("empty.conf");
-                file_put_contents(
-                    "empty.conf",
-                    modifyStringAddItem($emptySource, $source)
-                );
-
-                removeFileInDirectory("subscription/source/normal/", $source);
-                removeFileInDirectory("subscription/source/base64/", $source);
-                removeFileInDirectory("subscription/source/hiddify/", $source);
-
-                echo "@{$source} ❌\n";
+                handleEmptySource($username, $source);
             }
             //channel timer
             echo "Total channel exec time in seconds: " .
@@ -205,23 +180,7 @@ function getTelegramChannelConfigs($username)
                     generateUpdateTime() .
                     $$filename .
                     generateEndofConfiguration();
-                file_put_contents(
-                    "subscription/normal/" . $filename,
-                    $configsType
-                );
-                file_put_contents(
-                    "subscription/base64/" . $filename,
-                    base64_encode($configsType)
-                );
-                file_put_contents(
-                    "subscription/hiddify/" . $filename,
-                    base64_encode(
-                        generateHiddifyTags(strtoupper($filename)) .
-                            "\n" .
-                            $configsType
-                    )
-                );
-                echo "#{$filename} ✅\n";
+                saveConfigs($source, $configsType, "");
             }
         }
 
@@ -230,54 +189,61 @@ function getTelegramChannelConfigs($username)
         foreach ($locationFiles as $filePath) {
             $fileName = basename($filePath);
             if (!in_array($fileName, $locationsArray)) {
-                removeFileInDirectory("subscription/location/normal/", $fileName);
-                removeFileInDirectory("subscription/location/base64/", $fileName);
-                removeFileInDirectory("subscription/location/hiddify/", $fileName);
+                removeFileInDirectory(
+                    "subscription/location/normal/",
+                    $fileName
+                );
+                removeFileInDirectory(
+                    "subscription/location/base64/",
+                    $fileName
+                );
+                removeFileInDirectory(
+                    "subscription/location/hiddify/",
+                    $fileName
+                );
                 echo "#{$fileName} ❌\n";
             }
         }
 
         foreach ($locationsArray as $location) {
-            // Trim the content and check if it's empty
-            if (empty(trim($$location))) {
-                removeFileInDirectory(
-                    "subscription/location/normal/",
-                    $location
-                );
-                removeFileInDirectory(
-                    "subscription/location/base64/",
-                    $location
-                );
-                removeFileInDirectory(
-                    "subscription/location/hiddify/",
-                    $location
-                );
-                echo "#{$location} ❌\n";
-            } else {
-                $configsLocation =
-                    generateUpdateTime() .
-                    $$location .
-                    generateEndofConfiguration();
-                file_put_contents(
-                    "subscription/location/normal/" . $location,
-                    $configsLocation
-                );
-                file_put_contents(
-                    "subscription/location/base64/" . $location,
-                    base64_encode($configsLocation)
-                );
-                file_put_contents(
-                    "subscription/location/hiddify/" . $location,
-                    base64_encode(
-                        generateHiddifyTags(strtoupper($location)) .
-                            "\n" .
-                            $configsLocation
-                    )
-                );
-                echo "#{$location} ✅\n";
-            }
+            $configsLocation =
+                generateUpdateTime() .
+                $$location .
+                generateEndofConfiguration();
+            saveConfigs($source, $configsLocation, "location/");
         }
     }
+}
+
+function saveConfigs($name, $content, $type)
+{
+    $encodedContent = base64_encode($content);
+    $hiddifyContent = base64_encode(
+        generateHiddifyTags($name) . "\n" . $content
+    );
+
+    file_put_contents("subscription/{$type}normal/" . $name, $content);
+    file_put_contents("subscription/{$type}base64/" . $name, $encodedContent);
+    file_put_contents("subscription/{$type}hiddify/" . $name, $hiddifyContent);
+    echo "@{$name} ✅\n";
+    if (in_array($type, ["", "location/"])) {
+        echo "#" . strtoupper($name) . "✅\n";
+    } else {
+        echo "@" . strtoupper($name) . "✅\n";
+    }
+}
+
+function handleEmptySource($username, $source)
+{
+    file_put_contents("source.conf", modifyString($username, $source));
+    file_put_contents(
+        "empty.conf",
+        modifyStringAddItem(file_get_contents("empty.conf"), $source)
+    );
+    removeFileInDirectory("subscription/source/normal/", $source);
+    removeFileInDirectory("subscription/source/base64/", $source);
+    removeFileInDirectory("subscription/source/hiddify/", $source);
+    echo "@{$source} ❌\n";
 }
 
 function configParse($input, $configType)
@@ -1228,191 +1194,205 @@ function generateReadmeWeb($drop1, $drop2, $drop3)
 {
     $base =
         '<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HiN VPN: Your Gateway to Secure and Free Internet Access</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
-    <style>
-        body {
-            padding: 20px;
-            background-color: #f8f9fa;
-            color: #495057;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        body.dark-theme {
-            background-color: #343a40;
-            color: #f8f9fa;
-        }
-        .header {
-            background-color: #007bff;
-            color: white;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-        .feature {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            transition: background-color 0.3s;
-        }
-        .feature.dark-theme {
-            background-color: #495057;
-            color: #f8f9fa;
-        }
-        .feature h4 {
-            color: #007bff;
-        }
-        .footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #343a40;
-            color: white;
-            border-radius: 8px;
-            transition: background-color 0.3s;
-        }
-        .footer.dark-theme {
-            background-color: #212529;
-        }
-        .topbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            transition: background-color 0.3s;
-        }
-        .topbar.dark-theme {
-            background-color: #0056b3;
-        }
-        .topbar h1 {
-            margin: 0;
-            font-size: 1.5rem;
-        }
-        .topbar p {
-            margin: 0;
-            font-size: 1rem;
-        }
-        .theme-toggle {
-            cursor: pointer;
-            font-size: 1.5rem;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="topbar">
-            <div>
-                <h1>HiN VPN</h1>
-                <p>Your Gateway to Secure and Free Internet Access</p>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>HiN VPN: Your Gateway to Secure and Free Internet Access</title>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+            <style>
+                body {
+                    padding: 20px;
+                    background-color: #f8f9fa;
+                    color: #495057;
+                    transition: background-color 0.3s, color 0.3s;
+                }
+                body.dark-theme {
+                    background-color: #343a40;
+                    color: #f8f9fa;
+                }
+                .header {
+                    background-color: #007bff;
+                    color: white;
+                    padding: 20px;
+                    border-radius: 8px;
+                    margin-bottom: 20px;
+                }
+                .feature {
+                    background-color: white;
+                    padding: 20px;
+                    border-radius: 8px;
+                    margin-bottom: 20px;
+                    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                    transition: background-color 0.3s;
+                }
+                .feature.dark-theme {
+                    background-color: #495057;
+                    color: #f8f9fa;
+                }
+                .feature h4 {
+                    color: #007bff;
+                }
+                .footer {
+                    text-align: center;
+                    padding: 20px;
+                    background-color: #343a40;
+                    color: white;
+                    border-radius: 8px;
+                    transition: background-color 0.3s;
+                }
+                .footer.dark-theme {
+                    background-color: #212529;
+                }
+                .footer a {
+                    color: white;
+                    margin: 0 10px;
+                    text-decoration: none;
+                }
+                .footer a:hover {
+                    color: #007bff;
+                }
+                .topbar {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 10px 20px;
+                    background-color: #007bff;
+                    color: white;
+                    border-radius: 8px;
+                    margin-bottom: 20px;
+                    transition: background-color 0.3s;
+                }
+                .topbar.dark-theme {
+                    background-color: #0056b3;
+                }
+                .topbar h1 {
+                    margin: 0;
+                    font-size: 1.5rem;
+                }
+                .topbar p {
+                    margin: 0;
+                    font-size: 1rem;
+                }
+                .theme-toggle {
+                    cursor: pointer;
+                    font-size: 1.5rem;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="topbar">
+                    <div>
+                        <h1>HiN VPN</h1>
+                        <p>Your Gateway to Secure and Free Internet Access</p>
+                    </div>
+                    <div class="theme-toggle" id="theme-toggle">
+                        <i class="bi bi-moon-fill"></i>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 feature">
+                        <h3>About HiN VPN</h3>
+                        <p><strong>HiN VPN</strong> is an open-source project designed to provide secure, unrestricted internet access. It uses Telegram for collecting and distributing VPN configurations, offering a community-driven approach to online privacy.</p>
+                    </div>
+                    <div class="col-12 feature">
+                        <h4>How It Works</h4>
+                        <ol>
+                            <li><strong>Telegram Integration</strong>: A Telegram bot collects VPN configuration files.</li>
+                            <li><strong>Subscription Link</strong>: Provides a link for users to subscribe to the VPN service.</li>
+                            <li><strong>Open Source</strong>: Encourages collaboration and transparency.</li>
+                            <li><strong>PHP and Python Backend</strong>: The backend is developed using PHP and Python (Thanks to @NekoHanaku).</li>
+                        </ol>
+                    </div>
+                    <div class="col-12 feature">
+                        <h4>Benefits</h4>
+                        <ul>
+                            <li><strong>Free Access</strong>: Completely free to use.</li>
+                            <li><strong>Community-Driven</strong>: Wide range of VPN configurations from community contributions.</li>
+                            <li><strong>Enhanced Security</strong>: Open-source nature allows for constant scrutiny and improvement.</li>
+                            <li><strong>Easy to Use</strong>: Simple subscription link for easy setup.</li>
+                        </ul>
+                    </div>
+                    <div class="col-12 feature">
+                        <h4>Subscription Links</h4>
+                        <p>Get started with HiN VPN using the subscription links below. These links provide access to the latest VPN configurations.</p>
+                        <!-- Placeholder for dynamic content -->
+                        ' .
+                $drop1 .
+                '
+                        <p>Below is a Drop-Down menu that shows the generated subscription links from each Source, providing users with a variety of options to choose from.</p>
+                        ' .
+                $drop2 .
+                '
+                        <p>and Below is a Drop-Down that shows the generated subscription links from each Location, providing users with a variety of options to choose from.</p>
+                        ' .
+                $drop3 .
+                '
+                        <p>This tables provides a quick reference for the different subscription links available through HiN VPN, allowing users to easily select the one that best suits their needs.</p>
+                    </div>
+                    <div class="col-12 footer">
+                        <h4>The Last Word</h4>
+                        <p>HiN VPN is more than just a VPN service; it\'s a movement towards a more secure and open internet. By leveraging the power of community and open-source technology, HiN VPN is paving the way for a future where online privacy is a fundamental right for all.</p>
+                        <div>
+                            <a href="https://github.com/itsyebekhe/HiN-VPN" target="_blank"><i class="bi bi-github"></i></a>
+                            <a href="https://x.com/yebekhe" target="_blank"><i class="bi bi-twitter"></i></a>
+                            <a href="https://t.me/Here_is_Nowhere" target="_blank"><i class="bi bi-telegram"></i></a>
+                        </div>
+                        <p>&copy; ' . date("Y") . ' HiN VPN. All rights reserved.</p>
+                    </div>
+                </div>
             </div>
-            <div class="theme-toggle" id="theme-toggle">
-                <i class="bi bi-moon-fill"></i>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 feature">
-                <h3>About HiN VPN</h3>
-                <p><strong>HiN VPN</strong> is an open-source project designed to provide secure, unrestricted internet access. It uses Telegram for collecting and distributing VPN configurations, offering a community-driven approach to online privacy.</p>
-            </div>
-            <div class="col-12 feature">
-                <h4>How It Works</h4>
-                <ol>
-                    <li><strong>Telegram Integration</strong>: A Telegram bot collects VPN configuration files.</li>
-                    <li><strong>Subscription Link</strong>: Provides a link for users to subscribe to the VPN service.</li>
-                    <li><strong>Open Source</strong>: Encourages collaboration and transparency.</li>
-                    <li><strong>PHP and Python Backend</strong>: The backend is developed using PHP and Python (Thanks to @NekoHanaku).</li>
-                </ol>
-            </div>
-            <div class="col-12 feature">
-                <h4>Benefits</h4>
-                <ul>
-                    <li><strong>Free Access</strong>: Completely free to use.</li>
-                    <li><strong>Community-Driven</strong>: Wide range of VPN configurations from community contributions.</li>
-                    <li><strong>Enhanced Security</strong>: Open-source nature allows for constant scrutiny and improvement.</li>
-                    <li><strong>Easy to Use</strong>: Simple subscription link for easy setup.</li>
-                </ul>
-            </div>
-            <div class="col-12 feature">
-                <h4>Subscription Links</h4>
-                <p>Get started with HiN VPN using the subscription links below. These links provide access to the latest VPN configurations.</p>
-                <!-- Placeholder for dynamic content -->
-                ' .
-        $drop1 .
-        '
-                <p>Below is a Drop-Down menu that shows the generated subscription links from each Source, providing users with a variety of options to choose from.</p>
-                ' .
-        $drop2 .
-        '
-                <p>and Below is a Drop-Down that shows the generated subscription links from each Location, providing users with a variety of options to choose from.</p>
-                ' .
-        $drop3 .
-        '
-                <p>This tables provides a quick reference for the different subscription links available through HiN VPN, allowing users to easily select the one that best suits their needs.</p>
-            </div>
-            <div class="col-12 footer">
-                <h4>The Last Word</h4>
-                <p>HiN VPN is more than just a VPN service; it\'s a movement towards a more secure and open internet. By leveraging the power of community and open-source technology, HiN VPN is paving the way for a future where online privacy is a fundamental right for all.</p>
-            </div>
-        </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const themeToggle = document.getElementById(\'theme-toggle\');
-        const body = document.body;
-
-        // Load theme preference from local storage
-        const currentTheme = localStorage.getItem(\'theme\');
-        if (currentTheme) {
-            body.classList.add(currentTheme);
-            themeToggle.innerHTML = currentTheme === \'dark-theme\' ? \'<i class="bi bi-sun-fill"></i>\' : \'<i class="bi bi-moon-fill"></i>\';
-            document.querySelectorAll(\'.feature, .footer, .topbar\').forEach(el => el.classList.add(currentTheme));
-        }
-
-        themeToggle.addEventListener(\'click\', () => {
-            if (body.classList.contains(\'dark-theme\')) {
-                body.classList.remove(\'dark-theme\');
-                body.classList.add(\'light-theme\');
-                themeToggle.innerHTML = \'<i class="bi bi-moon-fill"></i>\';
-                localStorage.setItem(\'theme\', \'light-theme\');
-                document.querySelectorAll(\'.feature, .footer, .topbar\').forEach(el => {
-                    el.classList.remove(\'dark-theme\');
-                    el.classList.add(\'light-theme\');
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+            <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const themeToggle = document.getElementById(\'theme-toggle\');
+                const body = document.body;
+        
+                // Load theme preference from local storage
+                const currentTheme = localStorage.getItem(\'theme\');
+                if (currentTheme) {
+                    body.classList.add(currentTheme);
+                    themeToggle.innerHTML = currentTheme === \'dark-theme\' ? \'<i class="bi bi-sun-fill"></i>\' : \'<i class="bi bi-moon-fill"></i>\';
+                    document.querySelectorAll(\'.feature, .footer, .topbar\').forEach(el => el.classList.add(currentTheme));
+                }
+        
+                themeToggle.addEventListener(\'click\', () => {
+                    if (body.classList.contains(\'dark-theme\')) {
+                        body.classList.remove(\'dark-theme\');
+                        body.classList.add(\'light-theme\');
+                        themeToggle.innerHTML = \'<i class="bi bi-moon-fill"></i>\';
+                        localStorage.setItem(\'theme\', \'light-theme\');
+                        document.querySelectorAll(\'.feature, .footer, .topbar\').forEach(el => {
+                            el.classList.remove(\'dark-theme\');
+                            el.classList.add(\'light-theme\');
+                        });
+                    } else {
+                        body.classList.remove(\'light-theme\');
+                        body.classList.add(\'dark-theme\');
+                        themeToggle.innerHTML = \'<i class="bi bi-sun-fill"></i>\';
+                        localStorage.setItem(\'theme\', \'dark-theme\');
+                        document.querySelectorAll(\'.feature, .footer, .topbar\').forEach(el => {
+                            el.classList.remove(\'light-theme\');
+                            el.classList.add(\'dark-theme\');
+                        });
+                    }
                 });
-            } else {
-                body.classList.remove(\'light-theme\');
-                body.classList.add(\'dark-theme\');
-                themeToggle.innerHTML = \'<i class="bi bi-sun-fill"></i>\';
-                localStorage.setItem(\'theme\', \'dark-theme\');
-                document.querySelectorAll(\'.feature, .footer, .topbar\').forEach(el => {
-                    el.classList.remove(\'light-theme\');
-                    el.classList.add(\'dark-theme\');
-                });
-            }
-        });
-
-        document.querySelectorAll(".btn-copy").forEach(function(button) {
-            button.addEventListener("click", function() {
-                navigator.clipboard.writeText(button.getAttribute("data-text")).then(function() {
-                    alert("Text copied to clipboard!");
-                }, function(err) {
-                    console.error("Could not copy text: ", err);
+        
+                document.querySelectorAll(".btn-copy").forEach(function(button) {
+                    button.addEventListener("click", function() {
+                        navigator.clipboard.writeText(button.getAttribute("data-text")).then(function() {
+                            alert("Text copied to clipboard!");
+                        }, function(err) {
+                            console.error("Could not copy text: ", err);
+                        });
+                    });
                 });
             });
-        });
-    });
-    </script>
-</body>
-</html>';
+            </script>
+        </body>
+        </html>';
 
     return $base;
 }
