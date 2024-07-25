@@ -1329,7 +1329,7 @@ function generateReadmeWeb($drop1, $drop2, $drop3)
                         ' .
                 $drop3 .
                 '
-                        <p>This tables provides a quick reference for the different subscription links available through HiN VPN, allowing users to easily select the one that best suits their needs.</p>
+                        <p>This Drop-Downs provides a quick reference for the different subscription links available through HiN VPN, allowing users to easily select the one that best suits their needs.</p>
                     </div>
                     <div class="col-12 footer">
                         <h4>The Last Word</h4>
