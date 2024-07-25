@@ -104,7 +104,7 @@ function getTelegramChannelConfigs($username)
         "configs.json",
         $GIT_TOKEN
     );
-
+    
     echo "Configs Arrived!⚡️\n";
     if ($configs["status"] === "OK") {
         unset($configs["status"]);
@@ -125,18 +125,12 @@ function getTelegramChannelConfigs($username)
                         $source
                     );
                     if ($correctedConfigArray !== false) {
-                        $configLocation =
-                            getFlags($correctedConfigArray["loc"]) .
-                            " " .
-                            $correctedConfigArray["loc"];
+                        $configLocation =  getFlags($correctedConfigArray["loc"]) . " " . $correctedConfigArray["loc"];
                         $correctedConfig = $correctedConfigArray["config"];
                         $mix .= $correctedConfig . "\n";
                         $$configType .= $correctedConfig . "\n";
                         $$source .= $correctedConfig . "\n";
-                        if (
-                            !in_array($configLocation, $locationsArray) &&
-                            $configLocation !== getFlags("") . " "
-                        ) {
+                        if (!in_array($configLocation, $locationsArray) && $configLocation !== getFlags("") . " ") {
                             $locationsArray[] = $configLocation;
                         }
                         $$configLocation .= $correctedConfig . "\n";
@@ -147,9 +141,40 @@ function getTelegramChannelConfigs($username)
                     generateUpdateTime() .
                     $$source .
                     generateEndofConfiguration();
-                saveConfigs($source, $configsSource, "source/");
+                file_put_contents(
+                    "subscription/source/normal/" . $source,
+                    $configsSource
+                );
+                file_put_contents(
+                    "subscription/source/base64/" . $source,
+                    base64_encode($configsSource)
+                );
+                file_put_contents(
+                    "subscription/source/hiddify/" . $source,
+                    base64_encode(
+                        generateHiddifyTags("@" . $source) .
+                            "\n" .
+                            $configsSource
+                    )
+                );
+                echo "@{$source} ✅\n";
             } else {
-                handleEmptySource($username, $source);
+                file_put_contents(
+                    "source.conf",
+                    modifyString($username, $source)
+                );
+
+                $emptySource = file_get_contents("empty.conf");
+                file_put_contents(
+                    "empty.conf",
+                    modifyStringAddItem($emptySource, $source)
+                );
+
+                removeFileInDirectory("subscription/source/normal/", $source);
+                removeFileInDirectory("subscription/source/base64/", $source);
+                removeFileInDirectory("subscription/source/hiddify/", $source);
+
+                echo "@{$source} ❌\n";
             }
             //channel timer
             echo "Total channel exec time in seconds: " .
@@ -179,7 +204,23 @@ function getTelegramChannelConfigs($username)
                     generateUpdateTime() .
                     $$filename .
                     generateEndofConfiguration();
-                saveConfigs($source, $configsType, "");
+                file_put_contents(
+                    "subscription/normal/" . $filename,
+                    $configsType
+                );
+                file_put_contents(
+                    "subscription/base64/" . $filename,
+                    base64_encode($configsType)
+                );
+                file_put_contents(
+                    "subscription/hiddify/" . $filename,
+                    base64_encode(
+                        generateHiddifyTags(strtoupper($filename)) .
+                            "\n" .
+                            $configsType
+                    )
+                );
+                echo "#{$filename} ✅\n";
             }
         }
 
@@ -188,61 +229,54 @@ function getTelegramChannelConfigs($username)
         foreach ($locationFiles as $filePath) {
             $fileName = basename($filePath);
             if (!in_array($fileName, $locationsArray)) {
-                removeFileInDirectory(
-                    "subscription/location/normal/",
-                    $fileName
-                );
-                removeFileInDirectory(
-                    "subscription/location/base64/",
-                    $fileName
-                );
-                removeFileInDirectory(
-                    "subscription/location/hiddify/",
-                    $fileName
-                );
+                removeFileInDirectory("subscription/location/normal/", $fileName);
+                removeFileInDirectory("subscription/location/base64/", $fileName);
+                removeFileInDirectory("subscription/location/hiddify/", $fileName);
                 echo "#{$fileName} ❌\n";
             }
         }
 
         foreach ($locationsArray as $location) {
-            $configsLocation =
-                generateUpdateTime() .
-                $$location .
-                generateEndofConfiguration();
-            saveConfigs($source, $configsLocation, "location/");
+            // Trim the content and check if it's empty
+            if (empty(trim($$location))) {
+                removeFileInDirectory(
+                    "subscription/location/normal/",
+                    $location
+                );
+                removeFileInDirectory(
+                    "subscription/location/base64/",
+                    $location
+                );
+                removeFileInDirectory(
+                    "subscription/location/hiddify/",
+                    $location
+                );
+                echo "#{$location} ❌\n";
+            } else {
+                $configsLocation =
+                    generateUpdateTime() .
+                    $$location .
+                    generateEndofConfiguration();
+                file_put_contents(
+                    "subscription/location/normal/" . $location,
+                    $configsLocation
+                );
+                file_put_contents(
+                    "subscription/location/base64/" . $location,
+                    base64_encode($configsLocation)
+                );
+                file_put_contents(
+                    "subscription/location/hiddify/" . $location,
+                    base64_encode(
+                        generateHiddifyTags(strtoupper($location)) .
+                            "\n" .
+                            $configsLocation
+                    )
+                );
+                echo "#{$location} ✅\n";
+            }
         }
     }
-}
-
-function saveConfigs($name, $content, $type)
-{
-    $encodedContent = base64_encode($content);
-    $hiddifyContent = base64_encode(
-        generateHiddifyTags($name) . "\n" . $content
-    );
-
-    file_put_contents("subscription/{$type}normal/" . $name, $content);
-    file_put_contents("subscription/{$type}base64/" . $name, $encodedContent);
-    file_put_contents("subscription/{$type}hiddify/" . $name, $hiddifyContent);
-    echo "@{$name} ✅\n";
-    if (in_array($type, ["", "location/"])) {
-        echo "#" . strtoupper($name) . "✅\n";
-    } else {
-        echo "@" . strtoupper($name) . "✅\n";
-    }
-}
-
-function handleEmptySource($username, $source)
-{
-    file_put_contents("source.conf", modifyString($username, $source));
-    file_put_contents(
-        "empty.conf",
-        modifyStringAddItem(file_get_contents("empty.conf"), $source)
-    );
-    removeFileInDirectory("subscription/source/normal/", $source);
-    removeFileInDirectory("subscription/source/base64/", $source);
-    removeFileInDirectory("subscription/source/hiddify/", $source);
-    echo "@{$source} ❌\n";
 }
 
 function configParse($input, $configType)
