@@ -7,24 +7,22 @@ error_reporting(E_ERROR | E_PARSE);
 
 function getTheType($input)
 {
-    if (substr($input, 0, 8) === "vmess://") {
-        return "vmess";
-    } elseif (substr($input, 0, 8) === "vless://") {
-        return "vless";
-    } elseif (substr($input, 0, 9) === "trojan://") {
-        return "trojan";
-    } elseif (substr($input, 0, 5) === "ss://") {
-        return "ss";
-    } elseif (substr($input, 0, 7) === "tuic://") {
-        return "tuic";
-    } elseif (
-        substr($input, 0, 6) === "hy2://" ||
-        substr($input, 0, 12) === "hysteria2://"
-    ) {
-        return "hysteria2";
-    } elseif (substr($input, 0, 11) === "hysteria://") {
-        return "hysteria";
+    $types = [
+        "vmess",
+        "vless",
+        "trojan",
+        "ss",
+        "tuic",
+        "hysteria",
+        "hysteria2",
+        "hy2"
+    ];
+    foreach ($types as $type) {
+        if (substr($input, 0, strlen($type) + 3) === $type . "://") {
+            return $type;
+        }
     }
+    return false;
 }
 
 function fetchGitHubContent($owner, $repo, $path, $token)
