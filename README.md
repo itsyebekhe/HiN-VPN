@@ -78,7 +78,6 @@ Below is a table that shows the generated subscription links from each Source, p
 | vmessorg | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/vmessorg | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/vmessorg | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/vmessorg |
 | deamnet_proxy | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/deamnet_proxy | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/deamnet_proxy | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/deamnet_proxy |
 | proxy_mtm | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/proxy_mtm | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/proxy_mtm | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/proxy_mtm |
-| v2rayng_matsuri | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/normal/v2rayng_matsuri | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/base64/v2rayng_matsuri | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/source/hiddify/v2rayng_matsuri |
 
 
 Below is a table that shows the generated subscription links from each Location, providing users with a variety of options to choose from.
