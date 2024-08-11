@@ -1552,6 +1552,6 @@ $message = "⏱ {$tehranTime}
 🚹 <a href='https://itsyebekhe.github.io/HiN-VPN/'>𝗛.𝗜.𝗡 𝗚𝗜𝗧𝗛𝗨𝗕 𝗣𝗔𝗚𝗘</a>
 ---- 𝗠𝗢𝗥𝗘 ----
 
-🌐 <a href='https://t.me/Here_is_Nowhere'>𝗛.𝗜.𝗡 🫧</a>";
+💬 <a href:'https://t.me/share/url?url=https://t.me/Here_is_Nowhere&text=https://t.me/share/url?url=https://t.me/Here_is_Nowhere&text=Your%20Gateway%20to%20Secure%20and%20Free%20Internet%20Access%0AHiN%20VPN%20is%20an%20open-source%20project%20designed%20to%20provide%20secure,%20unrestricted%20internet%20access.%20It%20uses%20Telegram%20for%20collecting%20and%20distributing%20VPN%20configurations,%20offering%20a%20community-driven%20approach%20to%20online%20privacy.'>𝗖𝗟𝗜𝗖𝗞 𝗧𝗢 𝗦𝗛𝗔𝗥𝗘 𝗛.𝗜.𝗡!</a>";
 
 sendMessage($botToken, -1002043507701, $message, "html", $keyboard);
