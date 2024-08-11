@@ -1543,7 +1543,7 @@ $keyboard = [
 
 $message = "⏱ {$tehranTime}
 
-<blockquote>📥 Copy => Import config from Clipboard (<a href='https://github.com/mahsanet/NikaNG/releases/latest'>NikaNG</a>): <blockquote>
+<blockquote>📥 Copy => Import config from Clipboard (<a href='https://github.com/mahsanet/NikaNG/releases/latest'>NikaNG</a>): </blockquote>
 ---- 𝗖𝗢𝗣𝗬 ----
 🔎 <code>{$randType}</code>
 ---- 𝗖𝗢𝗣𝗬 ----
