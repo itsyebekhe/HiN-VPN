@@ -1532,13 +1532,7 @@ $keyboard = [
             "text" => "📲 HIDDIFY",
             "url" => maskUrl("hiddify://import/" . $randType),
         ],
-    ],
-    [
-        [
-            "text" => "🚹 HiN VPN GITHUB 🚹",
-            "url" => "https://itsyebekhe.github.io/HiN-VPN/",
-        ],
-    ],
+    ]
 ];
 
 $message = "⏱ {$tehranTime}
