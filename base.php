@@ -1541,14 +1541,16 @@ $keyboard = [
     ],
 ];
 
-$message = "🔺 لینک های اشتراک HiN بروزرسانی شدن! 🔻
+$message = "⏱ {$tehranTime}
 
-⏱ آخرین آپدیت: 
-{$tehranTime}
-
+<blockquote>📥 Copy => Import config from Clipboard (<a href='https://github.com/mahsanet/NikaNG/releases/latest'>NikaNG</a>): <blockquote>
+---- 𝗖𝗢𝗣𝗬 ----
 🔎 <code>{$randType}</code>
+---- 𝗖𝗢𝗣𝗬 ----
 
-💥 برای لینک های بیشتر وارد گیتهاب پروژه بشید
+---- 𝗠𝗢𝗥𝗘 ----
+🚹 <a href='https://itsyebekhe.github.io/HiN-VPN/'>𝗛.𝗜.𝗡 𝗚𝗜𝗧𝗛𝗨𝗕 𝗣𝗔𝗚𝗘</a>
+---- 𝗠𝗢𝗥𝗘 ----
 
 🌐 <a href='https://t.me/Here_is_Nowhere'>𝗛.𝗜.𝗡 🫧</a>";
 
