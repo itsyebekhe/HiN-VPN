@@ -79,6 +79,7 @@ Below is a table that shows the generated subscription links from each Location,
 
 | Location | Normal | Base64 | Hiddify |
 | -------- | ------ | ------ | ------- |
+| 🇺🇾 UY | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/🇺🇾 UY | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/🇺🇾 UY | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/🇺🇾 UY |
 | 🇪🇪 EE | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/🇪🇪 EE | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/🇪🇪 EE | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/🇪🇪 EE |
 | 🇮🇹 IT | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/🇮🇹 IT | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/🇮🇹 IT | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/🇮🇹 IT |
 | 🇬🇧 GB | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/normal/🇬🇧 GB | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/base64/🇬🇧 GB | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/location/hiddify/🇬🇧 GB |
