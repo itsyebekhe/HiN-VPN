@@ -29,6 +29,7 @@ To get started with HiN VPN, simply follow the subscription links provided below
 | trojan | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/normal/trojan | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/base64/trojan | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/hiddify/trojan |
 | mix | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/normal/mix | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/base64/mix | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/hiddify/mix |
 | ss | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/normal/ss | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/base64/ss | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/hiddify/ss |
+| hysteria2 | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/normal/hysteria2 | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/base64/hysteria2 | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/hiddify/hysteria2 |
 | vmess | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/normal/vmess | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/base64/vmess | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/hiddify/vmess |
 
     
