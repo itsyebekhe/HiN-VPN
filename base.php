@@ -1538,14 +1538,16 @@ $keyboard = [
 $message = "⏱ {$tehranTime}
 
 <blockquote>📥 Copy => Import config from Clipboard (<a href='https://github.com/mahsanet/NikaNG/releases/latest'>NikaNG</a>): </blockquote>
----- 𝗖𝗢𝗣𝗬 ----
+---- کپی کنید ----
 🔎 <code>{$randType}</code>
----- 𝗖𝗢𝗣𝗬 ----
+---- کپی کنید ----
 
----- 𝗠𝗢𝗥𝗘 ----
-🚹 <a href='https://itsyebekhe.github.io/HiN-VPN/'>𝗛.𝗜.𝗡 𝗚𝗜𝗧𝗛𝗨𝗕 𝗣𝗔𝗚𝗘</a>
----- 𝗠𝗢𝗥𝗘 ----
+---- کانفیگ بیشتر ----
+🚹 <a href='https://itsyebekhe.github.io/HiN-VPN/'>پیج گیتهاب 𝗛.𝗜.𝗡</a>
+---- کانفیگ بیشتر ----
 
-💬 <a href='https://t.me/share/url?url=https://t.me/Here_is_Nowhere&text=https://t.me/share/url?url=https://t.me/Here_is_Nowhere&text=Your%20Gateway%20to%20Secure%20and%20Free%20Internet%20Access%0AHiN%20VPN%20is%20an%20open-source%20project%20designed%20to%20provide%20secure,%20unrestricted%20internet%20access.%20It%20uses%20Telegram%20for%20collecting%20and%20distributing%20VPN%20configurations,%20offering%20a%20community-driven%20approach%20to%20online%20privacy.'>𝗖𝗟𝗜𝗖𝗞 𝗧𝗢 𝗦𝗛𝗔𝗥𝗘 𝗛.𝗜.𝗡!</a>";
+💬 <a href='https://t.me/share/url?url=https://t.me/Here_is_Nowhere&text=%D8%AF%D8%B1%D9%88%D8%A7%D8%B2%D9%87%20%D8%B4%D9%85%D8%A7%20%D8%A8%D8%B1%D8%A7%DB%8C%20%D8%AF%D8%B3%D8%AA%D8%B1%D8%B3%DB%8C%20%D8%A8%D9%87%20%D8%A7%DB%8C%D9%86%D8%AA%D8%B1%D9%86%D8%AA%20%D8%A7%D9%85%D9%86%20%D9%88%20%D8%B1%D8%A7%DB%8C%DA%AF%D8%A7%D9%86%0A%D9%BE%D8%B1%D9%88%DA%98%D9%87%20HiN%20VPN%20%DB%8C%DA%A9%20%D9%BE%D8%B1%D9%88%DA%98%D9%87%20%D9%85%D8%AA%D9%86%20%D8%A8%D8%A7%D8%B2%20%D8%A7%D8%B3%D8%AA%20%DA%A9%D9%87%20%D8%B7%D8%B1%D8%A7%D8%AD%DB%8C%20%D8%B4%D8%AF%D9%87%20%D8%AA%D8%A7%20%D8%AF%D8%B3%D8%AA%D8%B1%D8%B3%DB%8C%20%D8%A7%D9%85%D9%86%20%D9%88%20%D8%A8%D8%AF%D9%88%D9%86%20%D9%85%D8%AD%D8%AF%D9%88%D8%AF%DB%8C%D8%AA%20%D8%A8%D9%87%20%D8%A7%DB%8C%D9%86%D8%AA%D8%B1%D9%86%D8%AA%20%D8%B1%D8%A7%20%D9%81%D8%B1%D8%A7%D9%87%D9%85%20%DA%A9%D9%86%D8%AF.%20%D8%A7%D8%B2%20%D8%AA%D9%84%DA%AF%D8%B1%D8%A7%D9%85%20%D8%A8%D8%B1%D8%A7%DB%8C%20%D8%AC%D9%85%D8%B9%20%D8%A2%D9%88%D8%B1%DB%8C%20%D9%88%20%D8%AA%D9%88%D8%B2%DB%8C%D8%B9%20%D8%AA%D9%86%D8%B8%DB%8C%D9%85%D8%A7%D8%AA%20VPN%20%D8%A7%D8%B3%D8%AA%D9%81%D8%A7%D8%AF%D9%87%20%D9%85%DB%8C%20%DA%A9%D9%86%D8%AF%D8%8C%20%D9%88%20%DB%8C%DA%A9%20%D8%B1%D9%88%DB%8C%DA%A9%D8%B1%D8%AF%20%D9%85%D8%A8%D8%AA%D9%86%DB%8C%20%D8%A8%D8%B1%20%D8%AC%D8%A7%D9%85%D8%B9%D9%87%20%D8%A8%D8%B1%D8%A7%DB%8C%20%D8%AD%D9%81%D8%B8%20%D8%AD%D8%B1%DB%8C%D9%85%20%D8%AE%D8%B5%D9%88%D8%B5%DB%8C%20%D8%A2%D9%86%D9%84%D8%A7%DB%8C%D9%86%20%D8%A7%D8%B1%D8%A7%D8%A6%D9%87%20%D9%85%DB%8C%20%D8%AF%D9%87%D8%AF'>برای اشتراک گذاری 𝗛.𝗜.𝗡 کلیک کنید!</a>
+
+💲 <a href='https://plisio.net/donate/iekXi_N0'>برای حمایت مالی از 𝗛.𝗜.𝗡 کلیک کنید!</a>";
 
 sendMessage($botToken, -1002043507701, $message, "html", $keyboard);
