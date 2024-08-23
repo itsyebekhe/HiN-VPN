@@ -1066,6 +1066,90 @@ function sendMessage($botToken, $chatId, $message, $parse_mode, $keyboard)
     echo /** @scrutinizer ignore-type */ $response;
 }
 
+function sendPhoto($token, $chat_id, $photo, $caption = '', $parse_mode = 'HTML', $disable_notification = false, $reply_to_message_id = null, $reply_markup = null) {
+    // Telegram Bot API URL
+    $url = "https://api.telegram.org/bot{$token}/sendPhoto";
+
+    // Prepare the cURL request
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POST, true);
+
+    // Prepare the POST fields
+    $postFields = [
+        'chat_id' => $chat_id,
+        'photo' => $photo,
+        'caption' => $caption,
+        'parse_mode' => $parse_mode,
+        'disable_notification' => $disable_notification,
+    ];
+
+    // Add reply_to_message_id if provided
+    if ($reply_to_message_id !== null) {
+        $postFields['reply_to_message_id'] = $reply_to_message_id;
+    }
+
+    // Add reply_markup if provided
+    if ($reply_markup !== null) {
+        $postFields['reply_markup'] = json_encode($reply_markup);
+    }
+
+    // Set the POST fields
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $postFields);
+
+    // Execute the cURL request
+    $response = curl_exec($ch);
+
+    // Check for cURL errors
+    if (curl_errno($ch)) {
+        $error_msg = curl_error($ch);
+        curl_close($ch);
+        throw new Exception("cURL error: $error_msg");
+    }
+
+    // Close the cURL session
+    curl_close($ch);
+
+    // Decode the JSON response
+    $responseData = json_decode($response, true);
+
+    // Check if the response contains an error
+    if (!$responseData['ok']) {
+        throw new Exception("Telegram API error: {$responseData['description']}");
+    }
+
+    // Return the sent message
+    return $responseData['result'];
+}
+
+function generateQRCode($data, $size = '200x200', $charsetSource = 'UTF-8', $charsetTarget = 'UTF-8', $ecc = 'L', $color = '0-0-0', $bgcolor = '255-255-255', $margin = 1, $qzone = 0, $format = 'png') {
+    // Base URL for the QR code generation API
+    $baseUrl = "https://api.qrserver.com/v1/create-qr-code/";
+
+    // URL-encode the data to ensure it's safely passed in the URL
+    $data = urlencode($data);
+
+    // Construct the query parameters
+    $params = [
+        'data' => $data,
+        'size' => $size,
+        'charset-source' => $charsetSource,
+        'charset-target' => $charsetTarget,
+        'ecc' => $ecc,
+        'color' => $color,
+        'bgcolor' => $bgcolor,
+        'margin' => $margin,
+        'qzone' => $qzone,
+        'format' => $format
+    ];
+
+    // Build the full URL with query parameters
+    $fullUrl = $baseUrl . '?' . http_build_query($params);
+
+    // Return the full URL to the generated QR code image
+    return $fullUrl;
+}
+
 function generateHiddifyTags($type)
 {
     $profileTitle = base64_encode("{$type} | HiN 🫧");
@@ -1535,6 +1619,10 @@ $keyboard = [
     ]
 ];
 
+$reply_markup = [
+    'inline_keyboard' => $keyboard
+];
+
 $message = "⏱ {$tehranTime}
 
 <blockquote>📥 Copy => Import config from Clipboard (<a href='https://github.com/mahsanet/NikaNG/releases/latest'>NikaNG</a>): </blockquote>
@@ -1550,4 +1638,5 @@ $message = "⏱ {$tehranTime}
 
 💲 <a href='https://plisio.net/donate/iekXi_N0'>برای حمایت مالی از 𝗛.𝗜.𝗡 کلیک کنید!</a>";
 
-sendMessage($botToken, -1002043507701, $message, "html", $keyboard);
+$generateQRCode = generateQRCode($randType, '500x500', 'UTF-8', 'UTF-8', 'L', '0-0-255', '0-0-0', '1', '1', 'png');
+sendPhoto($botToken, -1002043507701, $generateQRCode, $message, 'HTML', false, null, $reply_markup);
