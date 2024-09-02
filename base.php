@@ -1638,5 +1638,5 @@ $message = "⏱ {$tehranTime}
 
 💲 <a href='https://t.me/HiNDONATEBOT?start=start'>برای حمایت مالی به تومان از 𝗛.𝗜.𝗡 کلیک کنید!</a>";
 
-$generateQRCode = generateQRCode($randType, '500x500', 'UTF-8', 'UTF-8', 'L', '0-0-255', '0-0-0', '1', '1', 'png');
+$generateQRCode = generateQRCode($randType, '500x500', 'UTF-8', 'UTF-8', 'L', '0-0-0', '255-255-255', '2', '1', 'png');
 sendPhoto($botToken, -1002043507701, $generateQRCode, $message, 'HTML', false, null, $reply_markup);
