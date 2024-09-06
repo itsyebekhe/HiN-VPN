@@ -25,7 +25,6 @@ To get started with HiN VPN, simply follow the subscription links provided below
     
 | Protocol | Normal | Base64 | Hiddify |
 | -------- | ------ | ------ | ------- |
-| hysteria2 | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/normal/hysteria2 | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/base64/hysteria2 | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/hiddify/hysteria2 |
 | trojan | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/normal/trojan | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/base64/trojan | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/hiddify/trojan |
 | vmess | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/normal/vmess | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/base64/vmess | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/hiddify/vmess |
 | mix | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/normal/mix | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/base64/mix | https://raw.githubusercontent.com/itsyebekhe/HiN-VPN/main/subscription/hiddify/mix |
