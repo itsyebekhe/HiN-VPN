@@ -19,7 +19,8 @@ function getTheType($input)
     ];
     foreach ($types as $type) {
         if (substr($input, 0, strlen($type) + 3) === $type . "://") {
-            if ($type === "hy2") return "hysteria2";
+            if ($type === "hy2")
+                return "hysteria2";
             return $type;
         }
     }
@@ -104,7 +105,7 @@ function getTelegramChannelConfigs($username)
         "configs.json",
         $GIT_TOKEN
     );
-    
+
     echo "Configs Arrived!⚡️\n";
     if ($configs["status"] === "OK") {
         unset($configs["status"]);
@@ -125,7 +126,7 @@ function getTelegramChannelConfigs($username)
                         $source
                     );
                     if ($correctedConfigArray !== false) {
-                        $configLocation =  getFlags($correctedConfigArray["loc"]) . " " . $correctedConfigArray["loc"];
+                        $configLocation = getFlags($correctedConfigArray["loc"]) . " " . $correctedConfigArray["loc"];
                         $correctedConfig = $correctedConfigArray["config"];
                         $mix .= $correctedConfig . "\n";
                         $$configType .= $correctedConfig . "\n";
@@ -153,8 +154,8 @@ function getTelegramChannelConfigs($username)
                     "subscription/source/hiddify/" . $source,
                     base64_encode(
                         generateHiddifyTags("@" . $source) .
-                            "\n" .
-                            $configsSource
+                        "\n" .
+                        $configsSource
                     )
                 );
                 echo "@{$source} ✅\n";
@@ -216,8 +217,8 @@ function getTelegramChannelConfigs($username)
                     "subscription/hiddify/" . $filename,
                     base64_encode(
                         generateHiddifyTags(strtoupper($filename)) .
-                            "\n" .
-                            $configsType
+                        "\n" .
+                        $configsType
                     )
                 );
                 echo "#{$filename} ✅\n";
@@ -269,8 +270,8 @@ function getTelegramChannelConfigs($username)
                     "subscription/location/hiddify/" . $location,
                     base64_encode(
                         generateHiddifyTags(strtoupper($location)) .
-                            "\n" .
-                            $configsLocation
+                        "\n" .
+                        $configsLocation
                     )
                 );
                 echo "#{$location} ✅\n";
@@ -1066,7 +1067,8 @@ function sendMessage($botToken, $chatId, $message, $parse_mode, $keyboard)
     echo /** @scrutinizer ignore-type */ $response;
 }
 
-function sendPhoto($token, $chat_id, $photo, $caption = '', $parse_mode = 'HTML', $disable_notification = false, $reply_to_message_id = null, $reply_markup = null) {
+function sendPhoto($token, $chat_id, $photo, $caption = '', $parse_mode = 'HTML', $disable_notification = false, $reply_to_message_id = null, $reply_markup = null)
+{
     // Telegram Bot API URL
     $url = "https://api.telegram.org/bot{$token}/sendPhoto";
 
@@ -1122,7 +1124,8 @@ function sendPhoto($token, $chat_id, $photo, $caption = '', $parse_mode = 'HTML'
     return $responseData['result'];
 }
 
-function generateQRCode($data, $size = '200x200', $charsetSource = 'UTF-8', $charsetTarget = 'UTF-8', $ecc = 'L', $color = '0-0-0', $bgcolor = '255-255-255', $margin = 1, $qzone = 0, $format = 'png') {
+function generateQRCode($data, $size = '200x200', $charsetSource = 'UTF-8', $charsetTarget = 'UTF-8', $ecc = 'L', $color = '0-0-0', $bgcolor = '255-255-255', $margin = 1, $qzone = 0, $format = 'png')
+{
     // Base URL for the QR code generation API
     $baseUrl = "https://api.qrserver.com/v1/create-qr-code/";
 
@@ -1250,7 +1253,7 @@ function addStringToBeginning($array, $string)
     $modifiedArray = [];
 
     foreach ($array as $item) {
-        $modifiedArray[] = urlencode($string . $item);
+        $modifiedArray[] = $string . urlencode($item);
     }
 
     return $modifiedArray;
@@ -1437,16 +1440,16 @@ function generateReadmeWeb($drop1, $drop2, $drop3)
                         <p>Get started with HiN VPN using the subscription links below. These links provide access to the latest VPN configurations.</p>
                         <!-- Placeholder for dynamic content -->
                         ' .
-                $drop1 .
-                '
+        $drop1 .
+        '
                         <p>Below is a Drop-Down menu that shows the generated subscription links from each Source, providing users with a variety of options to choose from.</p>
                         ' .
-                $drop2 .
-                '
+        $drop2 .
+        '
                         <p>and Below is a Drop-Down that shows the generated subscription links from each Location, providing users with a variety of options to choose from.</p>
                         ' .
-                $drop3 .
-                '
+        $drop3 .
+        '
                         <p>This Drop-Downs provides a quick reference for the different subscription links available through HiN VPN, allowing users to easily select the one that best suits their needs.</p>
                     </div>
                     <div class="col-12 footer">
