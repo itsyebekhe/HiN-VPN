@@ -1253,7 +1253,7 @@ function addStringToBeginning($array, $string)
     $modifiedArray = [];
 
     foreach ($array as $item) {
-        $modifiedArray[] = $string . preg_replace(" ", "%20", $item);
+        $modifiedArray[] = $string . str_replace(" ", "%20", $item);
     }
 
     return $modifiedArray;
