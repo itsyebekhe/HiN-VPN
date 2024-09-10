@@ -1613,6 +1613,12 @@ $botToken = getenv("TELEGRAM_BOT_TOKEN");
 $keyboard = [
     [
         [
+            "text" => "🌐 NikaNG",
+            "url" => "https://github.com/mahsanet/NikaNG/releases/latest",
+        ]
+    ],
+    [
+        [
             "text" => "📲 STREISAND",
             "url" => maskUrl("streisand://import/" . $randType),
         ],
@@ -1629,7 +1635,6 @@ $reply_markup = [
 
 $message = "⏱ {$tehranTime}
 
-<blockquote>📥 Copy => Import config from Clipboard (<a href='https://github.com/mahsanet/NikaNG/releases/latest'>NikaNG</a>): </blockquote>
 ---- کپی کنید ----
 🔎 <code>{$randType}</code>
 ---- کپی کنید ----
