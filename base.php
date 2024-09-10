@@ -1250,7 +1250,7 @@ function addStringToBeginning($array, $string)
     $modifiedArray = [];
 
     foreach ($array as $item) {
-        $modifiedArray[] = $string . $item;
+        $modifiedArray[] = urlencode($string . $item);
     }
 
     return $modifiedArray;
