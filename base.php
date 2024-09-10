@@ -452,7 +452,8 @@ function generateReadmeTable($titles, $data)
     $table .= $separator;
 
     foreach ($data as $row) {
-        $table .= "| " . urldecode(implode(" | ", $row)) . " |" . PHP_EOL;
+        $row[0] = urldecode($row[0]);
+        $table .= "| " . implode(" | ", $row) . " |" . PHP_EOL;
     }
 
     return $table;
@@ -1253,7 +1254,7 @@ function addStringToBeginning($array, $string)
     $modifiedArray = [];
 
     foreach ($array as $item) {
-        $modifiedArray[] = $string . str_replace(" ", "%20", $item);
+        $modifiedArray[] = $string . $item;
     }
 
     return $modifiedArray;
